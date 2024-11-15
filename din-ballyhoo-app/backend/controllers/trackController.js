@@ -65,7 +65,7 @@ exports.createTrack = async (req, res) => {
 //update Track 
 exports.updateTrack = async (req, res) => {
     try {
-        const track = await Trackk.findByIdAndUpdate(req.params.id);
+        const track = await Track.findByIdAndUpdate(req.params.id);
         res.status(200).json({
             status: 'success',
             data: {
