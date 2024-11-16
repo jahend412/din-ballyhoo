@@ -9,7 +9,13 @@ app.use(express.json());
 // Get All Tracks
 exports.getAllTracks = async (req, res) => {
     try {
-        const tracks = await Track.find();
+        const queryObj = { ...req.query }; // Destructure the query object
+        const excludedFields = ['page', 'sort', 'limit', 'fields']; // Define the fields to exclude from the query object
+        excludedFields.forEach((el) => delete queryObj[el]); // Loop through the excluded fields and delete them from the query object
+
+        const query = Track.find(queryObj); // Fetch all tracks from the database
+        
+        const tracks = await query; // Await the query
         res.status(200).json({
             status: 'success',
             results: tracks.length,
