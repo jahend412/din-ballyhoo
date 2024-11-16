@@ -1,27 +1,26 @@
-const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const dotenv = require('dotenv');
 
-const app = express();
-const PORT = process.env.PORT || 8080;
+dotenv.config({path: './config.env'});
+const app = require('./app');
 
-// <--- Middleware --->
-app.use(cors());
-app.use(express.json());
+const DB = process.env.DATABASE
+    .replace('<PASSWORD>',
+        process.env.DATABASE_PASSWORD);
+
 
 // <--- MongoDB Connection --->
-mongoose.connect('mongodb://localhost:27017/din-ballyhoo', {
+mongoose.connect(DB, {
+    newUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false
 }).then(() => 
     console.log('MongoDB Connected'))
     .catch(err => console.log(err));
 
-    // <--- Routes --->
 
-app.get('/', (req, res) => {
-res.send('This is working');
-})
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+        console.log(`App running on port ${port}...`);
+    });
