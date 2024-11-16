@@ -2,7 +2,13 @@ const Shows = require('../models/showModel');
 
 exports.getAllShows = async (req, res) => {
     try {
-        const shows = await Shows.find();
+        const queryObj = { ...req.query }; // Destructure the query object
+        const excludedFields = ['page', 'sort', 'limit', 'fields']; // Define the fields to exclude from the query object
+        excludedFields.forEach((el) => delete queryObj[el]); // Loop through the excluded fields and delete them from the query object
+
+        const query = await Shows.find(queryObj);
+
+        const shows = await query;
         res.status(200).json({
             status: 'success',
             results: shows.length,
