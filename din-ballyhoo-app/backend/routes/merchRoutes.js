@@ -9,9 +9,13 @@ router
     .route('/')
     .get(merchController.getAllMerch)
     .post(merchController.createMerch)
+   
+
+router
+    .route('/:id')
     .get(merchController.getMerchById)
     .put(merchController.updateMerch)
-    .delete(merchController.deleteMerch);
+    .delete(merchController.deleteMerch);    
 
 module.exports = router;
 
