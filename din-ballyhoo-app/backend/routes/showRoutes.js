@@ -7,6 +7,9 @@ router
     .route('/')
     .get(showController.getAllShows)
     .post(showController.createShow)
+    
+router
+    .route('/:id')
     .get(showController.getShowById)
     .put(showController.updateShow)
     .delete(showController.deleteShow);
