@@ -2,7 +2,13 @@ const Webcast = require('../models/webcastModel');
 
 exports.getAllWebcasts = async (req, res) => {
     try {
-        const webcasts = await Webcast.find();
+        const queryObj = { ...req.query }; // Destructure the query object
+        const excludedFields = ['page', 'sort', 'limit', 'fields']; // Define the fields to exclude from the query object
+        excludedFields.forEach((el) => delete queryObj[el]); // Loop through the excluded fields and delete them from the query object
+
+        const query = Webcast.find(queryObj);
+
+        const webcasts = await query;
         res.status(200).json({
             status: 'success',
             results: webcasts.length,
