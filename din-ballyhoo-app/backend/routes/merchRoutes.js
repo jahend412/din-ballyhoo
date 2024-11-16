@@ -6,11 +6,12 @@ const router = express.Router();
 
 
 router
-    .get(getAllMerch)
-    .post(createMerch)
-    .get(getMerchById)
-    .put(updateMerch)
-    .delete(deleteMerch);
+    .route('/')
+    .get(merchController.getAllMerch)
+    .post(merchController.createMerch)
+    .get(merchController.getMerchById)
+    .put(merchController.updateMerch)
+    .delete(merchController.deleteMerch);
 
 module.exports = router;
 
