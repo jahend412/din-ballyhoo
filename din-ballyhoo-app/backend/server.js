@@ -1,26 +1,30 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-dotenv.config({path: './config.env'});
+// Load environment variables
+dotenv.config({ path: './config.env' });
+
 const app = require('./app');
 
-const DB = process.env.DATABASE
-    .replace('<PASSWORD>',
-        process.env.DATABASE_PASSWORD);
+// Construct the MongoDB URI
+const DB = process.env.DATABASE.replace(
+    '<PASSWORD>',
+    process.env.DATABASE_PASSWORD
+);
 
+// Debugging: Log the final connection string (remove this in production)
+console.log('MongoDB URI:', DB);
 
-// <--- MongoDB Connection --->
+// MongoDB connection
 mongoose.connect(DB, {
-    newUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-}).then(() => 
-    console.log('MongoDB Connected'))
-    .catch(err => console.log(err));
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB Connected'))
+.catch(err => console.log('MongoDB connection error:', err));
 
-
-
-    const port = process.env.PORT || 3000;
-    app.listen(port, () => {
-        console.log(`App running on port ${port}...`);
-    });
+// Start the app
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`App running on port ${port}...`);
+});
