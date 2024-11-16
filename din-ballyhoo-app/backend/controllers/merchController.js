@@ -8,7 +8,15 @@ app.use(express.json());
 // Get All Merch
 exports.getAllMerch = async (req, res) => {
     try {
-        const merch = await Merch.find();
+const queryObj = { ...req.query }; // Destructure the query object
+const excludedFields = ['page', 'sort', 'limit', 'fields']; // Define the fields to exclude from the query object
+excludedFields.forEach((el) => delete queryObj[el]); // Loop through the excluded fields and delete them from the query object
+
+console.log(req.query, queryObj);
+
+        const query = await Merch.find(queryObj);
+
+        const merch = await query;
         res.status(200).json({
             status: 'success',
             results: merch.length,
