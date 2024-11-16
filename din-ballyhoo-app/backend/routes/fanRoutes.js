@@ -4,6 +4,7 @@ const fanController = require('../controllers/fanController');
 const router = express.Router();
 
 router 
+    .route('/')
     .get(fanController.getAllFans)
     .post(fanController.createFan)
 
