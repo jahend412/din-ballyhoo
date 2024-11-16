@@ -4,6 +4,7 @@ const bandMemberController = require('../controllers/bandMemberController');
 const router = express.Router();
 
 router
+    .route('/')
     .get(bandMemberController.getAllBandMembers)
     .post(bandMemberController.createBandMember)
 
