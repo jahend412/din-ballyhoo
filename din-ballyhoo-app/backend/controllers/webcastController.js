@@ -1,14 +1,16 @@
 const Webcast = require('../models/webcastModel');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.getAllWebcasts = async (req, res) => {
     try {
-        const queryObj = { ...req.query }; // Destructure the query object
-        const excludedFields = ['page', 'sort', 'limit', 'fields']; // Define the fields to exclude from the query object
-        excludedFields.forEach((el) => delete queryObj[el]); // Loop through the excluded fields and delete them from the query object
+        // Execute the query
+        const features = new APIFeatures(Webcast.find(), req.query)
+            .filter()
+            .sort()
+            .limitFields()
+            .paginate();
 
-        const query = Webcast.find(queryObj);
-
-        const webcasts = await query;
+        const webcasts = await features.query;
         res.status(200).json({
             status: 'success',
             results: webcasts.length,
