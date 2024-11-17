@@ -3,7 +3,9 @@ const merchController = require('../controllers/merchController');
 
 const router = express.Router();
 
-
+router
+    .route('/top-5-merch')
+    .get(merchController.aliasTopMerch, merchController.getAllMerch);
 
 router
     .route('/')
