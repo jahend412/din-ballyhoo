@@ -1,14 +1,16 @@
 const Shows = require('../models/showModel');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.getAllShows = async (req, res) => {
     try {
-        const queryObj = { ...req.query }; // Destructure the query object
-        const excludedFields = ['page', 'sort', 'limit', 'fields']; // Define the fields to exclude from the query object
-        excludedFields.forEach((el) => delete queryObj[el]); // Loop through the excluded fields and delete them from the query object
+       const features = new APIFeatures(Shows.find(), req.query)
+            .filter()
+            .sort()
+            .limitFields()
+            .paginate();
 
-        const query = await Shows.find(queryObj);
-
-        const shows = await query;
+        const shows = await features.query;
+    
         res.status(200).json({
             status: 'success',
             results: shows.length,
