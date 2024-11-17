@@ -1,23 +1,17 @@
 const Album = require('../models/albumModel');
-const express = require('express');
-
-const app = express();
-
-app.use(express.json());
-
+const APIFeatures = require('../utils/apiFeatures');
 
 // Get All Albums
 exports.getAllAlbums = async (req, res) => {
     try {
-        const queryObj = { ...req.query }; // Destructure the query object
-        const excludedFields = ['page', 'sort', 'limit', 'fields']; // Define the fields to exclude from the query object
-        excludedFields.forEach((el) => delete queryObj[el]); // Loop through the excluded fields and delete them from the query object
+       // Execute Query
+        const features = new APIFeatures(Album.find(), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
 
-console.log(req.query, queryObj);
-
-        const query = Album.find(queryObj); // Fetch all albums from the database
-
-        const albums = await query; // Await the query
+        const albums = await features.query; // Await the query
         res.status(200).json({
             status: 'success',
             results: albums.length, // Include the number of results
