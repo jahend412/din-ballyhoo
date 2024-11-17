@@ -1,21 +1,17 @@
 const Track = require('../models/trackModel');
-const express = require('express');
-
-const app = express();
-
-app.use(express.json());
+const APIFeatures = require('../utils/apiFeatures');
 
 
 // Get All Tracks
 exports.getAllTracks = async (req, res) => {
     try {
-        const queryObj = { ...req.query }; // Destructure the query object
-        const excludedFields = ['page', 'sort', 'limit', 'fields']; // Define the fields to exclude from the query object
-        excludedFields.forEach((el) => delete queryObj[el]); // Loop through the excluded fields and delete them from the query object
+        const features = new APIFeatures(Tracks.find(), req.query) // Fetch all tracks from the database
+            .filter() // Filter the tracks
+            .sort() // Sort the tracks
+            .limitFields() // Limit the fields
+            .paginate(); // Paginate the tracks
 
-        const query = Track.find(queryObj); // Fetch all tracks from the database
-        
-        const tracks = await query; // Await the query
+        const tracks = await features.query; // Await the query
         res.status(200).json({
             status: 'success',
             results: tracks.length,
