@@ -7,6 +7,10 @@ router
     .route('/top-5-merch')
     .get(merchController.aliasTopMerch, merchController.getAllMerch);
 
+router 
+    .route('/merch-stats')
+    .get(merchController.getMerchStats);    
+
 router
     .route('/')
     .get(merchController.getAllMerch)
