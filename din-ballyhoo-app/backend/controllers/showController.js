@@ -28,13 +28,6 @@ exports.getAllShows = async (req, res) => {
 
 exports.createShow = async (req, res) => {
     try {
-        if (!req.body.name || !req.body.date) {
-            return res.status(400).json({
-                status: 'fail',
-                message: 'Missing required fields: name or date'
-            });
-        }
-
         const newShow = await Shows.create(req.body);
         res.status(201).json({
             status: 'success',
@@ -119,3 +112,4 @@ exports.deleteShow = async (req, res) => {
         });
     }
 };
+
