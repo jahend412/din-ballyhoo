@@ -104,3 +104,33 @@ exports.deleteMerch = async (req, res) => {
         });
     }
 }
+
+// Get Merch Stats
+exports.getMerchStats = async (req, res) => {
+    try {
+        const stats = await Merch.aggregate([
+            {
+                $match: { price: { $gte: 5 } }
+            },
+            {
+                $group: {
+                    _id: null, // Grouping everything together
+                    avgPrice: { $avg: '$price' },
+                    minPrice: { $min: '$price' },
+                    maxPrice: { $max: '$price' }
+                }
+            }
+        ]);
+        res.status(200).json({
+            status: 'success',
+            data: {
+                stats
+            }
+        });
+    } catch (err) {
+        res.status(404).json({
+            status: 'fail',
+            message: err.message // Provide the actual error message for debugging
+        });
+    }
+};
