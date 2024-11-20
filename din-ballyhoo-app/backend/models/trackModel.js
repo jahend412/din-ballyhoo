@@ -15,21 +15,25 @@ const trackSchema = new mongoose.Schema({
         ref: 'Album',
         required: false
     },
+    fileId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Track',
+    },
     duration: {
         type: Number,
-        required: [true, 'Duration is required']
+        
     },
     audioFile: {
         type: String, // URL to the audio file
-        required: [true, 'Audio file is required']
+    
     },
     coverImage: {
         type: String, 
-        required: [true, 'Cover image is required']
+      
     },
     trackNumber: {
         type: Number,
-        required: [true, 'Track number is required']
+       
     },
     songWriter: {
         type: String,
