@@ -25,7 +25,7 @@ const storage = new GridFsStorage({  // Create a new GridFS storage engine
         if (file.mimetype === 'audio/mpeg') {  // Accept only MP3 files
             return {
             bucketName: 'tracks', // Bucket name
-            filename: `track-${Date.now()-}${file.originalname}`,  // File name
+            filename: `track-${Date.now()}-${file.originalname}`,  // File name
         };
     }
     return null;  // Reject non-MP3 files
