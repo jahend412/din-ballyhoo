@@ -13,6 +13,14 @@ const webcastRoutes = require('./routes/webcastRoutes');
 
 const app = express();
 
+//  Error handling   * This is a catch-all route handler
+app.all('*', (req, res, next) => {
+    res.status(404).json({
+        status: 'fail',
+        message: `Can't find ${req.originalUrl} on this server!`
+    });
+});
+
 app.use(morgan('dev'));
 
 app.use(express.json());
