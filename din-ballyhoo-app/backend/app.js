@@ -2,6 +2,8 @@ const express = require('express');
 
 const morgan = require('morgan');
 
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
 const albumRoutes = require('./routes/albumRoutes');
 const bandMemberRoutes = require('./routes/bandMemberRoutes');
 const fanRoutes = require('./routes/fanRoutes');
@@ -13,17 +15,14 @@ const webcastRoutes = require('./routes/webcastRoutes');
 
 const app = express();
 
-//  Error handling   * This is a catch-all route handler
-app.all('*', (req, res, next) => {
-    res.status(404).json({
-        status: 'fail',
-        message: `Can't find ${req.originalUrl} on this server!`
-    });
-});
-
-app.use(morgan('dev'));
+// Middleware
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
 
 app.use(express.json());
+
+// Routes
 
 app.use('/api/v1/albums', albumRoutes);
 app.use('/api/v1/bandMembers', bandMemberRoutes);
@@ -33,5 +32,13 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/tracks', trackRoutes);
 app.use('/api/v1/shows', showRoutes);
 app.use('/api/v1/webcasts', webcastRoutes);
+
+// Error handling middleware
+app.all('*', (req, res, next) => {
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+// Global error handling middleware
+app.use(globalErrorHandler);
 
 module.exports = app;
