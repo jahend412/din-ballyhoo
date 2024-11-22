@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
 
+process.on('uncaughtException', err => {
+    console.log(err.name, err.message);
+    console.log('UNCAUGHT EXCEPTION! Shutting down...');
+      process.exit(1);
+});
+
 // Load environment variables FIRST
 const result = dotenv.config({ 
     path: path.resolve(__dirname, './config.env') 
@@ -32,13 +38,18 @@ mongoose.connect(DB, {
 
     // Start the app
     const port = process.env.PORT || 3000;
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
         console.log(`App running on port ${port}...`);
     });
 
     return conn;
-})
-.catch(err => {
-    console.error('Initialization error:', err);
-    process.exit(1);
 });
+
+process.on('unhandledRejection', err => {
+    console.log(err.name, err.message);
+    console.log('UNHANDLED REJECTION! Shutting down...');
+    server.close(() => {  // Always close the server like this!!!
+        process.exit(1);
+    });
+});
+
