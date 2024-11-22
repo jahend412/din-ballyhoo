@@ -1,8 +1,9 @@
 const Webcast = require('../models/webcastModel');
 const APIFeatures = require('../utils/apiFeatures');
+const catchAsync = require('../utils/catchAsync');
 
-exports.getAllWebcasts = async (req, res) => {
-    try {
+exports.getAllWebcasts = catchAsync(async (req, res, next) => {
+    
         // Execute the query
         const features = new APIFeatures(Webcast.find(), req.query)
             .filter()
@@ -18,16 +19,10 @@ exports.getAllWebcasts = async (req, res) => {
                 webcasts
             }
         });
-    } catch (err) {
-        res.status(500).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-}
+});
 
-exports.createWebcast = async (req, res) => {
-    try {
+exports.createWebcast = catchAsync(async (req, res, next) => {
+    
         const newWebcast = await Webcast.create(req.body);
         res.status(201).json({
             status: 'success',
@@ -35,16 +30,10 @@ exports.createWebcast = async (req, res) => {
                 webcast: newWebcast
             }
         });
-    } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-}
+});
 
-exports.getWebcastById = async (req, res) => {
-    try {
+exports.getWebcastById = catchAsync(async (req, res, next) => {
+    
         const webcast = await Webcast.findById(req.params.id);
         if (!webcast) {
             return res.status(404).json({
@@ -58,16 +47,10 @@ exports.getWebcastById = async (req, res) => {
                 webcast
             }
         });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-}
+});
 
-exports.updateWebcast = async (req, res) => {
-    try {
+exports.updateWebcast = catchAsync(async (req, res, next) => {
+    
         const webcast = await Webcast.findByIdAndUpdate
             (req.params.id, req.body, {
                 new: true,
@@ -85,26 +68,13 @@ exports.updateWebcast = async (req, res) => {
                 webcast
             }
         });
-    }
-    catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-}
+});
 
-exports.deleteWebcast = async (req, res) => {
-    try {
+exports.deleteWebcast = catchAsync(async (req, res, next) => {
+    
         await Webcast.findByIdAndDelete(req.params.id);
         res.status(204).json({
             status: 'success',
             data: null
         });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-}
+});

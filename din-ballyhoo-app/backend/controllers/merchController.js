@@ -1,5 +1,6 @@
 const Merch = require('../models/merchModel');
 const APIFeatures = require('../utils/apiFeatures');
+const catchAsync = require('../utils/catchAsync');
 
 exports.aliasTopMerch = (req, res, next) => {
     req.query.limit = '5';
@@ -9,8 +10,7 @@ exports.aliasTopMerch = (req, res, next) => {
 }
 
 // Get All Merch
-exports.getAllMerch = async (req, res) => {
-    try {
+exports.getAllMerch = catchAsync(async (req, res, next) => {
 
 // Execute Query
         const features = new APIFeatures(Merch.find(), req.query)
@@ -27,17 +27,11 @@ exports.getAllMerch = async (req, res) => {
                 merch
             }
         });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
-    }
-}
+});
 
 // Create New Merch
-exports.createMerch = async (req, res) => {
-    try {
+exports.createMerch = catchAsync(async (req, res, next) => {
+  
         const newMerch = await Merch.create(req.body);
         res.status(201).json({
             stauts: 'success',
@@ -45,17 +39,10 @@ exports.createMerch = async (req, res) => {
                 merch: newMerch
             }
         });
-    } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            message: err
-        });
-    }
-}
+});
 
 // Get Merch By ID
-exports.getMerchById = async (req, res) => {
-    try {
+exports.getMerchById = catchAsync(async (req, res, next) => {
         const merch = await Merch.findById(req.params.id);
         res.status(200).json({
             status: 'success',
@@ -63,16 +50,11 @@ exports.getMerchById = async (req, res) => {
                 merch
             }
         });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
-    }
-}  
+});
+
 // Update Merch
-exports.updateMerch = async (req, res) => {
-    try {
+exports.updateMerch = catchAsync(async (req, res, next) => {
+    
         const merch = await Merch.findByIdAndUpdate
         (req.body, req.params);
         res.status(200).json({
@@ -81,33 +63,21 @@ exports.updateMerch = async (req, res) => {
                 merch
             }
         });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
-    }
-}
+});
 
 // Delete Merch
-exports.deleteMerch = async (req, res) => {
-    try {
+exports.deleteMerch = catchAsync(async (req, res, next) => {
+    
         await Merch.findByIdAndDelete(req.params.id);
         res.status(204).json({
             status: 'success',
             data: null
         });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
-    }
-}
+});
 
 // Get Merch Stats
-exports.getMerchStats = async (req, res) => {
-    try {
+exports.getMerchStats = catchAsync(async (req, res, next) => {
+    
         const stats = await Merch.aggregate([
             {
                 $match: { price: { $gte: 5 } }
@@ -127,10 +97,4 @@ exports.getMerchStats = async (req, res) => {
                 stats
             }
         });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err.message // Provide the actual error message for debugging
-        });
-    }
-};
+});

@@ -1,8 +1,8 @@
 const Shows = require('../models/showModel');
 const APIFeatures = require('../utils/apiFeatures');
+const catchAsync = require('../utils/catchAsync');
 
-exports.getAllShows = async (req, res) => {
-    try {
+exports.getAllShows = catchAsync(async (req, res, next) => {
        const features = new APIFeatures(Shows.find(), req.query)
             .filter()
             .sort()
@@ -18,16 +18,9 @@ exports.getAllShows = async (req, res) => {
                 shows
             }
         });
-    } catch (err) {
-        res.status(500).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-};
+});
 
-exports.createShow = async (req, res) => {
-    try {
+exports.createShow = catchAsync(async (req, res, next) => {
         const newShow = await Shows.create(req.body);
         res.status(201).json({
             status: 'success',
@@ -35,16 +28,9 @@ exports.createShow = async (req, res) => {
                 show: newShow
             }
         });
-    } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-};
+});
 
-exports.getShowById = async (req, res) => {
-    try {
+exports.getShowById = catchAsync(async (req, res, next) => {
         const show = await Shows.findById(req.params.id);
         if (!show) {
             return res.status(404).json({
@@ -58,16 +44,9 @@ exports.getShowById = async (req, res) => {
                 show
             }
         });
-    } catch (err) {
-        res.status(500).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-};
+});
 
-exports.updateShow = async (req, res) => {
-    try {
+exports.updateShow = catchAsync(async (req, res, next) => {
         const show = await Shows.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true
@@ -84,16 +63,9 @@ exports.updateShow = async (req, res) => {
                 show
             }
         });
-    } catch (err) {
-        res.status(500).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-};
+});
 
-exports.deleteShow = async (req, res) => {
-    try {
+exports.deleteShow = catchAsync(async (req, res, next) => {
         const show = await Shows.findByIdAndDelete(req.params.id);
         if (!show) {
             return res.status(404).json({
@@ -105,11 +77,5 @@ exports.deleteShow = async (req, res) => {
             status: 'success',
             data: null
         });
-    } catch (err) {
-        res.status(500).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-};
+});
 

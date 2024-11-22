@@ -2,13 +2,14 @@ const Track = require('../models/trackModel');
 const APIFeatures = require('../utils/apiFeatures');
 const { gfs, storage } = require('../utils/multer');
 const multer = require('multer');
+const catchAsync = require('../utils/catchAsync');
 
 // Multer configuration
 const upload = multer({ storage });  // Initialize Multer with the GridFS storage engine
 
 // Upload Track
-exports.uploadTrack = async (req, res) => {
-    try {
+exports.uploadTrack = catchAsync(async (req, res, next) => {
+    
         // Check if it is an MP3 file
         if (!req.file) {
             return res.status(400).json({
@@ -35,18 +36,12 @@ exports.uploadTrack = async (req, res) => {
                 track: savedTrack
             }
         });
-    } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-};
+});
 
 
 // Get All Tracks
-exports.getAllTracks = async (req, res) => {
-    try {
+exports.getAllTracks = catchAsync(async (req, res, next) => {
+    
         const features = new APIFeatures(Tracks.find(), req.query) // Fetch all tracks from the database
             .filter() // Filter the tracks
             .sort() // Sort the tracks
@@ -61,17 +56,11 @@ exports.getAllTracks = async (req, res) => {
                 tracks
             }
         });
-    }   catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
-    }
-}
+});
 
 // get Track by Id
-exports.getTrackById = async (req, res) => {
-    try {
+exports.getTrackById = catchAsync(async (req, res, next) => {
+    
         // Fetch track metadata
         const track = await Track.findById(req.params.id)
         if (!track) {
@@ -87,19 +76,12 @@ exports.getTrackById = async (req, res) => {
                 track
             }
         });
-    }
-    catch (err) {
-        res.status(404).json({
-            status: 'error',
-            message: err.message,
-        });
-    }
-}
+});
 
 // Get Track Stream
 
-exports.streamTrackById = async (req, res) => {
-try {
+exports.streamTrackById = catchAsync(async (req, res, next) => {
+
         
     const track = await Track.findById(req.params.id); // Fetch track metadata
     if (!track) {
@@ -128,19 +110,13 @@ try {
             status: 'error',
             message: 'Error streaming track'
         });
-    });
-} catch (err) {
-    res.status(404).json({
-        status: 'error',
-        message: err.message,
-        });
-    }
-};
+    }); 
+});
 
 
 // Create Track
-exports.createTrack = async (req, res) => {
-    try {
+exports.createTrack = catchAsync(async (req, res, next) => {
+    
         const newTrack = await Track.create({
             title: req.body.title,
             artist: req.body.artist,  
@@ -153,17 +129,11 @@ exports.createTrack = async (req, res) => {
                 track: newTrack
             }
         });
-    } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            message: err.message
-        });
-    }
-}    
+}); 
 
 //update Track 
-exports.updateTrack = async (req, res) => {
-    try {
+exports.updateTrack = catchAsync(async (req, res, next) => {
+    
         const track = await Track.findByIdAndUpdate(req.params.id);
         res.status(200).json({
             status: 'success',
@@ -171,27 +141,14 @@ exports.updateTrack = async (req, res) => {
                 track
             }
         });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
-    }
-}
+});
 
 // Delete Track
-exports.deleteTrack = async (req, res) => {
-    try {
+exports.deleteTrack = catchAsync(async (req, res, next) => {
+    
         await Track.findByIdAndDelete(req.params.id);
         res.status(204).json({
             status: 'success',
             data: null
         });
-    }
-    catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
-    }
-}
+    });
