@@ -2,7 +2,11 @@ const express = require('express');
 const router = express.Router();
 const setupGridFsStorage = require('../utils/multer');
 
+const app = express();
 
+// Body parsing middleware MUST come before routes
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const upload = setupGridFsStorage();
 
@@ -23,7 +27,8 @@ router
     .route('/:id/stream', trackController.streamTrackById);
 
 
-    router.post('/upload', (req, res) => {
+    router
+        .post('/upload', (req, res) => {
         // Log incoming request details
         console.log('Upload Request Received:', {
             body: req.body,
