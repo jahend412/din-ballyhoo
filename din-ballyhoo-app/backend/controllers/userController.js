@@ -1,12 +1,13 @@
 const User = require('../models/userModel');
 const express = require('express');
+const catchAsync = require('../utils/catchAsync');
 
 const app = express();
 
 app.use(express.json());
 
-exports.getAllUsers = async (req, res) => {
-    try {
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+   
         const users = await User.find();
         res.status(200).json({
             status: 'success',
@@ -15,13 +16,7 @@ exports.getAllUsers = async (req, res) => {
                 users
             }
         });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
-    }
-}
+});
 
 exports.createUser = async (req, res) => {
     try {
