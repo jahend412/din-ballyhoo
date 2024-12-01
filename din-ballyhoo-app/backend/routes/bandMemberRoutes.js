@@ -4,14 +4,14 @@ const bandMemberController = require('../controllers/bandMemberController');
 const router = express.Router();
 
 router
-    .route('/')
-    .get(bandMemberController.getAllBandMembers)
-    .post(bandMemberController.createBandMember)
+  .route('/')
+  .get(bandMemberController.getAllBandMembers)
+  .post(bandMemberController.createBandMember);
 
 router
-    .route('/:id')
-    .get(bandMemberController.getBandMemberById)
-    .put(bandMemberController.updateBandMember)
-    .delete(bandMemberController.deleteBandMember);
+  .route('/:id')
+  .get(bandMemberController.getBandMemberById)
+  .put(bandMemberController.updateBandMember)
+  .delete(bandMemberController.deleteBandMember);
 
 module.exports = router;
