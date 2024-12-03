@@ -20,7 +20,8 @@ router
     authController.protect,
     authController.updatePassword
   )
-  .patch('/updateMe', authController.protect, userController.updateMe);
+  .patch('/updateMe', authController.protect, userController.updateMe)
+  .delete('/deleteMe', authController.protect, userController.deleteMe);
 
 router
   .post('/signup', authController.signup)
