@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -16,6 +17,8 @@ const webcastRoutes = require('./routes/webcastRoutes');
 const app = express();
 
 // 1. Global Middleware
+app.use(helmet()); // Helmet helps secure Express apps by setting various HTTP headers
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
