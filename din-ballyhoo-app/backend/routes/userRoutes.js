@@ -19,7 +19,8 @@ router
     '/updatePassword',
     authController.protect,
     authController.updatePassword
-  );
+  )
+  .patch('/updateMe', authController.protect, userController.updateMe);
 
 router
   .post('/signup', authController.signup)
