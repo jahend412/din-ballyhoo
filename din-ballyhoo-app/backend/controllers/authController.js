@@ -131,7 +131,7 @@ exports.restrictTo = (...roles) => {
 };
 
 // Forgot Password
-const forgotPassword = catchAsync(async (req, res, next) => {
+exports.forgotPassword = catchAsync(async (req, res, next) => {
   // Get user based on posted email
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
@@ -172,6 +172,7 @@ const forgotPassword = catchAsync(async (req, res, next) => {
 });
 
 // Reset Password
+
 // Get user based on the token
 // If token has not expired, and there is a user, set the new password
 // Update changedPasswordAt property for the user
