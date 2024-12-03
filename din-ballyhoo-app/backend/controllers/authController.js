@@ -4,6 +4,10 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const { promisify } = require('util');
 const exp = require('constants');
+const crypto = require('crypto');
+const sendEmail = require('../utils/sendEmail');
+
+// Signup
 
 const signToken = (id) => {
   return jwt({ id }, process.env.JWT_SECRET, {
@@ -127,9 +131,45 @@ exports.restrictTo = (...roles) => {
 };
 
 // Forgot Password
-// Get user based on posted email
-// Generate the random reset token
-// Send it to user's email
+const forgotPassword = catchAsync(async (req, res, next) => {
+  // Get user based on posted email
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new AppError('No user found with that email', 404));
+  }
+
+  // Generate the random reset token
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+
+  // Send the reset token to user's email
+  const resetUrl = `${req.protocol}://${req.get(
+    'host'
+  )}/api/v1/users/resetPassword/${resetToken}`;
+  const message = `You are receiving this email because you (or someone else) has requested a password reset. \n\nPlease click on the following link to reset your password: \n\n${resetUrl}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Your password reset token (valid for 10 minutes)',
+      message,
+    });
+    res.status(200).json({
+      status: 'success',
+      message: 'Token sent to email',
+    });
+  } catch (error) {
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(
+      new AppError(
+        'There was an error sending the email. Try again later!',
+        500
+      )
+    );
+  }
+});
 
 // Reset Password
 // Get user based on the token
