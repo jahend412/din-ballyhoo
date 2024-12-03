@@ -1,5 +1,6 @@
 const express = require('express');
 const userController = require('../controllers/userController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
@@ -11,6 +12,14 @@ router
 router
   .post('/forgotPassword', authController.forgotPassword)
   .post('/resetPassword/:token', authController.resetPassword);
+
+router
+  // Protect routes
+  .patch(
+    '/updatePassword',
+    authController.protect,
+    authController.updatePassword
+  );
 
 router
   .post('/signup', authController.signup)
