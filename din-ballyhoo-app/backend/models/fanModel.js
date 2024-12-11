@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('./userModel');
 
 const fanSchema = new mongoose.Schema({
   userId: {
@@ -59,6 +60,6 @@ const fanSchema = new mongoose.Schema({
   },
 });
 
-const Fan = mongoose.model('Fan', fanSchema);
+const Fan = User.discriminator('Fan', fanSchema);
 
 module.exports = Fan;
