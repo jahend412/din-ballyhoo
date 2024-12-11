@@ -1,18 +1,24 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  role: {
-    type: String,
-    enum: ['fan', 'band_member', 'admin'],
-    required: true,
+const userSchema = new mongoose.Schema(
+  {
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: {
+      type: String,
+      enum: ['fan', 'band_member', 'admin'],
+      required: true,
+    },
+    createdAt: { type: Date, default: Date.now },
+    passwordChangedAt: Date,
   },
-  createdAt: { type: Date, default: Date.now },
-  passwordChangedAt: Date,
-});
+  {
+    discriminatorKey: 'role', // Discriminator key for Mongoose
+    collection: 'users', // Shared collection for all user types
+  }
+);
 
 // Document Middleware
 userSchema.pre('save', async function (next) {
