@@ -11,4 +11,9 @@ router
   .get(ratingController.getAllRatings)
   .post(ratingController.createRating);
 
+router
+  .route('/:id')
+  .patch(ratingController.updateRating)
+  .delete(ratingController.deleteRating);
+
 module.exports = router;
