@@ -58,3 +58,36 @@ exports.getCommentsForEntity = async (req, res, next) => {
     },
   });
 };
+
+// Update a comment
+exports.updateComment = catchAsync(async (req, res, next) => {
+  const updatedComment = await Comment.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true, // Return the updated document
+      runValidators: true, // Ensure that validation runs on update
+    }
+  );
+
+  if (!updatedComment) {
+    return next(new AppError('No comment found with that ID', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      comment: updatedComment,
+    },
+  });
+});
+
+// Delete a comment
+exports.deleteComment = catchAsync(async (req, res, next) => {
+  await Comment.findByIdAndDelete(req.params.id);
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
