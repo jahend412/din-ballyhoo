@@ -1,0 +1,79 @@
+[
+  {
+    "title": "Band Logo T-Shirt",
+    "description": "Black cotton t-shirt with the band's logo printed on the front.",
+    "price": 25.99,
+    "quantity": 50,
+    "size": "M",
+    "color": "Black",
+    "category": "Clothing",
+    "stock": true,
+    "imageUrl": "https://example.com/images/logo-tshirt.jpg"
+  },
+  {
+    "title": "Signed Vinyl Album",
+    "description": "Limited edition vinyl album signed by all band members.",
+    "price": 49.99,
+    "quantity": 20,
+    "category": "Music",
+    "stock": true,
+    "imageUrl": "https://example.com/images/signed-vinyl.jpg"
+  },
+  {
+    "title": "Band Hoodie",
+    "description": "Warm and cozy hoodie with the band's logo on the chest.",
+    "price": 45.99,
+    "quantity": 30,
+    "size": "L",
+    "color": "Gray",
+    "category": "Clothing",
+    "stock": true,
+    "imageUrl": "https://example.com/images/band-hoodie.jpg"
+  },
+  {
+    "title": "Guitar Pick Set",
+    "description": "Set of 3 custom guitar picks featuring unique band artwork.",
+    "price": 9.99,
+    "quantity": 100,
+    "category": "Accessories",
+    "stock": true,
+    "imageUrl": "https://example.com/images/guitar-pick-set.jpg"
+  },
+  {
+    "title": "Tour Poster",
+    "description": "High-quality print of the band's latest tour poster.",
+    "price": 15.99,
+    "quantity": 40,
+    "category": "Posters",
+    "stock": true,
+    "imageUrl": "https://example.com/images/tour-poster.jpg"
+  },
+  {
+    "title": "Drumsticks",
+    "description": "Custom drumsticks engraved with the band's name.",
+    "price": 19.99,
+    "quantity": 25,
+    "category": "Accessories",
+    "stock": true,
+    "imageUrl": "https://example.com/images/custom-drumsticks.jpg"
+  },
+  {
+    "title": "Band Logo Cap",
+    "description": "Adjustable cap with an embroidered band logo.",
+    "price": 22.99,
+    "quantity": 60,
+    "color": "Black",
+    "category": "Clothing",
+    "stock": true,
+    "imageUrl": "https://example.com/images/band-logo-cap.jpg"
+  },
+  {
+    "title": "Limited Edition Box Set",
+    "description": "Exclusive box set including CDs, posters, and a photo book.",
+    "price": 99.99,
+    "quantity": 10,
+    "category": "Collectibles",
+    "stock": true,
+    "imageUrl": "https://example.com/images/box-set.jpg"
+  }
+]

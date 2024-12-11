@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Ballyhoo Nights",
+    "date": "2024-12-20",
+    "time": "19:30",
+    "venue": "The Echo Lounge",
+    "location": "Austin, TX",
+    "bands": ["Din Ballyhoo"],
+    "ticketPrice": 20.0,
+    "ticketsAvailable": 120,
+    "description": "Din Ballyhoo brings their signature sound to The Echo Lounge for a night to remember."
+  },
+  {
+    "title": "Din Ballyhoo Live",
+    "date": "2025-01-15",
+    "time": "20:00",
+    "venue": "The Roxy Theater",
+    "location": "Los Angeles, CA",
+    "bands": ["Din Ballyhoo"],
+    "ticketPrice": 25.0,
+    "ticketsAvailable": 200,
+    "description": "Experience Din Ballyhoo live at The Roxy Theater with an unforgettable performance."
+  },
+  {
+    "title": "Ballyhoo Unplugged",
+    "date": "2025-03-05",
+    "time": "19:00",
+    "venue": "The Acoustic Room",
+    "location": "Nashville, TN",
+    "bands": ["Din Ballyhoo"],
+    "ticketPrice": 30.0,
+    "ticketsAvailable": 100,
+    "description": "A rare acoustic set from Din Ballyhoo at The Acoustic Room. Intimate and captivating."
+  },
+  {
+    "title": "Moose Rock Revival",
+    "date": "2024-12-10",
+    "time": "20:00",
+    "venue": "The Underground",
+    "location": "Denver, CO",
+    "bands": ["Moose"],
+    "ticketPrice": 28.0,
+    "ticketsAvailable": 150,
+    "description": "Moose is bringing back the classic rock vibes at The Underground. Don’t miss it!"
+  },
+  {
+    "title": "Moose on the Loose",
+    "date": "2025-02-25",
+    "time": "21:00",
+    "venue": "Red Moon Tavern",
+    "location": "Chicago, IL",
+    "bands": ["Moose"],
+    "ticketPrice": 35.0,
+    "ticketsAvailable": 180,
+    "description": "Catch Moose tearing up the stage at the Red Moon Tavern for an electrifying show!"
+  }
+]

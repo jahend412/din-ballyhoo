@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Admin User",
+    "email": "admin@bandsite.com",
+    "password": "admin123",
+    "role": "admin",
+    "bio": "I oversee the entire site and manage content.",
+    "profilePicture": "https://example.com/images/admin.jpg"
+  },
+  {
+    "name": "John Doe",
+    "email": "john@bandsite.com",
+    "password": "bandmember1",
+    "role": "band-member",
+    "bio": "Lead guitarist and songwriter of the band.",
+    "profilePicture": "https://example.com/images/john.jpg",
+    "socialLinks": {
+      "instagram": "https://instagram.com/johndoe",
+      "twitter": "https://twitter.com/johndoe"
+    }
+  },
+  {
+    "name": "Jane Smith",
+    "email": "jane@bandsite.com",
+    "password": "bandmember2",
+    "role": "band-member",
+    "bio": "Drummer and backup vocalist.",
+    "profilePicture": "https://example.com/images/jane.jpg",
+    "socialLinks": {
+      "instagram": "https://instagram.com/janesmith"
+    }
+  },
+  {
+    "name": "Mark Johnson",
+    "email": "mark@bandsite.com",
+    "password": "bandmember3",
+    "role": "band-member",
+    "bio": "Bass guitarist and music producer.",
+    "profilePicture": "https://example.com/images/mark.jpg",
+    "socialLinks": {
+      "facebook": "https://facebook.com/markjohnson"
+    }
+  },
+  {
+    "name": "Alice Brown",
+    "email": "alice@bandsite.com",
+    "password": "fanpassword1",
+    "role": "fan",
+    "bio": "Biggest fan of the band, loves attending live shows.",
+    "profilePicture": "https://example.com/images/alice.jpg"
+  },
+  {
+    "name": "Bob Green",
+    "email": "bob@bandsite.com",
+    "password": "fanpassword2",
+    "role": "fan",
+    "bio": "Collector of rare band merch and albums.",
+    "profilePicture": "https://example.com/images/bob.jpg"
+  },
+  {
+    "name": "Cathy Blue",
+    "email": "cathy@bandsite.com",
+    "password": "fanpassword3",
+    "role": "fan",
+    "bio": "Loves writing reviews for albums and tracks.",
+    "profilePicture": "https://example.com/images/cathy.jpg"
+  },
+  {
+    "name": "Dave White",
+    "email": "dave@bandsite.com",
+    "password": "fanpassword4",
+    "role": "fan",
+    "bio": "Enjoys sharing the band's music with friends.",
+    "profilePicture": "https://example.com/images/dave.jpg"
+  },
+  {
+    "name": "Eve Black",
+    "email": "eve@bandsite.com",
+    "password": "fanpassword5",
+    "role": "fan",
+    "bio": "Always the first to comment on new releases.",
+    "profilePicture": "https://example.com/images/eve.jpg"
+  },
+  {
+    "name": "Frank Yellow",
+    "email": "frank@bandsite.com",
+    "password": "fanpassword6",
+    "role": "fan",
+    "bio": "Dreams of meeting the band in person one day.",
+    "profilePicture": "https://example.com/images/frank.jpg"
+  }
+]
