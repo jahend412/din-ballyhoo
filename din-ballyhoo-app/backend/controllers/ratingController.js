@@ -64,3 +64,32 @@ exports.getRatingsForEntity = async (req, res, next) => {
     },
   });
 };
+
+// Update a rating
+exports.updateRating = catchAsync(async (req, res, next) => {
+  const updatedRating = await Rating.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      rating: updatedRating,
+    },
+  });
+});
+
+// Delete a rating
+exports.deleteRating = catchAsync(async (req, res, next) => {
+  await Rating.findByIdAndDelete(req.params.id);
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
