@@ -56,3 +56,23 @@ exports.removeFromFavorites = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+// Get All favorites
+exports.getFavorites = catchAsync(async (req, res, next) => {
+  const favorites = await Favorites.findOne({ user: req.user.id })
+    .populate('tracks')
+    .populate('albums')
+    .populate('shows')
+    .populate('webcasts');
+
+  if (!favorites) {
+    return next(new AppError('No favorites found for this user', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      favorites,
+    },
+  });
+});
