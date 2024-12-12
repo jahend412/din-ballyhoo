@@ -54,7 +54,7 @@ exports.getRatingsForEntity = async (req, res, next) => {
   if (entityType === 'show') filter.show = entityId;
   if (entityType === 'webcast') filter.webcast = entityId;
 
-  const ratings = await Rating(find(filter));
+  const ratings = await Rating.find(filter);
 
   res.status(200).json({
     status: 'success',
