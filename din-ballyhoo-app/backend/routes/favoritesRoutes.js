@@ -8,7 +8,7 @@ Router.use(AuthController.protect);
 
 Router.route('/')
   .get(FavoritesController.getFavorites)
-  .post(FavoritesController.addToFavorite)
+  .post(FavoritesController.addToFavorites)
   .delete(FavoritesController.removeFromFavorites);
 
 module.exports = Router;
