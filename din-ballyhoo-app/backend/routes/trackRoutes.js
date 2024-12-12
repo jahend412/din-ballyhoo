@@ -20,7 +20,7 @@ router
 router
   .route('/:id')
   .get(trackController.getTrackById)
-  .put(trackController.updateTrack)
+  .patch(trackController.updateTrack)
   .delete(trackController.deleteTrack);
 
 router.route('/:id/stream', trackController.streamTrackById);

@@ -11,7 +11,7 @@ router
 router
   .route('/:id')
   .get(bandMemberController.getBandMemberById)
-  .put(bandMemberController.updateBandMember)
+  .patch(bandMemberController.updateBandMember)
   .delete(bandMemberController.deleteBandMember);
 
 module.exports = router;

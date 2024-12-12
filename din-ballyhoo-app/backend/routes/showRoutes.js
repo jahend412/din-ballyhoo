@@ -11,7 +11,7 @@ router
 router
   .route('/:id')
   .get(showController.getShowById)
-  .put(showController.updateShow)
+  .patch(showController.updateShow)
   .delete(showController.deleteShow);
 
 module.exports = router;

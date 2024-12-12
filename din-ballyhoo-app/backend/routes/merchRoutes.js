@@ -17,7 +17,7 @@ router
 router
   .route('/:id')
   .get(merchController.getMerchById)
-  .put(merchController.updateMerch)
+  .patch(merchController.updateMerch)
   .delete(merchController.deleteMerch);
 
 module.exports = router;
