@@ -29,3 +29,30 @@ exports.addToFavorites = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+// Remove from favorites
+exports.removeFromFavorites = catchAsync(async (req, res, next) => {
+  const { type, itemId } = req.body; // Type: track, album, show, webcast; itemId: ID of the item to remove from favorites
+
+  if (!['track', 'album', 'show', 'webcast'].includes(type)) {
+    return next(new AppError('Invalid type', 400));
+  }
+
+  const favorites = await Favorites.findOne({ fan: req.user.id });
+  if (!favoites) {
+    return next(new AppError('No favorites found for this user', 404));
+  }
+
+  // Remove the item from the appropriate array
+  favorites[type + 's'] = favorites[type + 's'].filter(
+    (id) => id.toString() !== itemId
+  );
+  await favorites.save();
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      favorites,
+    },
+  });
+});
