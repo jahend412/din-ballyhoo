@@ -9,8 +9,8 @@ const hpp = require('hpp');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const albumRoutes = require('./routes/albumRoutes');
-const bandMemberRoutes = require('./routes/bandMemberRoutes');
-const fanRoutes = require('./routes/fanRoutes');
+// const bandMemberRoutes = require('./routes/bandMemberRoutes');
+// const fanRoutes = require('./routes/fanRoutes');
 const merchRoutes = require('./routes/merchRoutes');
 const userRoutes = require('./routes/userRoutes');
 const trackRoutes = require('./routes/trackRoutes');
@@ -64,8 +64,8 @@ app.use((req, res, next) => {
 // Routes
 
 app.use('/api/v1/albums', albumRoutes);
-app.use('/api/v1/bandMembers', bandMemberRoutes);
-app.use('/api/v1/fans', fanRoutes);
+// app.use('/api/v1/bandMembers', bandMemberRoutes);
+// app.use('/api/v1/fans', fanRoutes);
 app.use('/api/v1/merch', merchRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/tracks', trackRoutes);
