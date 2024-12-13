@@ -1,24 +1,51 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const validator = require('validator');
 
-const userSchema = new mongoose.Schema(
-  {
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: {
-      type: String,
-      enum: ['fan', 'band_member', 'admin'],
-      required: true,
-    },
-    createdAt: { type: Date, default: Date.now },
-    passwordChangedAt: Date,
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Please tell us your name!'],
   },
-  {
-    discriminatorKey: 'role', // Discriminator key for Mongoose
-    collection: 'users', // Shared collection for all user types
-  }
-);
+  email: {
+    type: String,
+    required: [true, 'Please provide your email'],
+    unique: true,
+    lowercase: true,
+    validate: [validator.isEmail, 'Please provide a valid email'],
+  },
+  photo: String,
+  role: {
+    type: String,
+    enum: ['user', 'bandMember', 'fan', 'admin'],
+    default: 'user',
+  },
+  password: {
+    type: String,
+    required: [true, 'Please provide a password'],
+    minlength: 8,
+    select: false, // This hides the password
+  },
+  passwordConfirm: {
+    type: String,
+    required: [true, 'Please confirm your password'],
+    validate: {
+      // This only works on SAVE!!!
+      validator: function (el) {
+        return el === this.password;
+      },
+      message: 'Passwords are not the same!',
+    },
+  },
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false, // This hides the active field
+  },
+});
 
 // Document Middleware
 userSchema.pre('save', async function (next) {
