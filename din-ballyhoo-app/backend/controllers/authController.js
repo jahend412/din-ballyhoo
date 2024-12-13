@@ -10,7 +10,7 @@ const sendEmail = require('../utils/sendEmail');
 // Signup
 
 const signToken = (id) => {
-  return jwt({ id }, process.env.JWT_SECRET, {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
@@ -46,6 +46,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
+    role: req.body.role,
   });
 
   createSendToken(newUser, 201, res);
