@@ -48,7 +48,7 @@ exports.getCommentsForEntity = async (req, res, next) => {
   if (entityType === 'show') filter.show = entityId;
   if (entityType === 'webcast') filter.webcast = entityId;
 
-  const comments = await Comment.find(filter).populate('user', 'username');
+  const comments = await Comment.find(filter).populate('user', 'name');
 
   res.status(200).json({
     status: 'success',
