@@ -1,6 +1,7 @@
 const Merch = require('../models/merchModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
+const factory = require('./handlerFactory');
 
 exports.aliasTopMerch = (req, res, next) => {
   req.query.limit = '5';
@@ -9,66 +10,12 @@ exports.aliasTopMerch = (req, res, next) => {
   next();
 };
 
-// Get All Merch
-exports.getAllMerch = catchAsync(async (req, res, next) => {
-  // Execute Query
-  const features = new APIFeatures(Merch.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-
-  const merch = await features.query;
-  res.status(200).json({
-    status: 'success',
-    results: merch.length,
-    data: {
-      merch,
-    },
-  });
-});
-
-// Create New Merch
-exports.createMerch = catchAsync(async (req, res, next) => {
-  const newMerch = await Merch.create(req.body);
-  res.status(201).json({
-    stauts: 'success',
-    data: {
-      merch: newMerch,
-    },
-  });
-});
-
-// Get Merch By ID
-exports.getMerchById = catchAsync(async (req, res, next) => {
-  const merch = await Merch.findById(req.params.id);
-  res.status(200).json({
-    status: 'success',
-    data: {
-      merch,
-    },
-  });
-});
-
-// Update Merch
-exports.updateMerch = catchAsync(async (req, res, next) => {
-  const merch = await Merch.findByIdAndUpdate(req.body, req.params);
-  res.status(200).json({
-    status: 'success',
-    data: {
-      merch,
-    },
-  });
-});
-
-// Delete Merch
-exports.deleteMerch = catchAsync(async (req, res, next) => {
-  await Merch.findByIdAndDelete(req.params.id);
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-});
+// Route Handlers
+exports.getAllMerch = factory.getAll(Merch);
+exports.getMerch = factory.getOne(Merch);
+exports.createMerch = factory.createOne(Merch);
+exports.updateMerch = factory.updateOne(Merch);
+exports.deleteMerch = factory.deleteOne(Merch);
 
 // Get Merch Stats
 exports.getMerchStats = catchAsync(async (req, res, next) => {
