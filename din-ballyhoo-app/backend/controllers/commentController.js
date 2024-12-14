@@ -77,26 +77,35 @@ exports.getCommentsForEntity = async (req, res, next) => {
 
   // Dynamically create a filter based on entityType and entityId
   const filter = {};
+
+  // Ensure you're filtering for the correct entity type and entity ID
   if (entityType === 'track') filter.track = entityId;
   if (entityType === 'album') filter.album = entityId;
   if (entityType === 'show') filter.show = entityId;
   if (entityType === 'webcast') filter.webcast = entityId;
+  if (entityType === 'merch') filter.merch = entityId; // Explicit filter for 'merch'
 
-  // Fetch top-level comments (comments with no parentComment) and populate user & replies
-  const comments = await Comment.find({ ...filter, parentComment: null })
-    .populate('user', 'name') // Populate the user who posted the comment
-    .populate({
-      path: 'replies', // Populate the replies field
-      populate: { path: 'user', select: 'name' }, // Also populate user data for replies
+  console.log('Filter:', filter); // Debugging the filter
+
+  try {
+    // Fetch top-level comments (comments with no parentComment) and populate user & replies
+    const comments = await Comment.find({ ...filter, parentComment: null })
+      .populate('user', 'name') // Populate the user who posted the comment
+      .populate({
+        path: 'replies', // Populate the replies field
+        populate: { path: 'user', select: 'name' }, // Populate user data for replies
+      });
+
+    res.status(200).json({
+      status: 'success',
+      results: comments.length,
+      data: {
+        comments,
+      },
     });
-
-  res.status(200).json({
-    status: 'success',
-    results: comments.length,
-    data: {
-      comments,
-    },
-  });
+  } catch (err) {
+    next(err);
+  }
 };
 
 // Update a comment
