@@ -20,14 +20,23 @@ exports.setCommentEntity = (req, res, next) => {
   next();
 };
 
-// Create a comment
 exports.createComment = catchAsync(async (req, res) => {
-  const { comment } = req.body;
+  const { comment, parentComment } = req.body; // Parent comment is optional
 
+  // Ensure parentComment exists in the database if provided
+  if (parentComment) {
+    const existingComment = await Comment.findById(parentComment);
+    if (!existingComment) {
+      return next(new AppError('Parent comment not found', 404));
+    }
+  }
+
+  // Create a new comment
   const newComment = await Comment.create({
-    comment: req.body.comment,
+    comment,
     user: req.user.id,
-    [req.params.entityType]: req.params.entityId, // Automatically include the entity reference
+    parentComment: parentComment || null, // Include parentComment if it's a reply
+    [req.params.entityType]: req.params.entityId, // Dynamically reference an entity
   });
 
   res.status(201).json({
@@ -38,17 +47,23 @@ exports.createComment = catchAsync(async (req, res) => {
   });
 });
 
-// Get comment by entity
 exports.getCommentsForEntity = async (req, res, next) => {
   const { entityId, entityType } = req.params;
 
+  // Dynamically create a filter based on entityType and entityId
   const filter = {};
   if (entityType === 'track') filter.track = entityId;
   if (entityType === 'album') filter.album = entityId;
   if (entityType === 'show') filter.show = entityId;
   if (entityType === 'webcast') filter.webcast = entityId;
 
-  const comments = await Comment.find(filter).populate('user', 'name');
+  // Fetch top-level comments (comments with no parentComment) and populate user & replies
+  const comments = await Comment.find({ ...filter, parentComment: null })
+    .populate('user', 'name') // Populate the user who posted the comment
+    .populate({
+      path: 'replies', // Populate the replies field
+      populate: { path: 'user', select: 'name' }, // Also populate user data for replies
+    });
 
   res.status(200).json({
     status: 'success',
