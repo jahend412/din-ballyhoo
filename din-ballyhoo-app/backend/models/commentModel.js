@@ -34,6 +34,17 @@ const commentSchema = new mongoose.Schema({
     ref: 'Webcast',
     required: [true, 'Comment must belong to a webcast'],
   },
+  parentComment: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment', // References another comment
+    default: null,
+  },
+});
+
+commentSchema.virtual('replies', {
+  ref: 'Comment',
+  localField: '_id',
+  foreignField: 'parentComment',
 });
 
 const Comment = mongoose.model('Comment', commentSchema);
