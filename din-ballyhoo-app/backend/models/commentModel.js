@@ -34,6 +34,11 @@ const commentSchema = new mongoose.Schema({
     ref: 'Webcast',
     required: false,
   },
+  merch: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Merch',
+    required: false,
+  },
   parentComment: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment',
