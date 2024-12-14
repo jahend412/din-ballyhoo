@@ -56,6 +56,12 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+// Permissions Middleware
+userSchema.virtual('permissions').get(function () {
+  const permissions = require('./permissions');
+  return permissions[this.role] || [];
+});
+
 // Instance Method to compare password
 userSchema.methods.correctPassword = async function (
   candidatePassword,
