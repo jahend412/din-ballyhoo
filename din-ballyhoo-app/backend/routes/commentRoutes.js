@@ -7,6 +7,9 @@ const router = express.Router();
 // Protect all routes below this middleware
 router.use(authController.protect);
 
+// Get all comments from all entities (albums, tracks, merch, etc.)
+router.route('/comments').get(commentController.getAllComments);
+
 // Routes for creating, getting, updating, and deleting comments
 router
   .route('/:entityType/:entityId')
