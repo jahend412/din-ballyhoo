@@ -19,7 +19,7 @@ const albumSchema = new mongoose.Schema({
   },
   coverImage: {
     type: String,
-    required: [true, 'Cover image is required'],
+    required: false,
   },
   tracks: [
     {
