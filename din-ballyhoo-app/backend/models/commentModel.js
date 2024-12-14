@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema({
-  commment: {
+  comment: {
     type: String,
     required: [true, 'Comment is required'],
   },
@@ -17,26 +17,26 @@ const commentSchema = new mongoose.Schema({
   track: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Track',
-    required: [true, 'Comment must belong to a track'],
+    required: false,
   },
   album: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Album',
-    required: [true, 'Comment must belong to an album'],
+    required: false,
   },
   show: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Show',
-    required: [true, 'Comment must belong to a show'],
+    required: false,
   },
   webcast: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Webcast',
-    required: [true, 'Comment must belong to a webcast'],
+    required: false,
   },
   parentComment: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Comment', // References another comment
+    ref: 'Comment',
     default: null,
   },
 });
