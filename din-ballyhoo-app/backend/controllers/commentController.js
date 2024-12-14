@@ -20,6 +20,31 @@ exports.setCommentEntity = (req, res, next) => {
   next();
 };
 
+exports.getAllComments = async (req, res, next) => {
+  try {
+    // Fetch all comments from the database, without filtering by entity type
+    const comments = await Comment.find({})
+      .populate('user', 'name')
+      .populate({
+        path: 'replies',
+        populate: {
+          path: 'user',
+          select: 'name',
+        },
+      });
+
+    res.status(200).json({
+      status: 'success',
+      results: comments.length,
+      data: {
+        comments,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.createComment = catchAsync(async (req, res, next) => {
   const { comment, parentComment } = req.body; // parentComment is optional for replies
 
