@@ -9,7 +9,7 @@ router
 
 router
   .route('/:id') // Specify the path for operations on a specific album by ID
-  .get(albumController.getAlbumById) // Get a specific album by ID
+  .get(albumController.getAlbum) // Get a specific album by ID
   .patch(albumController.updateAlbum) // Update album by ID
   .delete(albumController.deleteAlbum); // Delete album by ID
 
