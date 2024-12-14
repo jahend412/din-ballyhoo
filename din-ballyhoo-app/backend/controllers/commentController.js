@@ -2,7 +2,6 @@ const Comment = require('../models/commentModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
-// Set Comment Entity Middleware
 exports.setCommentEntity = (req, res, next) => {
   const { entityId, entityType } = req.params;
 
@@ -12,6 +11,7 @@ exports.setCommentEntity = (req, res, next) => {
     return next(new AppError('Invalid entity type', 400));
   }
 
+  // Dynamically set the entity in the request body
   if (entityType === 'track') req.body.track = entityId;
   if (entityType === 'album') req.body.album = entityId;
   if (entityType === 'show') req.body.show = entityId;
@@ -20,10 +20,10 @@ exports.setCommentEntity = (req, res, next) => {
   next();
 };
 
-exports.createComment = catchAsync(async (req, res) => {
-  const { comment, parentComment } = req.body; // Parent comment is optional
+exports.createComment = catchAsync(async (req, res, next) => {
+  const { comment, parentComment } = req.body; // parentComment is optional for replies
 
-  // Ensure parentComment exists in the database if provided
+  // If a parentComment is provided, validate that it exists
   if (parentComment) {
     const existingComment = await Comment.findById(parentComment);
     if (!existingComment) {
@@ -31,12 +31,12 @@ exports.createComment = catchAsync(async (req, res) => {
     }
   }
 
-  // Create a new comment
+  // Dynamically set the entity (track, album, show, or webcast) based on the entity type
   const newComment = await Comment.create({
     comment,
     user: req.user.id,
     parentComment: parentComment || null, // Include parentComment if it's a reply
-    [req.params.entityType]: req.params.entityId, // Dynamically reference an entity
+    [req.params.entityType]: req.params.entityId, // Dynamically set the entity field (track, album, etc.)
   });
 
   res.status(201).json({
