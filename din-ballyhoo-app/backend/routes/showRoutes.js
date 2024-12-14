@@ -10,7 +10,7 @@ router
 
 router
   .route('/:id')
-  .get(showController.getShowById)
+  .get(showController.getShow)
   .patch(showController.updateShow)
   .delete(showController.deleteShow);
 
