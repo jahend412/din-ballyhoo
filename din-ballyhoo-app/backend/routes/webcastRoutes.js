@@ -10,7 +10,7 @@ router.get('/', webcastController.getAllWebcasts);
 router.post('/', webcastController.createWebcast);
 
 // GET a single webcast by ID
-router.get('/:id', webcastController.getWebcastById);
+router.get('/:id', webcastController.getWebcast);
 
 // PUT (update) a webcast by ID
 router.put('/:id', webcastController.updateWebcast);
