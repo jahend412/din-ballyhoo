@@ -19,7 +19,7 @@ router
 
 router
   .route('/:id')
-  .get(trackController.getTrackById)
+  .get(trackController.getTrack)
   .patch(trackController.updateTrack)
   .delete(trackController.deleteTrack);
 

@@ -3,6 +3,13 @@ const APIFeatures = require('../utils/apiFeatures');
 const { gfs, storage } = require('../utils/multer');
 const multer = require('multer');
 const catchAsync = require('../utils/catchAsync');
+const factory = require('./handlerFactory');
+
+exports.getAllTracks = factory.getAll(Track);
+exports.getTrack = factory.getOne(Track);
+exports.createTrack = factory.createOne(Track);
+exports.updateTrack = factory.updateOne(Track);
+exports.deleteTrack = factory.deleteOne(Track);
 
 // Multer configuration
 const upload = multer({ storage }); // Initialize Multer with the GridFS storage engine
@@ -37,43 +44,6 @@ exports.uploadTrack = catchAsync(async (req, res, next) => {
   });
 });
 
-// Get All Tracks
-exports.getAllTracks = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Tracks.find(), req.query) // Fetch all tracks from the database
-    .filter() // Filter the tracks
-    .sort() // Sort the tracks
-    .limitFields() // Limit the fields
-    .paginate(); // Paginate the tracks
-
-  const tracks = await features.query; // Await the query
-  res.status(200).json({
-    status: 'success',
-    results: tracks.length,
-    data: {
-      tracks,
-    },
-  });
-});
-
-// get Track by Id
-exports.getTrackById = catchAsync(async (req, res, next) => {
-  // Fetch track metadata
-  const track = await Track.findById(req.params.id);
-  if (!track) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'No track found with that ID',
-    });
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      track,
-    },
-  });
-});
-
 // Get Track Stream
 
 exports.streamTrackById = catchAsync(async (req, res, next) => {
@@ -104,41 +74,5 @@ exports.streamTrackById = catchAsync(async (req, res, next) => {
       status: 'error',
       message: 'Error streaming track',
     });
-  });
-});
-
-// Create Track
-exports.createTrack = catchAsync(async (req, res, next) => {
-  const newTrack = await Track.create({
-    title: req.body.title,
-    artist: req.body.artist,
-    album: req.body.album,
-    fileId: req.file.id, // Save the file ID from GridFS
-  });
-  res.status(201).json({
-    status: 'success',
-    data: {
-      track: newTrack,
-    },
-  });
-});
-
-//update Track
-exports.updateTrack = catchAsync(async (req, res, next) => {
-  const track = await Track.findByIdAndUpdate(req.params.id);
-  res.status(200).json({
-    status: 'success',
-    data: {
-      track,
-    },
-  });
-});
-
-// Delete Track
-exports.deleteTrack = catchAsync(async (req, res, next) => {
-  await Track.findByIdAndDelete(req.params.id);
-  res.status(204).json({
-    status: 'success',
-    data: null,
   });
 });
