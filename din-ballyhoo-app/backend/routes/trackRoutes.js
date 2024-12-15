@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const setupGridFsStorage = require('../utils/multer');
+const authController = require('../controllers/authController');
+const checkPermissions = require('../middleware/permissionsMiddleware');
 
 const app = express();
+
+router.use(authController.protect);
 
 // Body parsing middleware MUST come before routes
 app.use(express.json());
@@ -14,18 +18,18 @@ const trackController = require('../controllers/trackController');
 
 router
   .route('/')
-  .get(trackController.getAllTracks)
-  .post(trackController.createTrack);
+  .get(checkPermissions('view-track'), trackController.getAllTracks)
+  .post(checkPermissions(''), trackController.createTrack);
 
 router
   .route('/:id')
-  .get(trackController.getTrack)
-  .patch(trackController.updateTrack)
-  .delete(trackController.deleteTrack);
+  .get(checkPermissions('view-track'), trackController.getTrack)
+  .patch(checkPermissions('edit-track'), trackController.updateTrack)
+  .delete(checkPermissions('delete-track'), trackController.deleteTrack);
 
 router.route('/:id/stream', trackController.streamTrackById);
 
-router.post('/upload', (req, res) => {
+router.post('/upload', checkPermissions('upload-track'), (req, res) => {
   // Log incoming request details
   console.log('Upload Request Received:', {
     body: req.body,
