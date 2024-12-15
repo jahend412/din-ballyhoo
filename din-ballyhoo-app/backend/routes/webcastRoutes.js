@@ -1,21 +1,21 @@
 const express = require('express');
 const webcastController = require('../controllers/webcastController');
+const authController = require('../controllers/authController');
+const checkPermissions = require('../middleware/permissionsMiddleware');
 
 const router = express.Router();
 
 // GET all webcasts
-router.get('/', webcastController.getAllWebcasts);
+router
+  .route('/')
+  .get(checkPermissions('view-webcast'), webcastController.getAllWebcasts)
+  .post(checkPermissions('create-webcast'), webcastController.createWebcast);
 
-// POST a new webcast
-router.post('/', webcastController.createWebcast);
-
-// GET a single webcast by ID
-router.get('/:id', webcastController.getWebcast);
-
-// PUT (update) a webcast by ID
-router.put('/:id', webcastController.updateWebcast);
-
-// DELETE a webcast by ID
-router.delete('/:id', webcastController.deleteWebcast);
+// GET, PATCH, DELETE a specific webcast by ID
+router
+  .route('/:id')
+  .get(checkPermissions('view-webcast'), webcastController.getWebcast)
+  .patch(checkPermissions('edit-webcast'), webcastController.updateWebcast)
+  .delete(checkPermissions('delete-webcast'), webcastController.deleteWebcast);
 
 module.exports = router;
