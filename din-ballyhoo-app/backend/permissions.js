@@ -49,6 +49,20 @@ const permissions = {
   'donate-content': 'Allows donating to content creators',
   'download-content': 'Allows downloading tracks or albums',
   'view-dashboard': 'Allows viewing the admin or band member dashboard',
+
+  // User Management
+  'create-user': 'Allows creating a new user',
+  'view-user': 'Allows viewing user details',
+  'view-users': 'Allows viewing all users',
+  'update-user': 'Allows updating user details',
+  'delete-user': 'Allows deleting a user',
+  'update-password': 'Allows updating their own password',
+  'delete-own-account': 'Allows users to delete their own account',
+  'reset-password': 'Allows resetting passwords',
+  'forgot-password': 'Allows initiating a forgot password flow',
+
+  // Profile Management
+  'update-profile': 'Allows updating their own profile',
 };
 
 module.exports = permissions;
