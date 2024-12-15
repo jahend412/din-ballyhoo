@@ -1,27 +1,54 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const checkPermissions = require('../middleware/permissionsMiddleware');
 
 const router = express.Router();
 
 router
   .route('/')
-  .get(userController.getAllUsers)
-  .post(userController.createUser);
+  .get(
+    authController.protect,
+    checkPermissions('view-users'),
+    userController.getAllUsers
+  )
+  .post(
+    authController.protect,
+    checkPermissions('create-user'),
+    userController.createUser
+  );
 
 router
-  .post('/forgotPassword', authController.forgotPassword)
-  .post('/resetPassword/:token', authController.resetPassword);
+  .post(
+    '/forgotPassword',
+    checkPermissions('forgot-password'),
+    authController.forgotPassword
+  )
+  .post(
+    '/resetPassword/:token',
+    checkPermissions('reset-password'),
+    authController.resetPassword
+  );
 
 router
-  // Protect routes
   .patch(
     '/updatePassword',
     authController.protect,
+    checkPermissions('update-password'),
     authController.updatePassword
   )
-  .patch('/updateMe', authController.protect, userController.updateMe)
-  .delete('/deleteMe', authController.protect, userController.deleteMe);
+  .patch(
+    '/updateMe',
+    authController.protect,
+    checkPermissions('update-profile'),
+    userController.updateMe
+  )
+  .delete(
+    '/deleteMe',
+    authController.protect,
+    checkPermissions('delete-profile'),
+    userController.deleteMe
+  );
 
 router
   .post('/signup', authController.signup)
@@ -29,8 +56,16 @@ router
 
 router
   .route('/:id')
-  .get(userController.getUser)
-  //.patch(userController.updateUser)
-  .delete(userController.deleteUser);
+  .get(
+    authController.protect,
+    checkPermissions('view-user'),
+    userController.getUser
+  )
+  //.patch(authController.protect, checkPermissions('edit-user'), userController.updateUser)
+  .delete(
+    authController.protect,
+    checkPermissions('delete-user'),
+    userController.deleteUser
+  );
 
 module.exports = router;
