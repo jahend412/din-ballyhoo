@@ -8,6 +8,7 @@ const roles = {
     permissions['donate-content'],
     permissions['view-track'],
     permissions['view-album'],
+    permissions['view-albums'],
     permissions['view-show'],
     permissions['view-merch'],
     permissions['view-webcast'],
