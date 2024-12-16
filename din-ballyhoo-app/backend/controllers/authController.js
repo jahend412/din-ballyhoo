@@ -6,6 +6,7 @@ const { promisify } = require('util');
 const exp = require('constants');
 const crypto = require('crypto');
 const sendEmail = require('../utils/sendEmail');
+const roles = require('../config/roles');
 
 // Signup
 
@@ -35,18 +36,23 @@ const createSendToken = (user, statusCode, res) => {
     status: 'success',
     token,
     data: {
-      user,
+      user: {
+        ...user.toObject(),
+        permissions: roles[user.role], // Send permissions separately
+      },
     },
   });
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  const { name, email, password, passwordConfirm, role } = req.body;
+
   const newUser = await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
-    role: req.body.role,
+    name,
+    email,
+    password,
+    passwordConfirm,
+    role, // Role determines permissions dynamically
   });
 
   createSendToken(newUser, 201, res);
@@ -87,14 +93,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   // 2) Verification token
-  const decoded = await promisify(jwt.verify)(
-    token,
-    process.env.JWT_SECRET,
-    (err, decoded) => {
-      if (err) throw err;
-      return next(new AppError('Token is invalid', 401));
-    }
-  );
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
