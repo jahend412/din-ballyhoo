@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema({
   photo: String,
   role: {
     type: String,
-    enum: ['user', 'bandMember', 'fan', 'admin'],
-    default: 'user',
+    enum: ['bandMember', 'fan', 'admin'],
+    default: 'fan',
   },
   password: {
     type: String,
@@ -58,8 +58,8 @@ userSchema.pre('save', async function (next) {
 
 // Permissions Middleware
 userSchema.virtual('permissions').get(function () {
-  const permissions = require('./permissions');
-  return permissions[this.role] || [];
+  const roles = require('../config/roles');
+  return roles[this.role] || [];
 });
 
 // Instance Method to compare password
