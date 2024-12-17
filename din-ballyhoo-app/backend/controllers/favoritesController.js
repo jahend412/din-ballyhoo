@@ -10,6 +10,27 @@ exports.addToFavorites = catchAsync(async (req, res, next) => {
     return next(new AppError('Invalid type', 400));
   }
 
+  //Validate that the item exists
+  let item;
+  switch (type) {
+    case 'track':
+      item = await Track.findById(itemId);
+      break;
+    case 'album':
+      item = await Album.findById(itemId);
+      break;
+    case 'show':
+      item = await Show.findById(itemId);
+      break;
+    case 'webcast':
+      item = await Webcast.findById(itemId);
+      break;
+  }
+
+  if (!item) {
+    return next(newAppError('Item not found', 404));
+  }
+
   // Find or create the favorites document for the fan
   let favorites = await Favorites.findOne({ user: req.user.id });
   if (!favorites) {
@@ -24,6 +45,7 @@ exports.addToFavorites = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    message: `${type} added to favorites`,
     data: {
       favorites,
     },
@@ -39,7 +61,7 @@ exports.removeFromFavorites = catchAsync(async (req, res, next) => {
   }
 
   const favorites = await Favorites.findOne({ fan: req.user.id });
-  if (!favoites) {
+  if (!favorites) {
     return next(new AppError('No favorites found for this user', 404));
   }
 
