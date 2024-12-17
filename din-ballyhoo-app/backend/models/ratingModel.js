@@ -1,43 +1,22 @@
 const mongoose = require('mongoose');
 
-const ratingSchema = new mongoose.Schema({
-  rating: {
-    type: Number,
-    min: 1,
-    max: 5,
-    required: [true, 'Rating is required'],
+const ratingSchema = new mongoose.Schema(
+  {
+    rating: { type: Number, required: true, min: 1, max: 5 },
+    fan: { type: mongoose.Schema.Types.ObjectId, ref: 'Fan', required: true },
+    track: { type: mongoose.Schema.Types.ObjectId, ref: 'Track' },
+    album: { type: mongoose.Schema.Types.ObjectId, ref: 'Album' },
+    show: { type: mongoose.Schema.Types.ObjectId, ref: 'Show' },
+    webcast: { type: mongoose.Schema.Types.ObjectId, ref: 'Webcast' },
   },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: [true, 'Rating must belong to a user'],
-  },
-  track: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Track',
-    required: [true, 'Rating must belong to a track'],
-  },
-  album: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Album',
-    required: [true, 'Rating must belong to an album'],
-  },
-  show: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Show',
-    required: [true, 'Rating must belong to a show'],
-  },
-  webcast: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Webcast',
-    required: [true, 'Rating must belong to a webcast'],
-  },
-});
+  { timestamps: true }
+);
+
+// Ensure that a user can only rate each entity once
+ratingSchema.index({ fan: 1, track: 1 }, { unique: true });
+ratingSchema.index({ fan: 1, album: 1 }, { unique: true });
+ratingSchema.index({ fan: 1, show: 1 }, { unique: true });
+ratingSchema.index({ fan: 1, webcast: 1 }, { unique: true });
 
 const Rating = mongoose.model('Rating', ratingSchema);
-
 module.exports = Rating;
