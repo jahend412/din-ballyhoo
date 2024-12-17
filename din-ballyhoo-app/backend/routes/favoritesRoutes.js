@@ -6,8 +6,9 @@ const Router = Express.Router();
 
 Router.use(AuthController.protect);
 
-Router.route('/')
-  .get(FavoritesController.getFavorites)
+Router.route('/').get(FavoritesController.getFavorites);
+
+Router.route('/:itemType/:itemId')
   .post(FavoritesController.addToFavorites)
   .delete(FavoritesController.removeFromFavorites);
 
