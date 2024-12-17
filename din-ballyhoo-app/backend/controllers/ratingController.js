@@ -29,6 +29,16 @@ exports.createRating = catchAsync(async (req, res, next) => {
     return next(new AppError('Entity type and entity ID are required', 400));
   }
 
+  // Check if the user has already rated this entity
+  const existingRating = await Rating.findOne({
+    user: req.user.id,
+    [entityType]: entityId,
+  });
+
+  if (existingRating) {
+    return next(new AppError('You have already rated this item', 400));
+  }
+
   // Create a new rating
   const newRating = await Rating.create({
     rating: req.body.rating,
