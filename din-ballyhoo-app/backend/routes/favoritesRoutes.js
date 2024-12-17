@@ -8,7 +8,7 @@ Router.use(AuthController.protect);
 
 Router.route('/').get(FavoritesController.getFavorites);
 
-Router.route('/:itemType/:itemId')
+Router.route('/:type/:itemId')
   .post(FavoritesController.addToFavorites)
   .delete(FavoritesController.removeFromFavorites);
 
