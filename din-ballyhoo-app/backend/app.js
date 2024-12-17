@@ -10,6 +10,7 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const albumRoutes = require('./routes/albumRoutes');
 const commentRoutes = require('./routes/commentRoutes');
+const favoritesRoutes = require('./routes/favoritesRoutes');
 // const bandMemberRoutes = require('./routes/bandMemberRoutes');
 // const fanRoutes = require('./routes/fanRoutes');
 const merchRoutes = require('./routes/merchRoutes');
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/albums', albumRoutes);
 app.use('/api/v1/comments', commentRoutes);
+app.use('/api/v1/favorites', favoritesRoutes);
 // app.use('/api/v1/bandMembers', bandMemberRoutes);
 // app.use('/api/v1/fans', fanRoutes);
 app.use('/api/v1/merch', merchRoutes);
