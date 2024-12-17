@@ -1,16 +1,23 @@
 const Favorites = require('../models/favoritesModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const Track = require('../models/trackModel'); // Assuming you have models for these
+const Album = require('../models/albumModel');
+const Show = require('../models/showModel');
+const Webcast = require('../models/webcastModel');
 
 // Add to favorites
 exports.addToFavorites = catchAsync(async (req, res, next) => {
-  const { type, itemId } = req.body; // Type: track, album, show, webcast; itemId: ID of the item to add to favorites
+  const { type, itemId } = req.params; // Get type and itemId from URL params
 
+  console.log('Type:', type); // Debugging
+
+  // Ensure that the type is valid
   if (!['track', 'album', 'show', 'webcast'].includes(type)) {
     return next(new AppError('Invalid type', 400));
   }
 
-  //Validate that the item exists
+  // Validate that the item exists
   let item;
   switch (type) {
     case 'track':
@@ -25,19 +32,21 @@ exports.addToFavorites = catchAsync(async (req, res, next) => {
     case 'webcast':
       item = await Webcast.findById(itemId);
       break;
+    default:
+      return next(new AppError('Invalid type', 400));
   }
 
   if (!item) {
-    return next(newAppError('Item not found', 404));
+    return next(new AppError('Item not found', 404));
   }
 
-  // Find or create the favorites document for the fan
-  let favorites = await Favorites.findOne({ user: req.user.id });
+  // Find or create the favorites document for the user
+  let favorites = await Favorites.findOne({ fan: req.user.id });
   if (!favorites) {
-    favorites = await Favorites.create({ user: req.user.id });
+    favorites = await Favorites.create({ fan: req.user.id });
   }
 
-  // Add the item to the appropriate array
+  // Add the item to the appropriate favorites array if not already there
   if (!favorites[type + 's'].includes(itemId)) {
     favorites[type + 's'].push(itemId);
     await favorites.save();
@@ -54,7 +63,7 @@ exports.addToFavorites = catchAsync(async (req, res, next) => {
 
 // Remove from favorites
 exports.removeFromFavorites = catchAsync(async (req, res, next) => {
-  const { type, itemId } = req.body; // Type: track, album, show, webcast; itemId: ID of the item to remove from favorites
+  const { type, itemId } = req.params; // Type: track, album, show, webcast; itemId: ID of the item to remove from favorites
 
   if (!['track', 'album', 'show', 'webcast'].includes(type)) {
     return next(new AppError('Invalid type', 400));
@@ -81,7 +90,7 @@ exports.removeFromFavorites = catchAsync(async (req, res, next) => {
 
 // Get All favorites
 exports.getFavorites = catchAsync(async (req, res, next) => {
-  const favorites = await Favorites.findOne({ user: req.user.id })
+  const favorites = await Favorites.findOne({ fan: req.user.id })
     .populate('tracks')
     .populate('albums')
     .populate('shows')
