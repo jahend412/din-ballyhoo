@@ -37,6 +37,11 @@ const merchSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  rating: {
+    type: Number,
+    min: 0,
+    max: 5,
+  },
 });
 
 const Merch = mongoose.model('Merch', merchSchema);

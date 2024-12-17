@@ -32,6 +32,11 @@ const albumSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  rating: {
+    type: Number,
+    min: 0,
+    max: 5,
+  },
 });
 
 const Album = mongoose.model('Album', albumSchema);

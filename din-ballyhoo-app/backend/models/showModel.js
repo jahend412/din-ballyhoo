@@ -31,6 +31,11 @@ const showSchema = new mongoose.Schema({
   imageUrl: {
     type: String,
   },
+  rating: {
+    type: Number,
+    min: 0,
+    max: 5,
+  },
 });
 
 const Show = mongoose.model('Show', showSchema);

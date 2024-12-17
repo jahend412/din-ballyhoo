@@ -50,6 +50,11 @@ const trackSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  rating: {
+    type: Number,
+    min: 0,
+    max: 5,
+  },
 });
 
 const Track = mongoose.model('Track', trackSchema);

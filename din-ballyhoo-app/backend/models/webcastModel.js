@@ -60,6 +60,11 @@ const webcastSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  rating: {
+    type: Number,
+    min: 0,
+    max: 5,
+  },
 });
 
 const webcast = mongoose.model('Webcast', webcastSchema);
