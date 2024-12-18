@@ -36,7 +36,22 @@ const showSchema = new mongoose.Schema({
     min: 0,
     max: 5,
   },
+  favorites: {
+    type: Number,
+    default: 0,
+  },
 });
+
+// Virtual field for ratings
+showSchema.virtual('ratings', {
+  ref: 'Rating', // Name of the Rating model
+  foreignField: 'show', // Field in Rating that links to Show
+  localField: '_id', // Field in Show that links to Rating
+});
+
+// Ensure virtual fields are included in JSON responses
+showSchema.set('toJSON', { virtuals: true });
+showSchema.set('toObject', { virtuals: true });
 
 const Show = mongoose.model('Show', showSchema);
 module.exports = Show;
