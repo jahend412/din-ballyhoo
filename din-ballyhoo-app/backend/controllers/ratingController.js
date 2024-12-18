@@ -1,50 +1,44 @@
 const Rating = require('../models/ratingModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const mongoose = require('mongoose');
 
 // set Rating Entity Middleware
 exports.setRatingEntity = (req, res, next) => {
   const { entityId, entityType } = req.params;
 
-  if (entityType === 'track') req.body.track = entityId;
-  if (entityType === 'album') req.body.album = entityId;
-  if (entityType === 'show') req.body.show = entityId;
-  if (entityType === 'webcast') req.body.webcast = entityId;
+  const trimmedEntityId = entityId.trim();
+  if (!mongoose.Types.ObjectId.isValid(trimmedEntityId)) {
+    return next(new AppError('Invalid ID format', 400));
+  }
+
+  if (entityType === 'track') req.body.track = trimmedEntityId;
+  if (entityType === 'album') req.body.album = trimmedEntityId;
+  if (entityType === 'show') req.body.show = trimmedEntityId;
+  if (entityType === 'webcast') req.body.webcast = trimmedEntityId;
 
   next();
 };
 
 // Create a rating
 exports.createRating = catchAsync(async (req, res, next) => {
-  const { rating } = req.body;
-  const { entityId, entityType } = req.params;
+  console.log('Creating a rating with req.body:', req.body);
+  console.log('Logged-in user:', req.user);
 
-  // Validate that rating is within an acceptable range (1-5)
+  const { rating } = req.body;
+
   if (rating < 1 || rating > 5) {
     return next(new AppError('Rating must be between 1 and 5', 400));
   }
 
-  // Ensure entityType an entityId are provided
-  if (!entityType || !entityId) {
-    return next(new AppError('Entity type and entity ID are required', 400));
-  }
-
-  // Check if the user has already rated this entity
-  const existingRating = await Rating.findOne({
-    user: req.user.id,
-    [entityType]: entityId,
-  });
-
-  if (existingRating) {
-    return next(new AppError('You have already rated this item', 400));
-  }
-
-  // Create a new rating
+  const { entityType } = req.params;
   const newRating = await Rating.create({
-    rating: req.body.rating,
-    user: req.user.id,
-    [req.params.entityType]: req.params.entityId, // Automatically include the entity reference
+    rating,
+    fan: req.user.id,
+    [entityType]: req.body[entityType], // Dynamically assign based on entityType
   });
+
+  console.log('Created rating:', newRating);
 
   res.status(201).json({
     status: 'success',
