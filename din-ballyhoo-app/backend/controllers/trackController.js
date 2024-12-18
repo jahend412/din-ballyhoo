@@ -6,7 +6,16 @@ const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
 exports.getAllTracks = factory.getAll(Track);
-exports.getTrack = factory.getOne(Track);
+exports.getTrack = factory.getOne(Track, [
+  {
+    path: 'ratings', // Virtual field for ratings
+    select: 'rating fan createdAt', // Only include these fields in the populated ratings
+  },
+  {
+    path: 'favorites', // Virtual field for favorites
+    select: 'fan createdAt', // Only include these fields in the populated favorites
+  },
+]);
 exports.createTrack = factory.createOne(Track);
 exports.updateTrack = factory.updateOne(Track);
 exports.deleteTrack = factory.deleteOne(Track);
