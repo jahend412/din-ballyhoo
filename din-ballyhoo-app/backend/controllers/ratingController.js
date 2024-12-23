@@ -22,23 +22,35 @@ exports.setRatingEntity = (req, res, next) => {
 
 // Create a rating
 exports.createRating = catchAsync(async (req, res, next) => {
-  console.log('Creating a rating with req.body:', req.body);
-  console.log('Logged-in user:', req.user);
-
   const { rating } = req.body;
+  const { entityId, entityType } = req.params;
 
+  // Validate that rating is within an acceptable range (1-5)
   if (rating < 1 || rating > 5) {
     return next(new AppError('Rating must be between 1 and 5', 400));
   }
 
-  const { entityType } = req.params;
-  const newRating = await Rating.create({
-    rating,
-    fan: req.user.id,
-    [entityType]: req.body[entityType], // Dynamically assign based on entityType
+  // Ensure entityType an entityId are provided
+  if (!entityType || !entityId) {
+    return next(new AppError('Entity type and entity ID are required', 400));
+  }
+
+  // Check if the user has already rated this entity
+  const existingRating = await Rating.findOne({
+    user: req.user.id,
+    [entityType]: entityId,
   });
 
-  console.log('Created rating:', newRating);
+  if (existingRating) {
+    return next(new AppError('You have already rated this item', 400));
+  }
+
+  // Create a new rating
+  const newRating = await Rating.create({
+    rating: req.body.rating,
+    fan: req.user.id,
+    [req.params.entityType]: req.params.entityId, // Automatically include the entity reference
+  });
 
   res.status(201).json({
     status: 'success',

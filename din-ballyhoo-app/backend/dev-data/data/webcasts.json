@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Live Stream 1: Din Ballyhoo Concert",
+    "description": "A live stream of Din Ballyhoo's first concert of the year, featuring their latest album.",
+    "date": "2024-12-15T20:00:00.000Z",
+    "location": "Los Angeles, CA",
+    "imageUrl": "https://example.com/webcast-image1.jpg",
+    "videoUrl": "https://example.com/video/webcast1",
+    "setlist": "Track 1, Track 2, Track 3, Track 4, Track 5",
+    "guestArtists": "John Doe, Jane Smith",
+    "viewCount": 1200,
+    "likes": 350,
+    "createdAt": "2024-12-14T10:00:00.000Z",
+    "downloadLink": "https://example.com/download/webcast1",
+    "donateLing": "https://example.com/donate"
+  },
+  {
+    "title": "Webcast: Din Ballyhoo Live at the Arena",
+    "description": "Watch the entire live concert performance at the Arena, featuring fan-favorite songs.",
+    "date": "2024-12-20T19:30:00.000Z",
+    "location": "New York, NY",
+    "imageUrl": "https://example.com/webcast-image2.jpg",
+    "videoUrl": "https://example.com/video/webcast2",
+    "setlist": "Track A, Track B, Track C, Track D, Track E",
+    "guestArtists": "None",
+    "viewCount": 800,
+    "likes": 150,
+    "createdAt": "2024-12-16T14:00:00.000Z",
+    "downloadLink": "https://example.com/download/webcast2",
+    "donateLing": "https://example.com/donate"
+  },
+  {
+    "title": "Exclusive Webcast: Behind the Scenes with Din Ballyhoo",
+    "description": "Get an exclusive behind-the-scenes look at Din Ballyhoo's creative process and rehearsals.",
+    "date": "2024-12-22T17:00:00.000Z",
+    "location": "San Francisco, CA",
+    "imageUrl": "https://example.com/webcast-image3.jpg",
+    "videoUrl": "https://example.com/video/webcast3",
+    "setlist": "None (Behind the scenes footage)",
+    "guestArtists": "None",
+    "viewCount": 500,
+    "likes": 200,
+    "createdAt": "2024-12-18T09:00:00.000Z",
+    "downloadLink": "https://example.com/download/webcast3",
+    "donateLing": "https://example.com/donate"
+  }
+]
