@@ -9,7 +9,8 @@ export default function Home() {
       <p>Welcome to the Ballyhoo App</p>
 
       <p>
-        <Link href="/about">About</Link>
+        <Link href="/login">Login</Link>
+        <Link href="/signup">Signup</Link>
       </p>
     </main>
   );
