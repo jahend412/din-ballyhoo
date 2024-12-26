@@ -1,17 +1,24 @@
 import Link from "next/link";
-import Header from "@/components/Header";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <main>
-      <Header />
-      <h1>Home</h1>
-      <p>Welcome to the Ballyhoo App</p>
-
-      <p>
-        <Link href="/login">Login</Link>
-        <Link href="/signup">Signup</Link>
-      </p>
+    <main className="home-container">
+      <Image
+        className="home-logo"
+        src="/logo.png"
+        alt="Ballyhoo App"
+        layout="fill"
+        objectFit="contain"
+      />
+      <div className="home-links">
+        <Link href="/login" className="home-link">
+          Log In
+        </Link>
+        <Link href="/signup" className="home-link">
+          Sign Up
+        </Link>
+      </div>
     </main>
   );
 }
