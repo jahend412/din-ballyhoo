@@ -4,12 +4,13 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
+  --hover-text: #ff0000;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #050505;
     --foreground: #ededed;
   }
 }
@@ -18,4 +19,53 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Main container styling */
+.home-container {
+  position: relative;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Push links to the bottom */
+  align-items: center; /* Center links horizontally */
+}
+
+/* Image styling */
+.home-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Send the image to the background */
+}
+
+/* Links container */
+.home-links {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 5rem; /* Space between links */
+  margin-bottom: 2rem; /* Add some spacing from the bottom */
+}
+
+/* Styling for the Link elements */
+.home-link {
+  text-decoration: none;
+  color: var(--foreground);
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  border-radius: 5px; /* Optional rounded corners */
+  transition: background-color 0.3s, color 0.3s;
+  background-color: rgba(0, 0, 0, 0.7);
+  cursor: pointer; /* Change cursor to pointer */
+  display: inline-block; /* Ensure block behavior for padding and hover */
+}
+
+/* Hover effect for links */
+.home-link:hover {
+  background-color: var(--hover-text); /* Change background on hover */
+  color: var(--background); /* Change text color on hover */
 }
