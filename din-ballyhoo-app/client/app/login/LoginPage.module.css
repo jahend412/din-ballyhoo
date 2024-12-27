@@ -1,0 +1,90 @@
+/* Container for the login page */
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000000; /* Light background */
+  font-family: Arial, sans-serif;
+}
+
+/* Login form styling */
+.loginForm {
+  background: #000000;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Form heading */
+.loginForm h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.form-logo {
+}
+/* Grouping for input and labels */
+.inputGroup {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+/* Label styling */
+.inputGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Input fields */
+.inputGroup input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.inputGroup input:focus {
+  border-color: #0077ff; /* Highlight color */
+}
+
+/* Submit button */
+.submitButton {
+  background-color: #0077ff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.submitButton:hover {
+  background-color: #0056cc; /* Darker blue on hover */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+  .loginForm {
+    padding: 1.5rem;
+  }
+
+  .loginForm h2 {
+    font-size: 1.25rem;
+  }
+
+  .submitButton {
+    font-size: 0.9rem;
+  }
+}
