@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
+const cors = require('cors');
+const express = require('express');
+
+const app = express();
 
 process.on('uncaughtException', (err) => {
   console.log(err.name, err.message);
@@ -38,13 +42,25 @@ mongoose
     console.log('MongoDB Connected');
 
     // Start the app
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT || 8080;
     const server = app.listen(port, () => {
       console.log(`App running on port ${port}...`);
     });
 
     return conn;
   });
+
+// Enable CORS
+app.use(cors());
+
+// Enable CORS for development
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+);
 
 process.on('unhandledRejection', (err) => {
   console.log(err.name, err.message);
