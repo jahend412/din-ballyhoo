@@ -13,21 +13,25 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
+
     try {
-      const response = await fetch("/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post("/api/v1/users/login", {
+        email,
+        password,
       });
 
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
-      const data = await response.json();
-      console.log(data);
+      setSuccess("Login successful!");
+      console.log(response.data);
     } catch (error) {
+      const errorMessage = error.response?.data?.message || "Login failed";
+      setError(errorMessage);
       console.error("Error:", error);
     }
   };
@@ -38,8 +42,8 @@ export default function LoginPage() {
       <div className={styles.loginContainer}>
         <form onSubmit={handleSubmit} className={styles.loginForm}>
           <h2>Login</h2>
-          {error && <p className="styles.error">{error}</p>}
-          {success && <p className="styles.success">{success}</p>}
+          {error && <p className={styles.error}>{error}</p>}
+          {success && <p className={styles.success}>{success}</p>}
           <div className={styles.inputGroup}>
             <label htmlFor="email">Email</label>
             <input
