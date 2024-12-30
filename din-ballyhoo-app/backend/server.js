@@ -3,15 +3,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const cors = require('cors');
 const express = require('express');
-
-const app = express();
-
-process.on('uncaughtException', (err) => {
-  console.log(err.name, err.message);
-  console.log('UNCAUGHT EXCEPTION! Shutting down...');
-  process.exit(1);
-});
-
+const setupGridFsStorage = require('./utils/multer');
 // Load environment variables FIRST
 const result = dotenv.config({
   path: path.resolve(__dirname, './config.env'),
@@ -23,8 +15,16 @@ if (result.error) {
   throw new Error('Unable to load environment variables');
 }
 
-const setupGridFsStorage = require('./utils/multer');
 const app = require('./app');
+// Enable CORS
+app.use(
+  cors({
+    origin: 'http://localhost:3000', // Your frontend origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
+    allowedHeaders: ['Content-Type'], // Allowed headers
+    credentials: true, // Allow credentials (cookies, auth headers)
+  })
+);
 
 // Construct the MongoDB URI
 const DB = process.env.DATABASE.replace(
@@ -50,17 +50,12 @@ mongoose
     return conn;
   });
 
-// Enable CORS
-app.use(cors());
-
-// Enable CORS for development
-app.use(
-  cors({
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-  })
-);
+// Middleware
+process.on('uncaughtException', (err) => {
+  console.log(err.name, err.message);
+  console.log('UNCAUGHT EXCEPTION! Shutting down...');
+  process.exit(1);
+});
 
 process.on('unhandledRejection', (err) => {
   console.log(err.name, err.message);
