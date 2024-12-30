@@ -3,16 +3,33 @@
 import { useState } from "react";
 import styles from "./LoginPage.module.css";
 import Header from "@/components/Header";
+import axios from "axios";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Add your login logic here
+    try {
+      const response = await fetch("/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -21,6 +38,8 @@ export default function LoginPage() {
       <div className={styles.loginContainer}>
         <form onSubmit={handleSubmit} className={styles.loginForm}>
           <h2>Login</h2>
+          {error && <p className="styles.error">{error}</p>}
+          {success && <p className="styles.success">{success}</p>}
           <div className={styles.inputGroup}>
             <label htmlFor="email">Email</label>
             <input
