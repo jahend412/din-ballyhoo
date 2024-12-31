@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./Header.module.css";
 
-export default function Header() {
+export default function Header({ user }) {
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
