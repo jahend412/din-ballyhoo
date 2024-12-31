@@ -9,6 +9,12 @@ export default function Header() {
       </div>
       <h1 className={styles.title}>Din Ballyhoo </h1>
       <nav className={styles.navLinks}>
+        <Link href={"/profile/${userId}"} className={styles.navLink}>
+          Welcome, {user.name}!
+        </Link>
+        <Link href="/logout" className={styles.navLink}>
+          Logout
+        </Link>
         <Link href="/" className={styles.navLink}>
           Home
         </Link>
