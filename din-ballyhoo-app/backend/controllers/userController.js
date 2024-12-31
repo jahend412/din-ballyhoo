@@ -44,6 +44,8 @@ exports.createUser = catchAsync(async (req, res) => {
 });
 
 exports.getUser = catchAsync(async (req, res) => {
+  console.log('User ID from URL:', req.params.id);
+
   const user = await User.findById(req.params.id);
   res.status(200).json({
     status: 'success',
