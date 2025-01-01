@@ -1,0 +1,79 @@
+/* Main container */
+.termsContainer {
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+/* Logo container */
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+/* Logo styles */
+.logo {
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Title styles */
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 0.5rem;
+}
+
+/* Last updated text */
+.lastUpdated {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #ccc;
+}
+
+/* Section container */
+.section {
+  margin-bottom: 2rem;
+}
+
+/* Section title */
+.sectionTitle {
+  font-size: 1.5rem;
+  color: #f0a500;
+  margin-bottom: 0.5rem;
+}
+
+/* Section text */
+.sectionText {
+  font-size: 1rem;
+  color: #fff;
+  margin: 0.5rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .termsContainer {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+
+  .sectionText {
+    font-size: 0.9rem;
+  }
+}
