@@ -1,0 +1,52 @@
+.privacy-policy-container {
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+.privacy-policy-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 0.5rem;
+}
+
+.privacy-policy-intro {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.privacy-policy-section {
+  margin-bottom: 1.5rem;
+}
+
+.privacy-policy-heading {
+  font-size: 1.5rem;
+  color: #f0a500;
+  margin-bottom: 0.5rem;
+}
+
+.privacy-policy-list {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.privacy-policy-item {
+  margin-bottom: 0.5rem;
+}
+
+.privacy-policy-text {
+  margin-bottom: 1rem;
+}
+
+.privacy-policy-footer {
+  font-size: 1rem;
+  margin-top: 2rem;
+  color: #ff0000;
+}
