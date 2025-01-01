@@ -5,6 +5,7 @@ import styles from "./SignupPage.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Link from "next/link";
 
 export default function SignupPage() {
   const [name, setName] = useState("");
@@ -112,7 +113,8 @@ export default function SignupPage() {
           <button type="submit" className={styles.submitButton}>
             Sign In
           </button>
-          <a href="/terms">Terms & Conditions</a> <br />
+          <Link href="/terms">Terms & Conditions</Link>
+          <br />
           <a href="/privacy">Privacy Policy</a>
           <p className={styles.signupLink}>
             Do you already have an account? <a href="/signup">Sign in</a>
