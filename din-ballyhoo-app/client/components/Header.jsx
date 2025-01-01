@@ -4,9 +4,6 @@ import styles from "./Header.module.css";
 export default function Header({ user }) {
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>
-        <img src="/logo1.png" alt="Ballyhoo App" width="100" height="100" />
-      </div>
       <h1 className={styles.title}>Din Ballyhoo </h1>
       <nav className={styles.navLinks}>
         <Link href={"/profile/${userId}"} className={styles.navLink}>
@@ -15,14 +12,23 @@ export default function Header({ user }) {
         <Link href="/logout" className={styles.navLink}>
           Logout
         </Link>
-        <Link href="/" className={styles.navLink}>
-          Home
+        <Link href="/news" className={styles.navLink}>
+          News
+        </Link>
+        <Link href="/shows" className={styles.navLink}>
+          Shows
+        </Link>
+        <Link href="/albums" className={styles.navLink}>
+          Albums
+        </Link>
+        <Link href="/webcasts" className={styles.navLink}>
+          Webcast
         </Link>
         <Link href="/about" className={styles.navLink}>
           About
         </Link>
-        <Link href="/contact" className={styles.navLink}>
-          Contact
+        <Link href="/merch" className={styles.navLink}>
+          Store
         </Link>
       </nav>
     </header>
