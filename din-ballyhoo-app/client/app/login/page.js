@@ -5,6 +5,7 @@ import styles from "./LoginPage.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -113,7 +114,7 @@ export default function LoginPage() {
           <button type="submit" className={styles.submitButton}>
             Login
           </button>
-          <a href="/terms">Terms & Conditions</a> <br />
+          <Link href="/terms">Terms & Conditions</Link> <br />
           <a href="/privacy">Privacy Policy</a>
           <p className={styles.signupLink}>
             Don`t have an account? <a href="/signup">Sign up</a>
