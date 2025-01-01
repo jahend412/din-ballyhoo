@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function WelcomePage() {
   const params = useParams(); // Use useParams to get the dynamic route parameter
@@ -51,6 +52,7 @@ export default function WelcomePage() {
     <div>
       <Header user={user} />
       <h1>Welcome, {user.name}!</h1>
+      <Footer />
     </div>
   );
 }
