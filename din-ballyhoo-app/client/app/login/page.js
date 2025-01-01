@@ -115,7 +115,7 @@ export default function LoginPage() {
             Login
           </button>
           <Link href="/terms">Terms & Conditions</Link> <br />
-          <a href="/privacy">Privacy Policy</a>
+          <Link href="/privacy">Privacy Policy</Link>
           <p className={styles.signupLink}>
             Don`t have an account? <a href="/signup">Sign up</a>
           </p>
