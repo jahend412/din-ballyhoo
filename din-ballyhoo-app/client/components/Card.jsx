@@ -16,17 +16,17 @@ export default function Card({ data, config }) {
     <div className={styles.card}>
       {imageField && data[imageField] && (
         <Image
-          className={styles.card - image}
+          className={styles.cardImage}
           src={data[imageField]}
           alt={data[titleField]}
           width="300"
           height="300"
         />
       )}
-      <div className={styles.card - content}>
-        <h2 className={styles.card - title}>{titleField}</h2>
-        <h3 className={styles.card - subtitle}>{subtitleField}</h3>
-        <ul className={styles.card - details}>
+      <div className={styles.cardContent}>
+        <h2 className={styles.cardTitle}>{titleField}</h2>
+        <h3 className={styles.cardSubtitle}>{subtitleField}</h3>
+        <ul className={styles.cardDetails}>
           {detailField.map((field) => (
             <li key={field}>{data[field]}</li>
           ))}
@@ -34,7 +34,7 @@ export default function Card({ data, config }) {
         {linkField && (
           <Link
             href={`${linkBase}/${data[linkField]}`}
-            className={styles.card - link}
+            className={styles.cardLink}
           >
             {" "}
             View Details
