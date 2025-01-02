@@ -17,7 +17,7 @@ const webcastSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Location is required'],
   },
-  imageUrl: {
+  coverImage: {
     type: String,
     required: false,
   },

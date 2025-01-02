@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const showSchema = new mongoose.Schema({
-  bandName: {
+  artist: {
     type: String,
     required: [true, 'Band name is required'],
   },
