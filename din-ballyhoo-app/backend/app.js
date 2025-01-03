@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const path = require('path');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -19,6 +20,9 @@ const showRoutes = require('./routes/showRoutes');
 const webcastRoutes = require('./routes/webcastRoutes');
 
 const app = express();
+
+// Serve images from uploads folder
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // 1. Global Middleware
 app.use(helmet()); // Helmet helps secure Express apps by setting various HTTP headers
