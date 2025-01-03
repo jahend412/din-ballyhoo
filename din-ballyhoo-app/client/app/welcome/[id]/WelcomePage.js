@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import Card from "@/components/Card";
 import {
   albumConfig,
@@ -30,13 +29,19 @@ export default function WelcomePage() {
       .then((data) => {
         console.log("Fetched albums:", data);
         if (data.status === "success") {
-          setAlbums(data.data.data); // Correctly set the albums array
+          // Ensure coverImage has a leading slash
+          const updatedAlbums = data.data.data.map((album) => {
+            if (album.coverImage && !album.coverImage.startsWith("/")) {
+              album.coverImage = `/${album.coverImage}`; // Add leading slash
+            }
+            return album;
+          });
+          setAlbums(updatedAlbums); // Set the albums array with updated coverImage paths
         } else {
           console.error("Failed to fetch albums: Unexpected data structure");
         }
       })
       .catch((err) => console.error("Failed to fetch albums:", err));
-
     // Fetch shows
     fetch("/api/v1/shows", {
       headers: {
@@ -117,18 +122,25 @@ export default function WelcomePage() {
       <div className="card-grid">
         <h2>Albums</h2>
         <div className="cards">
-          {albums.map((album) => (
-            <Card key={album._id} data={album} config={albumConfig} />
-          ))}
+          {albums.length > 0 ? (
+            albums.map((album) => (
+              <Card key={album._id} data={album} config={albumConfig} />
+            ))
+          ) : (
+            <p>No albums found</p>
+          )}
         </div>
+      </div>
 
+      <div className="card-grid">
         <h2>Shows</h2>
         <div className="cards">
           {shows.map((show) => (
             <Card key={show._id} data={show} config={showConfig} />
           ))}
         </div>
-
+      </div>
+      <div className="card-grid">
         <h2>Webcasts</h2>
         <div className="cards">
           {webcasts.map((webcast) => (
@@ -136,7 +148,6 @@ export default function WelcomePage() {
           ))}
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
