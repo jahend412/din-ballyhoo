@@ -39,7 +39,7 @@ exports.createAlbum = async (req, res, next) => {
       title,
       artist,
       releaseDate,
-      coverImage: req.file ? req.file.path : undefined, // Add the uploaded file path
+      coverImage: `/uploads/${req.file.filename}`,
     });
 
     res.status(201).json({
