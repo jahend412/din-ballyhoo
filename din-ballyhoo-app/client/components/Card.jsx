@@ -12,20 +12,26 @@ export default function Card({ data, config }) {
     linkBase,
   } = config;
 
+  // Ensure image path has a leading slash if it's a relative path
+  const imagePath =
+    data[imageField] && !data[imageField].startsWith("/")
+      ? `/uploads/${data[imageField]}`
+      : data[imageField];
+
   return (
     <div className={styles.card}>
       {imageField && data[imageField] && (
         <Image
           className={styles.cardImage}
-          src={data[imageField]}
-          alt={data[titleField]}
+          src={`http://localhost:8080/${data.coverImage}`} // Use absolute path for image
+          alt={data[titleField] || "Card image"} // Default alt if titleField is not found
           width="300"
           height="300"
         />
       )}
       <div className={styles.cardContent}>
-        <h2 className={styles.cardTitle}>{titleField}</h2>
-        <h3 className={styles.cardSubtitle}>{subtitleField}</h3>
+        <h2 className={styles.cardTitle}>{data[titleField]}</h2>
+        <h3 className={styles.cardSubtitle}>{data[subtitleField]}</h3>
         <ul className={styles.cardDetails}>
           {detailField.map((field) => (
             <li key={field}>{data[field]}</li>
@@ -36,7 +42,6 @@ export default function Card({ data, config }) {
             href={`${linkBase}/${data[linkField]}`}
             className={styles.cardLink}
           >
-            {" "}
             View Details
           </Link>
         )}
