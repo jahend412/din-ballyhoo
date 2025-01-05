@@ -15,6 +15,8 @@ export default function WelcomePage() {
   const [albums, setAlbums] = useState([]);
   const [shows, setShows] = useState([]);
   const [webcasts, setWebcasts] = useState([]);
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -77,9 +79,6 @@ export default function WelcomePage() {
 
   const params = useParams(); // Use useParams to get the dynamic route parameter
   const id = params?.id; // Ensure `id` is extracted safely
-
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
