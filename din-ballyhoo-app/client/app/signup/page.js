@@ -115,7 +115,7 @@ export default function SignupPage() {
           </button>
           <Link href="/terms">Terms & Conditions</Link>
           <br />
-          <a href="/privacy">Privacy Policy</a>
+          <Link href="/privacy">Privacy Policy</Link>
           <p className={styles.signupLink}>
             Do you already have an account? <a href="/signup">Sign in</a>
           </p>
