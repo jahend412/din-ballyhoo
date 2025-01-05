@@ -3,14 +3,8 @@ import Link from "next/link";
 import styles from "./Card.module.css";
 
 export default function Card({ data, config }) {
-  const {
-    imageField,
-    titleField,
-    subtitleField,
-    detailField,
-    linkField,
-    linkBase,
-  } = config;
+  const backendBaseUrl = "http://localhost:8080";
+  const { imageField, titleField, subtitleField, linkField, linkBase } = config;
 
   // Ensure image path has a leading slash if it's a relative path
   const imagePath =
@@ -20,23 +14,23 @@ export default function Card({ data, config }) {
 
   return (
     <div className={styles.card}>
+      {/* Cover Image */}
+
       {imageField && data[imageField] && (
         <Image
           className={styles.cardImage}
-          src={`http://localhost:8080/${data.coverImage}`} // Use absolute path for image
-          alt={data[titleField] || "Card image"} // Default alt if titleField is not found
-          width="300"
-          height="300"
+          src={`${backendBaseUrl}${data.coverImage}`}
+          alt={data[titleField] || "Album cover"}
+          width={300}
+          height={300}
+          unoptimized // Disable image optimization for external URLs like Firebase
         />
       )}
+
+      {/* Content Section */}
       <div className={styles.cardContent}>
         <h2 className={styles.cardTitle}>{data[titleField]}</h2>
         <h3 className={styles.cardSubtitle}>{data[subtitleField]}</h3>
-        <ul className={styles.cardDetails}>
-          {detailField.map((field) => (
-            <li key={field}>{data[field]}</li>
-          ))}
-        </ul>
         {linkField && (
           <Link
             href={`${linkBase}/${data[linkField]}`}
