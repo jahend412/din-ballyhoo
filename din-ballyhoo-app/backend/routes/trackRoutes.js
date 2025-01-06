@@ -19,7 +19,7 @@ const trackController = require('../controllers/trackController');
 router
   .route('/')
   .get(checkPermissions('view-track'), trackController.getAllTracks)
-  .post(checkPermissions(''), trackController.createTrack);
+  .post(checkPermissions('create-track'), trackController.createTrack);
 
 router
   .route('/:id')
