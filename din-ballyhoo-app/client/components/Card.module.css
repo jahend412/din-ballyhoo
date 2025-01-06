@@ -1,41 +1,34 @@
+/* Style for each card */
 .card {
   border: 0.3rem solid #ddd;
   border-radius: 8px;
   margin: 16px;
   overflow: hidden;
-  width: 300px;
+  width: 13rem; /* Fixed width for cards */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Card image style */
 .cardImage {
   width: 100%;
   height: 18rem;
   object-fit: cover;
 }
 
+/* Card content style */
 .cardContent {
   padding: 16px;
 }
 
+/* Style for card details */
 .cardDetails {
   list-style: none;
   padding: 0;
   margin: 8px 0;
 }
 
+/* Link styling within the card */
 .cardLink {
   text-decoration: none;
   color: #007bff;
-}
-
-.cardGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
 }
