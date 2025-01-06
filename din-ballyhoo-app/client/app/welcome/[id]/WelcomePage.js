@@ -10,6 +10,7 @@ import {
   showConfig,
   webcastConfig,
 } from "@/app/config/cardConfigs";
+import styles from "../WelcomePage.module.css";
 
 export default function WelcomePage() {
   const [albums, setAlbums] = useState([]);
@@ -118,9 +119,10 @@ export default function WelcomePage() {
   return (
     <div>
       <Header user={user} />
-      <div className="card-grid">
+
+      <div className="section">
         <h2>Albums</h2>
-        <div className="cards">
+        <div className={styles.cardContainer}>
           {albums.length > 0 ? (
             albums.map((album) => (
               <Card key={album._id} data={album} config={albumConfig} />
@@ -131,20 +133,29 @@ export default function WelcomePage() {
         </div>
       </div>
 
-      <div className="card-grid">
+      <div className="section">
         <h2>Shows</h2>
-        <div className="cards">
-          {shows.map((show) => (
-            <Card key={show._id} data={show} config={showConfig} />
-          ))}
+        <div className={styles.cardContainer}>
+          {shows.length > 0 ? (
+            shows.map((show) => (
+              <Card key={show._id} data={show} config={showConfig} />
+            ))
+          ) : (
+            <p>No shows found</p>
+          )}
         </div>
       </div>
-      <div className="card-grid">
+
+      <div className="section">
         <h2>Webcasts</h2>
-        <div className="cards">
-          {webcasts.map((webcast) => (
-            <Card key={webcast._id} data={webcast} config={webcastConfig} />
-          ))}
+        <div className={styles.cardContainer}>
+          {webcasts.length > 0 ? (
+            webcasts.map((webcast) => (
+              <Card key={webcast._id} data={webcast} config={webcastConfig} />
+            ))
+          ) : (
+            <p>No webcasts found</p>
+          )}
         </div>
       </div>
     </div>
