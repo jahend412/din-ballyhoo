@@ -1,0 +1,29 @@
+/* Style for each card */
+.card {
+  border: 0.3rem solid #ddd;
+  border-radius: 8px;
+  margin: 16px;
+  overflow: hidden;
+  width: 30rem; /* Fixed width for cards */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Card content style */
+.cardContent {
+  padding: 16px;
+}
+
+/* Link styling within the card */
+.cardLink {
+  text-decoration: none;
+  color: #007bff;
+}
+
+/* Parent container for all cards (this holds the flexbox properties) */
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap; /* Ensures that cards wrap when they overflow */
+  gap: 16px; /* Adds space between cards */
+  justify-content: flex-start; /* Aligns cards to the left */
+  padding: 1rem; /* Adds padding around the container */
+}
