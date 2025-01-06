@@ -33,7 +33,7 @@ export default function WelcomePage() {
         console.log("Fetched albums:", data);
         if (data.status === "success") {
           // Ensure coverImage has a leading slash
-          const updatedAlbums = data.data.data.map((album) => {
+          const updatedAlbums = data.data.map((album) => {
             if (album.coverImage && !album.coverImage.startsWith("/")) {
               album.coverImage = `/${album.coverImage}`; // Add leading slash
             }
@@ -45,6 +45,7 @@ export default function WelcomePage() {
         }
       })
       .catch((err) => console.error("Failed to fetch albums:", err));
+
     // Fetch shows
     fetch("/api/v1/shows", {
       headers: {
@@ -54,7 +55,7 @@ export default function WelcomePage() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
-          setShows(data.data.data); // Correctly set the shows array
+          setShows(data.data); // Set the shows array directly
         } else {
           console.error("Failed to fetch shows: Unexpected data structure");
         }
@@ -70,7 +71,7 @@ export default function WelcomePage() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
-          setWebcasts(data.data.data); // Correctly set the webcasts array
+          setWebcasts(data.data); // Set the webcasts array directly
         } else {
           console.error("Failed to fetch webcasts: Unexpected data structure");
         }
@@ -97,8 +98,9 @@ export default function WelcomePage() {
           },
         });
 
-        setUser(response.data.data.user);
+        setUser(response.data.data.user); // Update with the user data
       } catch (err) {
+        console.error("Error fetching user:", err);
         setError(err.response?.data?.message || "Error fetching user.");
       }
     };
