@@ -1,4 +1,5 @@
 const Album = require('../models/albumModel');
+const Track = require('../models/trackModel');
 const factory = require('./handlerFactory');
 const multer = require('multer');
 
@@ -35,7 +36,14 @@ exports.uploadAlbumCover = upload.single('coverImage');
 exports.createAlbum = async (req, res, next) => {
   try {
     const { title, artist, releaseDate } = req.body;
+    let tracks = req.body.tracks;
 
+    // Parse tracks if it's a string
+    if (typeof tracks === 'string') {
+      tracks = JSON.parse(tracks);
+    }
+
+    // Create the album
     const newAlbum = await Album.create({
       title,
       artist,
@@ -43,11 +51,30 @@ exports.createAlbum = async (req, res, next) => {
       coverImage: req.file ? req.file.path : undefined, // Add the uploaded file path
     });
 
+    // Create and link tracks if provided
+    if (Array.isArray(tracks) && tracks.length > 0) {
+      const trackPromises = tracks.map(async (track) => {
+        const newTrack = await Track.create({
+          title: track.title,
+          artist: track.artist || artist,
+          album: newAlbum._id,
+          url: track.url,
+        });
+        return newTrack._id;
+      });
+
+      const trackIds = await Promise.all(trackPromises);
+
+      // Add the tracks to the album
+      await Album.findByIdAndUpdate(newAlbum._id, {
+        $push: { tracks: { $each: trackIds } },
+      });
+    }
+
+    // Respond with the created album
     res.status(201).json({
       status: 'success',
-      data: {
-        album: newAlbum,
-      },
+      data: newAlbum, // Return the created album
     });
   } catch (error) {
     res.status(400).json({
@@ -107,6 +134,10 @@ exports.getAlbum = factory.getOne(Album, [
   {
     path: 'favorites', // Virtual field for favorites
     select: 'fan createdAt', // Only include these fields in the populated favorites
+  },
+  {
+    path: 'tracks', // Add this to populate the tracks
+    select: 'title artist url', // Specify the fields you want to include for tracks
   },
 ]);
 exports.deleteAlbum = factory.deleteOne(Album);
