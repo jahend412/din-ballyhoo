@@ -77,6 +77,7 @@ const roles = {
     permissions['view-users'],
     permissions['create-user'],
     permissions['delete-user'],
+    permissions['create-track'],
   ],
 };
 
