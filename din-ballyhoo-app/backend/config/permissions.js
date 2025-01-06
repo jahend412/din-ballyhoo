@@ -10,6 +10,7 @@ const permissions = {
   'edit-track': 'edit-track',
   'delete-track': 'delete-track',
   'view-track': 'view-track',
+  'create-track': 'create-track',
 
   // Album Management
   'create-album': 'create-album',
