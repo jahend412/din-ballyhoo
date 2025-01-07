@@ -11,32 +11,32 @@ export default function AlbumsPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchAlbums = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          setError("Unauthorized: Please log in.");
-          return;
+    const token = localStorage.getItem("token");
+
+    // Fetch albums
+    fetch("/api/v1/albums", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Fetched albums:", data);
+        if (data.status === "success") {
+          // Ensure coverImage has a leading slash
+          const updatedAlbums = data.data.map((album) => {
+            if (album.coverImage && !album.coverImage.startsWith("/")) {
+              album.coverImage = `/${album.coverImage}`; // Add leading slash
+            }
+            return album;
+          });
+          setAlbums(updatedAlbums); // Set the albums array with updated coverImage paths
+        } else {
+          console.error("Failed to fetch albums: Unexpected data structure");
         }
-
-        const response = await fetch("/api/v1/albums", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch albums");
-        }
-
-        const data = await response.json();
-        setAlbums(data.data);
-      } catch (err) {
-        setError(err.message || "Something went wrong.");
-      }
-    };
-
-    fetchAlbums();
+      })
+      .catch((err) => console.error("Failed to fetch albums:", err));
   }, []);
-
   if (error) {
     return <p>{error}</p>;
   }
