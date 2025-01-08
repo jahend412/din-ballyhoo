@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
+import { useUserContext } from "@/context/UserContext"; // Import useUserContext
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ export default function LoginPage() {
   const [success, setSuccess] = useState("");
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
+  const { loginUser } = useUserContext(); // Destructure loginUser from context
 
   useEffect(() => {
     setIsClient(true);
@@ -45,9 +47,8 @@ export default function LoginPage() {
       const { _id, name } = user; // Get the user ID from the response
       const token = response.data.token; // Get the token from the response
 
-      // Optionally, store token in localStorage or cookies
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", _id); // Store user ID
+      // Store token and user ID in the context and localStorage
+      loginUser(user, token);
 
       setSuccess("Login successful!");
       console.log("Login Success:", response.data);
@@ -65,6 +66,7 @@ export default function LoginPage() {
       console.error("Error:", error);
     }
   };
+
   return (
     <div className={styles.pageContainer}>
       <div className={styles.logoContainer}>
