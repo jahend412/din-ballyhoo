@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useState, useContext, useEffect } from "react";
+import Cookies from "js-cookie";
 
 const UserContext = createContext();
 
@@ -10,8 +11,8 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Fetch user from localStorage if available
-    const savedUser = localStorage.getItem("user");
+    // Fetch user from Cookies if available
+    const savedUser = Cookies.get("user");
     if (savedUser) {
       setUser(JSON.parse(savedUser));
     }
@@ -19,12 +20,18 @@ export const UserProvider = ({ children }) => {
 
   const loginUser = (userData) => {
     setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData)); // Store user in localStorage
+    Cookies.set("user", JSON.stringify(userData), { expires: 7 }); // Expires in 7 days
+    Cookies.set("token", token, {
+      expires: 7,
+      secure: true,
+      sameSite: "Strict",
+    });
   };
 
   const logoutUser = () => {
     setUser(null);
-    localStorage.removeItem("user"); // Remove user from localStorage
+    Cookies.remove("user");
+    Cookies.remove("token");
   };
 
   return (
