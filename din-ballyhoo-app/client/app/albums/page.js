@@ -5,6 +5,7 @@ import styles from "./AlbumsPage.module.css";
 import Card from "../../components/Card";
 import { albumConfig } from "@/app/config/cardConfigs";
 import { useState, useEffect } from "react";
+import Header from "@/components/Header";
 
 export default function AlbumsPage() {
   const [albums, setAlbums] = useState([]);
@@ -48,6 +49,7 @@ export default function AlbumsPage() {
   console.log(albums);
   return (
     <div>
+      <Header />
       <div className={styles.albumsPage}>
         <h2>Albums</h2>
         <div className={styles.cardContainer}>
