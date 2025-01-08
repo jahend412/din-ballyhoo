@@ -1,0 +1,64 @@
+/* General page container */
+.about-container {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  padding: 24px;
+}
+
+/* Main content container */
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Title styling */
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  color: #ff0000;
+  margin-bottom: 32px;
+}
+
+/* Text paragraphs */
+.text {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+
+/* Members title */
+.members-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #ff0000;
+  margin-top: 48px;
+  margin-bottom: 16px;
+}
+
+/* Members list styling */
+.members-list {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  font-size: 1.125rem;
+  margin-bottom: 32px;
+}
+
+/* Individual member bio section */
+.member {
+  margin-bottom: 32px;
+}
+
+.member-name {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #ff0000;
+  margin-bottom: 12px;
+}
+
+.member-bio {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: #ffffff;
+}
