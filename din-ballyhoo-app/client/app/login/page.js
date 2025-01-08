@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
-import { useUserContext } from "@/context/UserContext"; // Import useUserContext
+import { useUserContext } from "@/app/context/UserContext"; // Import useUserContext
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
