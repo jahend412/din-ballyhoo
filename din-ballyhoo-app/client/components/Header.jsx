@@ -1,15 +1,25 @@
-import Link from "next/link";
+"use client";
 
+import Link from "next/link";
+import { useUserContext } from "@/app/context/UserContext";
+import { useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 
 export default function Header() {
+  const { user } = useUserContext();
+  const { logoutUser } = useUserContext();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    logoutUser();
+    router.push("/");
+  };
+
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>Din Ballyhoo</h1>
       <nav className={styles.navLinks}>
-        <Link href="/" className={styles.navLink}>
-          Home
-        </Link>
+        <p>Welcome, {user ? user.name : "Guest"}</p>
         <Link href="/shows" className={styles.navLink}>
           Shows
         </Link>
@@ -22,9 +32,12 @@ export default function Header() {
         <Link href="/about" className={styles.navLink}>
           About
         </Link>
-        <Link href="/logout" className={styles.navLink}>
+        <button
+          onClick={handleLogout}
+          className={`${styles.navLink} ${styles.logout}`}
+        >
           Logout
-        </Link>
+        </button>
       </nav>
     </header>
   );
