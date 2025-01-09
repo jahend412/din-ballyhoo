@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Card.module.css";
@@ -24,6 +26,7 @@ export default function Card({ data, config }) {
           width={300}
           height={300}
           unoptimized // Disable image optimization for external URLs like Firebase
+          priority
         />
       )}
 
