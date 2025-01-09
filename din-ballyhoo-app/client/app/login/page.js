@@ -13,21 +13,19 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [isClient, setIsClient] = useState(false);
+  const [loading, setLoading] = useState(false); // For loading state
   const router = useRouter();
   const { loginUser } = useUserContext(); // Destructure loginUser from context
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
+    setLoading(true);
 
     if (!email || !password) {
-      setError("Email and password are required");
+      setError(`Missing ${!email ? "Email" : "Password"}`);
+      setLoading(false);
       return;
     }
 
@@ -36,34 +34,24 @@ export default function LoginPage() {
         email,
         password,
       });
-      console.log("Response:", response.data);
-      const user = response.data.data?.user; // Get the user ID and name from the response
+      const user = response.data.data?.user;
+      const token = response.data.token;
 
-      if (!user) {
-        setError("User not found");
+      if (!user || !token) {
+        setError("Invalid login response");
+        setLoading(false);
         return;
       }
 
-      const { _id, name } = user; // Get the user ID from the response
-      const token = response.data.token; // Get the token from the response
-
-      // Store token and user ID in the context and localStorage
       loginUser(user, token);
-
       setSuccess("Login successful!");
-      console.log("Login Success:", response.data);
-
-      // Now that the client has mounted, redirect to the user's page
-      if (isClient && _id) {
-        console.log("Redirecting to:", _id); // Debugging log to check _id
-        router.push(`/welcome/${_id}`); // Redirect to user's home page
-      } else {
-        setError("Unable to redirect, user ID is missing");
-      }
+      router.push(`/welcome/${user._id}`);
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Login failed";
+      const errorMessage =
+        error.response?.data?.message || error.message || "Login failed";
       setError(errorMessage);
-      console.error("Error:", error);
+    } finally {
+      setLoading(false); // End loading state
     }
   };
 
@@ -92,6 +80,7 @@ export default function LoginPage() {
               value={email}
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
+              className={error && !email ? styles.invalidInput : ""}
             />
           </div>
           <div className={styles.inputGroup}>
@@ -102,6 +91,7 @@ export default function LoginPage() {
               value={password}
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
+              className={error && !password ? styles.invalidInput : ""}
             />
           </div>
           <div className={styles.optionContainer}>
@@ -110,16 +100,20 @@ export default function LoginPage() {
               <label htmlFor="rememberMe">Remember me</label>
             </div>
             <div className={styles.forgotPassword}>
-              <a href="#">Forgot password?</a>
+              <Link href="/forgot-password">Forgot password?</Link>
             </div>
           </div>
-          <button type="submit" className={styles.submitButton}>
-            Login
+          <button
+            type="submit"
+            className={styles.submitButton}
+            disabled={loading}
+          >
+            {loading ? "Logging in..." : "Login"}
           </button>
           <Link href="/terms">Terms & Conditions</Link> <br />
           <Link href="/privacy">Privacy Policy</Link>
           <p className={styles.signupLink}>
-            Don`t have an account? <a href="/signup">Sign up</a>
+            Don’t have an account? <Link href="/signup">Sign up</Link>
           </p>
         </form>
       </div>
