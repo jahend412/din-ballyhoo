@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useUserContext } from "@/app/context/UserContext";
 import axios from "axios";
 import Header from "@/components/Header";
 import Card from "@/components/Card";
@@ -13,10 +14,12 @@ import {
 import styles from "../WelcomePage.module.css";
 
 export default function WelcomePage() {
+  const { user } = useUserContext();
+  const [loading, setLoading] = useState(false);
   const [albums, setAlbums] = useState([]);
   const [shows, setShows] = useState([]);
   const [webcasts, setWebcasts] = useState([]);
-  const [user, setUser] = useState(null);
+
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -85,30 +88,21 @@ export default function WelcomePage() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = localStorage.getItem("token");
-
-        if (!token) {
-          setError("Unauthorized: No token provided");
-          return;
+        setLoading(true);
+        if (!user) {
+          throw new Error("User is null");
         }
-
-        const response = await axios.get(`/api/v1/users/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setUser(response.data.data.user); // Update with the user data
+        // Simulate fetching user or other operations here
       } catch (err) {
         console.error("Error fetching user:", err);
-        setError(err.response?.data?.message || "Error fetching user.");
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (id) {
-      fetchUser();
-    }
-  }, [id]);
+    fetchUser();
+  }, [user]);
 
   if (error) {
     return <p>{error}</p>;
@@ -121,7 +115,6 @@ export default function WelcomePage() {
   return (
     <div>
       <Header user={user} />
-
       <div className="section">
         <h2>Albums</h2>
         <div className={styles.cardContainer}>
@@ -134,7 +127,6 @@ export default function WelcomePage() {
           )}
         </div>
       </div>
-
       <div className="section">
         <h2>Shows</h2>
         <div className={styles.cardContainer}>
@@ -147,7 +139,6 @@ export default function WelcomePage() {
           )}
         </div>
       </div>
-
       <div className="section">
         <h2>Webcasts</h2>
         <div className={styles.cardContainer}>
