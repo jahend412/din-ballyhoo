@@ -78,6 +78,9 @@ const roles = {
     permissions['create-user'],
     permissions['delete-user'],
     permissions['create-track'],
+    permissions['create-news'],
+    permissions['edit-news'],
+    permissions['delete-news'],
   ],
 };
 
