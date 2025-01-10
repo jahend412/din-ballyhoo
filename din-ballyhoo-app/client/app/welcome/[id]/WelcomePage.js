@@ -14,8 +14,7 @@ import {
 import styles from "../WelcomePage.module.css";
 
 export default function WelcomePage() {
-  const { user } = useUserContext();
-  const [loading, setLoading] = useState(false);
+  const { user, loading } = useUserContext();
   const [albums, setAlbums] = useState([]);
   const [shows, setShows] = useState([]);
   const [webcasts, setWebcasts] = useState([]);
@@ -87,29 +86,32 @@ export default function WelcomePage() {
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!loading && !user) {
+        setError("User is null or not logged in");
+        return;
+      }
+
       try {
-        setLoading(true);
-        if (!user) {
-          throw new Error("User is null");
-        }
-        // Simulate fetching user or other operations here
-      } catch (err) {
-        console.error("Error fetching user:", err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
+        console.log("User fetched successfully", user);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        setError("Error fetching user");
       }
     };
 
     fetchUser();
-  }, [user]);
+  }, [user, loading]);
 
   if (error) {
     return <p>{error}</p>;
   }
 
-  if (!user) {
+  if (loading) {
     return <p>Loading...</p>;
+  }
+
+  if (!user) {
+    return <p>No user found</p>;
   }
 
   return (
