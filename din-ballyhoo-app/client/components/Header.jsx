@@ -19,25 +19,30 @@ export default function Header() {
     <header className={styles.header}>
       <h1 className={styles.title}>Din Ballyhoo</h1>
       <nav className={styles.navLinks}>
-        <p>Welcome, {user ? user.name : "Guest"}</p>
+        <Link href="/profile" className={styles.navLink}>
+          Welcome, {user ? user.name : "Guest"}
+        </Link>
+        <Link href="/news" className={styles.navLink}>
+          News
+        </Link>
         <Link href="/shows" className={styles.navLink}>
           Shows
         </Link>
         <Link href="/albums" className={styles.navLink}>
           Albums
         </Link>
-        <Link href="/webcasts" className={styles.navLink}>
-          Webcast
+        <Link
+          href="https://www.youtube.com/@dinballyhoo6740"
+          className={styles.navLink}
+        >
+          Videos
         </Link>
         <Link href="/about" className={styles.navLink}>
           About
         </Link>
-        <button
-          onClick={handleLogout}
-          className={`${styles.navLink} ${styles.logout}`}
-        >
+        <Link href="/login" onClick={handleLogout} className={styles.navLink}>
           Logout
-        </button>
+        </Link>
       </nav>
     </header>
   );
