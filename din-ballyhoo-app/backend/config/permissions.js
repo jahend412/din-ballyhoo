@@ -4,6 +4,7 @@ const permissions = {
   'delete-comment': 'delete-comment',
   'edit-comment': 'edit-comment',
   'reply-comment': 'reply-comment',
+  'view-comments': 'view-comments',
 
   // Track Management
   'upload-track': 'upload-track',
