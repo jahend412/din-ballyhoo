@@ -4,6 +4,7 @@ import ReactPlayer from "react-player";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import CommentForm from "@/components/commentForm/CommentForm";
 
 export default function AlbumPage({ data }) {
   const { id } = useParams();
@@ -11,6 +12,7 @@ export default function AlbumPage({ data }) {
   const [albumToken, setAlbumToken] = useState(null);
   const [error, setError] = useState("");
   const [favorites, setFavorites] = useState([]);
+  const [comment, setComment] = useState("");
   const [comments, setComments] = useState("");
 
   useEffect(() => {
@@ -38,6 +40,7 @@ export default function AlbumPage({ data }) {
       }
     };
 
+    // Fetch the album
     fetchAlbum();
   }, [id]);
 
@@ -49,6 +52,7 @@ export default function AlbumPage({ data }) {
     }
   }, [album]);
 
+  // Fetch the comments for the album
   useEffect(() => {
     const fetchComments = async () => {
       const token = localStorage.getItem("token");
@@ -87,6 +91,56 @@ export default function AlbumPage({ data }) {
     fetchComments();
   }, [id]);
 
+  // Add a comment to the album
+  const handleCommentSubmit = async (entityType, entityId, commentText) => {
+    const token = localStorage.getItem("token");
+    console.log("Token:", token);
+    if (!token) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/comments/${entityType}/${entityId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ comment: commentText }),
+          credentials: "include",
+        }
+      );
+
+      console.log("Response Status:", response.status);
+      const data = await response.json();
+      console.log("Comment Response Data:", data);
+
+      if (response.ok) {
+        // Now, we handle the response assuming it contains a single comment
+        if (data && data.data && data.data.comment) {
+          const newComment = data.data.comment;
+
+          // Assuming you have a state to store comments, adjust based on actual structure
+          setComment((prevComments) => [...prevComments, newComment]); // Append the new comment
+          setError(""); // Clear any previous errors
+        } else {
+          setError("No comment returned in the response");
+        }
+      } else {
+        setError("Failed to add comment");
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  // Delete a comment from the album
+
+  // Fetch the favorites for the album
+
+  // Add the album to favorites
+
+  // Remove the album from favorites
   if (error) {
     return <p>{error}</p>;
   }
@@ -101,7 +155,7 @@ export default function AlbumPage({ data }) {
       <p>{album.artist}</p>
       <p>{album.releaseDate}</p>
       <p>{album.genre}</p>
-      <p>{album.label}</p>
+      <p>{album.producer}</p>
 
       <h3>Comments</h3>
       {/* Check if there are any comments */}
@@ -122,6 +176,12 @@ export default function AlbumPage({ data }) {
       ) : (
         <p>No comments yet.</p>
       )}
+
+      <CommentForm
+        onCommentAdded={handleCommentSubmit} // Pass the submit handler here
+        entityType="album" // Pass the type of entity as a string
+        entityId={album._id} // Pass the album ID here
+      />
     </div>
   );
 }
