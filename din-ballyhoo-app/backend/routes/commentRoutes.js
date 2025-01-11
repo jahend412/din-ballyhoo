@@ -18,7 +18,7 @@ router
     checkPermissions('view-comments'),
     commentController.getCommentsForEntity
   )
-  .post(checkPermissions('create-comments'), commentController.createComment); // POST for creating comments
+  .post(checkPermissions('create-comment'), commentController.createComment); // POST for creating comments
 
 router
   .route('/:entityType/:entityId/comments/:id') // for updating and deleting a specific comment
