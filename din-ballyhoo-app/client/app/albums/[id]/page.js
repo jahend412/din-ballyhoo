@@ -10,7 +10,8 @@ export default function AlbumPage({ data }) {
   const [album, setAlbum] = useState(null);
   const [albumToken, setAlbumToken] = useState(null);
   const [error, setError] = useState("");
-  const backendBaseUrl = "http://localhost:8080";
+  const [favorites, setFavorites] = useState([]);
+  const [comments, setComments] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -48,6 +49,44 @@ export default function AlbumPage({ data }) {
     }
   }, [album]);
 
+  useEffect(() => {
+    const fetchComments = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("Token is missing. Redirecting to login.");
+        return; // Exit if no token is found
+      }
+
+      try {
+        const response = await fetch(`/api/v1/comments/album/${id}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Comment Response:", data);
+
+          if (data && data.data && Array.isArray(data.data.comments)) {
+            setComments(data.data.comments); // Set the array of comments
+          } else {
+            console.error("No comments found or incorrect data format");
+            setComments([]); // Set empty array if no comments
+          }
+        } else {
+          console.error("Failed to fetch comments");
+        }
+      } catch (error) {
+        console.error("Error fetching comments:", error.message);
+      }
+    };
+
+    fetchComments();
+  }, [id]);
+
   if (error) {
     return <p>{error}</p>;
   }
@@ -63,23 +102,26 @@ export default function AlbumPage({ data }) {
       <p>{album.releaseDate}</p>
       <p>{album.genre}</p>
       <p>{album.label}</p>
-      {/* <Image
-        className="album-cover"
-        src={`${backendBaseUrl}${data.coverImage}`}
-        alt={data[titleField] || "Album cover"}
-        width={300}
-        height={300}
-        unoptimized // Disable image optimization for external URLs like Firebase
-        priority
-      /> */}
-      {album.tracks.map((track) => (
-        <div key={track._id}>
-          <h3>{track.title}</h3>
-          <ReactPlayer url={track.audio} controls />
+
+      <h3>Comments</h3>
+      {/* Check if there are any comments */}
+      {comments.length > 0 ? (
+        <div>
+          {comments.map((comment) => (
+            <div key={comment._id}>
+              <p>
+                <strong>{comment.user.name}</strong> commented:
+              </p>
+              <p>{comment.comment}</p>
+              <p>
+                <small>{new Date(comment.createdAt).toLocaleString()}</small>
+              </p>
+            </div>
+          ))}
         </div>
-      ))}
-      <h2>Description</h2>
-      <p>{album.description}</p>
+      ) : (
+        <p>No comments yet.</p>
+      )}
     </div>
   );
 }
