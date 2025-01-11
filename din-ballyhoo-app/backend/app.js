@@ -6,6 +6,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const path = require('path');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -20,6 +21,15 @@ const showRoutes = require('./routes/showRoutes');
 const webcastRoutes = require('./routes/webcastRoutes');
 
 const app = express();
+
+app.use(
+  cors({
+    origin: 'http://localhost:3000', // Your frontend origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // Allow cookies and headers
+  })
+);
 
 // Serve images from uploads folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
