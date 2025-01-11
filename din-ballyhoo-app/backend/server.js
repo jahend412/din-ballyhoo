@@ -16,15 +16,6 @@ if (result.error) {
 }
 
 const app = require('./app');
-// Enable CORS
-app.use(
-  cors({
-    origin: 'http://localhost:3000', // Your frontend origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
-    allowedHeaders: ['Content-Type'], // Allowed headers
-    credentials: true, // Allow credentials (cookies, auth headers)
-  })
-);
 
 // Construct the MongoDB URI
 const DB = process.env.DATABASE.replace(
