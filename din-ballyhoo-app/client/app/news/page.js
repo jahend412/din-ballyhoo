@@ -7,7 +7,7 @@ const NewsPage = () => {
 
   useEffect(() => {
     // Fetch the news from your API
-    fetch("http://localhost:8080/news")
+    fetch("http://localhost:8080/api/v1/news")
       .then((res) => res.json())
       .then((data) => setNews(data.data));
   }, []);
