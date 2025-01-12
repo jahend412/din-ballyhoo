@@ -33,6 +33,7 @@ const upload = multer({
 exports.uploadAlbumCover = upload.single('coverImage');
 
 // Create a new album with the uploaded image
+// Create a new album with the uploaded image
 exports.createAlbum = async (req, res, next) => {
   try {
     const { title, artist, releaseDate } = req.body;
@@ -41,6 +42,14 @@ exports.createAlbum = async (req, res, next) => {
     // Parse tracks if it's a string
     if (typeof tracks === 'string') {
       tracks = JSON.parse(tracks);
+    }
+
+    // Validate the tracks are in the correct format
+    if (!Array.isArray(tracks) || tracks.length === 0) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Tracks array is required and cannot be empty',
+      });
     }
 
     // Create the album
@@ -52,31 +61,43 @@ exports.createAlbum = async (req, res, next) => {
     });
 
     // Create and link tracks if provided
-    if (Array.isArray(tracks) && tracks.length > 0) {
-      const trackPromises = tracks.map(async (track) => {
-        const newTrack = await Track.create({
-          title: track.title,
-          artist: track.artist || artist,
-          album: newAlbum._id,
-          url: track.url,
-        });
-        return newTrack._id;
+    const trackPromises = tracks.map(async (track) => {
+      // Ensure the track has a title and URL
+      if (!track.title || !track.url) {
+        throw new Error('Track title and URL are required');
+      }
+
+      const newTrack = await Track.create({
+        title: track.title,
+        artist: track.artist || artist, // Use the album artist if track artist is not provided
+        album: newAlbum._id, // Link the track to the album
+        url: track.url,
+        trackNumber: track.trackNumber || 1, // Set track number if provided
+        // Optionally add other fields like duration, audioFile, etc.
+        duration: track.duration || 0,
+        audioFile: track.audioFile || '', // If applicable, handle audio file URL
       });
 
-      const trackIds = await Promise.all(trackPromises);
+      return newTrack._id;
+    });
 
-      // Add the tracks to the album
-      await Album.findByIdAndUpdate(newAlbum._id, {
-        $push: { tracks: { $each: trackIds } },
-      });
-    }
+    const trackIds = await Promise.all(trackPromises);
 
-    // Respond with the created album
+    // Add the track IDs to the album's tracks array
+    await Album.findByIdAndUpdate(newAlbum._id, {
+      $push: { tracks: { $each: trackIds } },
+    });
+
+    // Respond with the created album and tracks
     res.status(201).json({
       status: 'success',
-      data: newAlbum, // Return the created album
+      data: {
+        album: newAlbum,
+        tracks: trackIds,
+      },
     });
   } catch (error) {
+    console.error(error);
     res.status(400).json({
       status: 'fail',
       message: error.message,
