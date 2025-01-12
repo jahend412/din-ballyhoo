@@ -75,10 +75,10 @@ export default function CommentForm({ entityType, entityId, onCommentAdded }) {
         type="text"
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        placeholder="Add your comment"
+        placeholder="Leave A Review"
       />
       <button type="submit" disabled={loading}>
-        {loading ? "Posting..." : "Post Comment"}
+        {loading ? "Posting..." : "Post Review"}
       </button>
       {error && <div>{error}</div>}
     </form>
