@@ -46,13 +46,8 @@ export default function CommentForm({ entityType, entityId, onCommentAdded }) {
         console.log("API Response:", data); // Log the response to check structure
 
         if (data && data.data && data.data.comment) {
-          // When a single comment is returned, we need to handle that case
           onCommentAdded(entityType, entityId, data.data.comment); // Pass the single comment
           setComment(""); // Clear the input after submission
-          setError(""); // Clear any previous errors
-        } else if (data && data.data && data.data.comments) {
-          // When multiple comments are returned, handle that case (for fetching comments)
-          onCommentAdded(entityType, entityId, data.data.comments); // Pass the array of comments
           setError(""); // Clear any previous errors
         } else {
           setError(
