@@ -56,12 +56,18 @@ export default function CommentSection({ entityId, entityType }) {
   // Handle the comment added from CommentForm
   const handleCommentSubmit = (entityType, entityId, newComment) => {
     // Simply update the comments array with the new comment
-    setComments((prevComments) => [...prevComments, newComment]);
+    if (newComment && newComment.user) {
+      setComments((prevComments) => [...prevComments, newComment]);
+    }
     setError(""); // Clear any previous errors
   };
   return (
     <div className="comment-section">
-      <h2>Comments</h2>
+      <CommentForm
+        entityType={entityType}
+        entityId={entityId}
+        onCommentAdded={handleCommentSubmit}
+      />
       {loading ? (
         <p>Loading comments...</p>
       ) : error ? (
@@ -78,11 +84,6 @@ export default function CommentSection({ entityId, entityType }) {
           ))}
         </ul>
       )}
-      <CommentForm
-        entityType={entityType}
-        entityId={entityId}
-        onCommentAdded={handleCommentSubmit}
-      />
     </div>
   );
 }
