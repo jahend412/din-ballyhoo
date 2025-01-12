@@ -23,20 +23,14 @@ const albumSchema = new mongoose.Schema({
   },
   tracks: [
     {
-      title: {
-        type: String,
-        required: [true, 'Track title is required'],
-      },
-      url: {
-        type: String,
-        required: [true, 'Track URL is required'],
-      },
-      duration: {
-        type: Number,
-        required: false,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Track',
     },
   ],
+  details: {
+    type: String,
+    required: false,
+  },
   producer: {
     type: String,
     required: false,
