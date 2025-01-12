@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import CommentSection from "@/components/commentSection/CommentSection";
+import TrackSection from "@/components/trackSection/TrackSection";
 import Header from "@/components/Header";
 
 export default function AlbumPage({ data }) {
@@ -102,7 +103,7 @@ export default function AlbumPage({ data }) {
           Reviews {album.comments ? album.comments.length : 0}
         </button>
       </div>
-      {activeSection === "tracks"}
+      {activeSection === "tracks" && <TrackSection dataType="album" id={id} />}
       {activeSection === "details"}
       {activeSection === "comments" && (
         <CommentSection entityType="album" entityId={id} />
