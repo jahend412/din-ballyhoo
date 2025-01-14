@@ -58,6 +58,7 @@ const roles = {
     permissions['update-password'],
     permissions['upload-track'],
     permissions['edit-track'],
+    permissions['edit-album'],
     permissions['create-album'],
     permissions['create-show'],
     permissions['create-webcast'],
