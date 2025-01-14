@@ -7,6 +7,7 @@ import Image from "next/image";
 import CommentSection from "@/components/commentSection/CommentSection";
 import TrackSection from "@/components/trackSection/TrackSection";
 import Header from "@/components/Header";
+import { fetchTrackUrl } from "@/app/utils/firebaseUtils";
 
 export default function AlbumPage({ data }) {
   const { id } = useParams();
@@ -14,6 +15,7 @@ export default function AlbumPage({ data }) {
   const [albumToken, setAlbumToken] = useState(null);
   const [error, setError] = useState("");
   const [activeSection, setActiveSection] = useState("comments");
+  const [activeTrack, setActiveTrack] = useState(null);
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
@@ -29,7 +31,13 @@ export default function AlbumPage({ data }) {
 
         const albumData = await albumResponse.json();
         if (albumResponse.ok && albumData.status === "success") {
-          setAlbum(albumData.data);
+          const updatedTracks = await Promise.all(
+            albumData.data.tracks.map(async (track) => {
+              const url = await fetchTrackUrl(track.url);
+              return { ...track, url };
+            })
+          );
+          setAlbum({ ...albumData.data, tracks: updatedTracks });
         } else {
           setError("Failed to fetch album");
         }
@@ -69,6 +77,10 @@ export default function AlbumPage({ data }) {
     setActiveSection(section);
   };
 
+  const handleTrackClick = (track) => {
+    setActiveTrack(track);
+  };
+
   if (error) {
     return <p>{error}</p>;
   }
@@ -80,6 +92,12 @@ export default function AlbumPage({ data }) {
   return (
     <div>
       <Header />
+      <Image
+        src={album.coverImage}
+        alt={album.title}
+        width={200}
+        height={200}
+      />
       <h1>{album.title}</h1>
       <p>{album.artist}</p>
       <p>{album.releaseDate}</p>
@@ -103,11 +121,41 @@ export default function AlbumPage({ data }) {
           Reviews {album.comments ? album.comments.length : 0}
         </button>
       </div>
-      {activeSection === "tracks" && <TrackSection dataType="album" id={id} />}
-      {activeSection === "details"}
+      {activeSection === "tracks" && (
+        <div className="track-list">
+          {album.tracks.map((track, index) => (
+            <div
+              key={track._id}
+              className={`track-item ${
+                activeTrack?.url === track.url ? "active" : ""
+              }`}
+              onClick={() => handleTrackClick(track)}
+            >
+              <p>
+                {index + 1}. {track.title}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+      {activeSection === "details" && (
+        <div className="album-details">
+          <p>{album.details}</p>
+        </div>
+      )}
       {activeSection === "comments" && (
         <CommentSection entityType="album" entityId={id} />
       )}
+      <div className="track-player">
+        {activeTrack && (
+          <ReactPlayer
+            url={activeTrack.url}
+            controls
+            width="100%"
+            height="50px"
+          />
+        )}
+      </div>
     </div>
   );
 }
