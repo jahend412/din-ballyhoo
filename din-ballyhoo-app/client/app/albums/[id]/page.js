@@ -8,14 +8,16 @@ import CommentSection from "@/components/commentSection/CommentSection";
 import TrackSection from "@/components/trackSection/TrackSection";
 import Header from "@/components/Header";
 import { fetchTrackUrl } from "@/app/utils/firebaseUtils";
+import styles from "./AlbumPage.module.css";
 
 export default function AlbumPage({ data }) {
   const { id } = useParams();
   const [album, setAlbum] = useState(null);
   const [albumToken, setAlbumToken] = useState(null);
   const [error, setError] = useState("");
-  const [activeSection, setActiveSection] = useState("comments");
+  const [activeSection, setActiveSection] = useState("tracks");
   const [activeTrack, setActiveTrack] = useState(null);
+  const [playing, setPlaying] = useState(false);
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
@@ -79,6 +81,7 @@ export default function AlbumPage({ data }) {
 
   const handleTrackClick = (track) => {
     setActiveTrack(track);
+    setPlaying(true);
   };
 
   if (error) {
@@ -92,25 +95,30 @@ export default function AlbumPage({ data }) {
   return (
     <div>
       <Header />
-      <Image
-        src={album.coverImage}
-        alt={album.title}
-        width={200}
-        height={200}
-      />
-      <h1>{album.title}</h1>
-      <p>{album.artist}</p>
-      <p>{album.releaseDate}</p>
-      <div className="tabs">
+      <div className={styles.albumCover}>
+        <Image
+          src={`http://localhost:8080/${album.coverImage}`}
+          alt={album.title}
+          width={300}
+          height={300}
+          priority
+        />
+      </div>
+      <div className={styles.albumInfo}>
+        <h1>{album.title}</h1>
+        <p>{album.artist}</p>
+        <p>{album.releaseDate}</p>
+      </div>
+      <div className={styles.tabs}>
         <button
           onClick={() => handleSectionChange("tracks")}
-          className={activeSection === "comments" ? "active" : ""}
+          className={activeSection === "tracks" ? "active" : ""}
         >
           Tracks
         </button>
         <button
           onClick={() => handleSectionChange("details")}
-          className={activeSection === "comments" ? "active" : ""}
+          className={activeSection === "details" ? "active" : ""}
         >
           Details
         </button>
@@ -122,12 +130,12 @@ export default function AlbumPage({ data }) {
         </button>
       </div>
       {activeSection === "tracks" && (
-        <div className="track-list">
+        <div className={styles.trackList}>
           {album.tracks.map((track, index) => (
             <div
               key={track._id}
-              className={`track-item ${
-                activeTrack?.url === track.url ? "active" : ""
+              className={`${styles.trackItem} ${
+                activeTrack?.url === track.url ? styles.active : ""
               }`}
               onClick={() => handleTrackClick(track)}
             >
@@ -139,20 +147,22 @@ export default function AlbumPage({ data }) {
         </div>
       )}
       {activeSection === "details" && (
-        <div className="album-details">
+        <div className={styles.albumDetails}>
           <p>{album.details}</p>
         </div>
       )}
       {activeSection === "comments" && (
         <CommentSection entityType="album" entityId={id} />
       )}
-      <div className="track-player">
+      <div className={styles.trackPlayer}>
         {activeTrack && (
           <ReactPlayer
             url={activeTrack.url}
             controls
+            playing={playing}
             width="100%"
             height="50px"
+            onEnded={() => setPlaying(false)}
           />
         )}
       </div>
