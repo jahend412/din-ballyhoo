@@ -64,6 +64,9 @@ exports.createComment = catchAsync(async (req, res, next) => {
     [req.params.entityType]: req.params.entityId, // Dynamically set the entity field (track, album, etc.)
   });
 
+  // Populate the user field with the user's name
+  await newComment.populate('user', 'name');
+
   res.status(201).json({
     status: 'success',
     data: {
