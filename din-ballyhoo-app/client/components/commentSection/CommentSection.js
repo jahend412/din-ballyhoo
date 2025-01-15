@@ -55,12 +55,17 @@ export default function CommentSection({ entityId, entityType }) {
   // Add a comment
   // Handle the comment added from CommentForm
   const handleCommentSubmit = (entityType, entityId, newComment) => {
-    // Simply update the comments array with the new comment
-    if (newComment && newComment.user) {
-      setComments((prevComments) => [...prevComments, newComment]);
+    if (newComment && newComment.user && newComment.user.name) {
+      setComments((prevComments) => [...prevComments, newComment]); // Add the new comment
+      setError(""); // Clear errors
+    } else {
+      console.error(
+        "Invalid comment structure or missing user data:",
+        newComment
+      );
     }
-    setError(""); // Clear any previous errors
   };
+
   return (
     <div className="comment-section">
       <CommentForm
