@@ -84,6 +84,14 @@ export default function AlbumPage({ data }) {
     setPlaying(true);
   };
 
+  // Function to update the comments when a new comment is added
+  const updateComments = (newComment) => {
+    setAlbum((prevAlbum) => ({
+      ...prevAlbum,
+      comments: [...prevAlbum.comments, newComment], // Add new comment to the list
+    }));
+  };
+
   if (error) {
     return <p>{error}</p>;
   }
@@ -152,7 +160,11 @@ export default function AlbumPage({ data }) {
         </div>
       )}
       {activeSection === "comments" && (
-        <CommentSection entityType="album" entityId={id} />
+        <CommentSection
+          entityType="album"
+          entityId={id}
+          updateComments={updateComments}
+        />
       )}
       <div className={styles.trackPlayer}>
         {activeTrack && (
@@ -162,7 +174,6 @@ export default function AlbumPage({ data }) {
             playing={playing}
             width="100%"
             height="50px"
-            onEnded={() => setPlaying(false)}
           />
         )}
       </div>
