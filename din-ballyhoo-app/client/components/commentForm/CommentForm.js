@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./CommentForm.module.css";
 
 export default function CommentForm({ entityType, entityId, onCommentAdded }) {
   const token = localStorage.getItem("token");
@@ -72,12 +73,13 @@ export default function CommentForm({ entityType, entityId, onCommentAdded }) {
   return (
     <form onSubmit={handleSubmit}>
       <input
+        className={styles.largeInput}
         type="text"
         value={comment}
         onChange={(e) => setComment(e.target.value)}
         placeholder="Leave A Review"
       />
-      <button type="submit" disabled={loading}>
+      <button className={styles.submitBtn} type="submit" disabled={loading}>
         {loading ? "Posting..." : "Post Review"}
       </button>
       {error && <div>{error}</div>}
