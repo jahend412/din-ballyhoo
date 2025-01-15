@@ -5,39 +5,29 @@ import styles from "./AlbumsPage.module.css";
 import Card from "../../components/Card";
 import { albumConfig } from "@/app/config/cardConfigs";
 import { useState, useEffect } from "react";
+import { fetchAlbums } from "@/app/utils/fetchEntity";
 import Header from "@/components/Header";
 
 export default function AlbumsPage() {
   const [albums, setAlbums] = useState([]);
   const [error, setError] = useState("");
+  const token = localStorage.getItem("token");
 
+  // Fetch albums
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const loadAlbums = async () => {
+      try {
+        const fetchedAlbums = await fetchAlbums(token);
+        setAlbums(fetchedAlbums);
+      } catch (err) {
+        console.error("Error fetching albums:", err);
+        setError("Error fetching albums");
+      }
+    };
 
-    // Fetch albums
-    fetch("/api/v1/albums", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Fetched albums:", data);
-        if (data.status === "success") {
-          // Ensure coverImage has a leading slash
-          const updatedAlbums = data.data.map((album) => {
-            if (album.coverImage && !album.coverImage.startsWith("/")) {
-              album.coverImage = `/${album.coverImage}`; // Add leading slash
-            }
-            return album;
-          });
-          setAlbums(updatedAlbums); // Set the albums array with updated coverImage paths
-        } else {
-          console.error("Failed to fetch albums: Unexpected data structure");
-        }
-      })
-      .catch((err) => console.error("Failed to fetch albums:", err));
-  }, []);
+    loadAlbums();
+  }, [token]);
+
   if (error) {
     return <p>{error}</p>;
   }
