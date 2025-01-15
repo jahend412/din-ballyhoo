@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CommentForm from "@/components/commentForm/CommentForm";
-// import "./CommentSection.css";
+import styles from "./CommentSection.module.css";
 
 export default function CommentSection({ entityId, entityType }) {
   const [comments, setComments] = useState([]);
@@ -54,20 +54,89 @@ export default function CommentSection({ entityId, entityType }) {
 
   // Add a comment
   // Handle the comment added from CommentForm
-  const handleCommentSubmit = (entityType, entityId, newComment) => {
-    if (newComment && newComment.user && newComment.user.name) {
-      setComments((prevComments) => [...prevComments, newComment]); // Add the new comment
-      setError(""); // Clear errors
-    } else {
-      console.error(
-        "Invalid comment structure or missing user data:",
-        newComment
+  const handleCommentSubmit = async (entityType, entityId, newComment) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("Token is missing. Redirecting to login.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `/api/v1/comments/${entityType}/${entityId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ comment: newComment.comment }),
+        }
       );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("New Comment:", data);
+
+        if (data && data.data && data.data.comment) {
+          setComments((prevComments) => [
+            ...prevComments,
+            data.data.comment, // Add the new comment to the list
+          ]);
+        }
+      } else {
+        console.error("Failed to post comment");
+      }
+    } catch (error) {
+      console.error("Error posting comment:", error.message);
+    }
+  };
+
+  // Add a reply
+  const handleReplySubmit = async (parentId, replyText) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("Token is missing. Redirecting to login.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `/api/v1/comments/${entityType}/${entityId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ comment: replyText, parentComment: parentId }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const newReply = data.data.comment;
+
+        setComments((prevComments) =>
+          prevComments.map((comment) =>
+            comment._id === parentId
+              ? { ...comment, replies: [...comment.replies, newReply] }
+              : comment
+          )
+        );
+      } else {
+        console.error("Failed to post reply");
+      }
+    } catch (error) {
+      console.error("Error posting reply:", error.message);
     }
   };
 
   return (
-    <div className="comment-section">
+    <div className={styles.commentSection}>
+      <h2>Comments</h2>
       <CommentForm
         entityType={entityType}
         entityId={entityId}
@@ -78,13 +147,33 @@ export default function CommentSection({ entityId, entityType }) {
       ) : error ? (
         <p className="error">{error}</p>
       ) : (
-        <ul>
+        <ul className={styles.commentsList}>
           {comments.map((comment) => (
-            <li key={comment._id}>
-              <div className="comment">
+            <li key={comment._id} className={styles.commentItem}>
+              <div className={styles.comment}>
                 <p>{comment.comment}</p>
                 <small>By {comment.user.name}</small>
               </div>
+              <button
+                onClick={() =>
+                  handleReplySubmit(comment._id, "Your reply text")
+                }
+                className={styles.replyButton}
+              >
+                Reply
+              </button>
+              {comment.replies && comment.replies.length > 0 && (
+                <ul className={styles.repliesList}>
+                  {comment.replies.map((reply) => (
+                    <li key={reply._id} className={styles.replyItem}>
+                      <div className="styles.reply">
+                        <p>{reply.comment}</p>
+                        <small>By {reply.user.name}</small>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ul>
