@@ -6,6 +6,7 @@ export default function CommentSection({ entityId, entityType }) {
   const [comments, setComments] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showAllComments, setShowAllComments] = useState(false); // State for showing all comments
 
   // Fetch comments for the given entity
   useEffect(() => {
@@ -53,7 +54,6 @@ export default function CommentSection({ entityId, entityType }) {
   }, [entityId, entityType]);
 
   // Add a comment
-  // Handle the comment added from CommentForm
   const handleCommentSubmit = async (entityType, entityId, newComment) => {
     const token = localStorage.getItem("token");
 
@@ -134,6 +134,21 @@ export default function CommentSection({ entityId, entityType }) {
     }
   };
 
+  // Handle showing all comments
+  const toggleShowAllComments = () => {
+    setShowAllComments(!showAllComments);
+  };
+
+  // Sort comments by creation date (newest first)
+  const sortedComments = comments.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
+  // Show only the first 5 comments or all based on the showAllComments state
+  const commentsToShow = showAllComments
+    ? sortedComments
+    : sortedComments.slice(0, 5);
+
   return (
     <div className={styles.commentSection}>
       <h2>Comments</h2>
@@ -148,7 +163,7 @@ export default function CommentSection({ entityId, entityType }) {
         <p className="error">{error}</p>
       ) : (
         <ul className={styles.commentsList}>
-          {comments.map((comment) => (
+          {commentsToShow.map((comment) => (
             <li key={comment._id} className={styles.commentItem}>
               <div className={styles.comment}>
                 <p>{comment.comment}</p>
@@ -160,7 +175,9 @@ export default function CommentSection({ entityId, entityType }) {
                 }
                 className={styles.replyButton}
               >
-                Reply
+                {comment.replies && comment.replies.length > 0
+                  ? `Replies ${comment.replies.length}`
+                  : "Reply"}
               </button>
               {comment.replies && comment.replies.length > 0 && (
                 <ul className={styles.repliesList}>
@@ -177,6 +194,14 @@ export default function CommentSection({ entityId, entityType }) {
             </li>
           ))}
         </ul>
+      )}
+      {!showAllComments && comments.length > 5 && (
+        <button
+          onClick={toggleShowAllComments}
+          className={styles.showMoreButton}
+        >
+          See More
+        </button>
       )}
     </div>
   );
