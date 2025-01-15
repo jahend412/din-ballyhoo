@@ -1,0 +1,28 @@
+.largeInput {
+  width: 100%; /* Makes the input stretch across the available space */
+  height: 5rem;
+  padding: 12px 16px; /* Increases the padding inside the input */
+  font-size: 1.2rem; /* Increases the text size */
+  border-radius: 8px; /* Adds rounded corners */
+  border: 1px solid #ccc; /* Adjust the border color */
+  box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+}
+
+.largeInput:focus {
+  outline: none; /* Removes the default focus outline */
+  border-color: #007bff; /* Changes the border color on focus */
+}
+
+.submitBtn {
+  background: #ff0000; /* Changes the background color */
+  color: #fff; /* Changes the text color */
+  border: none; /* Removes the border */
+  padding: 12px 16px; /* Increases the padding */
+  border-radius: 8px; /* Adds rounded corners */
+  cursor: pointer; /* Changes the cursor to a pointer */
+  font-size: 1.2rem; /* Increases the text size */
+}
+
+.submitBtn:hover {
+  background: darkred; /* Changes the background color on hover */
+}
