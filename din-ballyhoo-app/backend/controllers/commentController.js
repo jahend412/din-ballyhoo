@@ -60,6 +60,7 @@ exports.createComment = catchAsync(async (req, res, next) => {
   const newComment = await Comment.create({
     comment,
     user: req.user.id,
+    createdAt: new Date().toISOString(),
     parentComment: parentComment || null, // Include parentComment if it's a reply
     [req.params.entityType]: req.params.entityId, // Dynamically set the entity field (track, album, etc.)
   });
