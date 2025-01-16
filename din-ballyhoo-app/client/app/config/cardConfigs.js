@@ -1,8 +1,8 @@
 export const albumConfig = {
   imageField: "coverImage",
   titleField: "title",
-  subtitleField: "artist",
-  detailField: ["releaseDate"],
+  subtitleField: ["releaseDate"],
+  detailField: "artist",
   linkField: "_id",
   linkBase: "/albums",
 };
