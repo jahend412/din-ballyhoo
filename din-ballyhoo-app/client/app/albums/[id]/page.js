@@ -115,7 +115,7 @@ export default function AlbumPage({ data }) {
       <div className={styles.albumInfo}>
         <h1>{album.title}</h1>
         <p>{album.artist}</p>
-        <p>{album.releaseDate}</p>
+        <p>{new Date(album.releaseDate).toLocaleDateString("en-US")}</p>
       </div>
       <div className={styles.tabs}>
         <button
