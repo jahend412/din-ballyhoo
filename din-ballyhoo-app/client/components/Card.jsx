@@ -33,7 +33,9 @@ export default function Card({ data, config }) {
       {/* Content Section */}
       <div className={styles.cardContent}>
         <h2 className={styles.cardTitle}>{data[titleField]}</h2>
-        <h3 className={styles.cardSubtitle}>{data[subtitleField]}</h3>
+        <h3 className={styles.cardSubtitle}>
+          {new Date(data[subtitleField]).toDateString("en-US")}
+        </h3>
         {linkField && (
           <Link
             href={`${linkBase}/${data[linkField]}`}
