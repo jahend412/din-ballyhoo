@@ -119,18 +119,6 @@ export default function WelcomePage() {
         </div>
       </div>
       <div className="section">
-        <h2>Shows</h2>
-        <div className={styles.cardContainer}>
-          {shows.length > 0 ? (
-            shows.map((show) => (
-              <Card key={show._id} data={show} config={showConfig} />
-            ))
-          ) : (
-            <p>No shows found</p>
-          )}
-        </div>
-      </div>
-      <div className="section">
         <h2>Webcasts</h2>
         <div className={styles.cardContainer}>
           {webcasts.length > 0 ? (
@@ -138,8 +126,20 @@ export default function WelcomePage() {
               <Card key={webcast._id} data={webcast} config={webcastConfig} />
             ))
           ) : (
-            <p>No webcasts found</p>
+            <p>Stay Tuned for the first webcast</p>
           )}
+        </div>
+        <div className="section">
+          <h2>Shows</h2>
+          <div className={styles.cardContainer}>
+            {shows.length > 0 ? (
+              shows.map((show) => (
+                <Card key={show._id} data={show} config={showConfig} />
+              ))
+            ) : (
+              <p>Stay Tuned for the first show</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
