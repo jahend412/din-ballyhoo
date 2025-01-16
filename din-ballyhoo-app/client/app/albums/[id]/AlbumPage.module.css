@@ -1,27 +1,27 @@
 .albumCover {
   display: inline-block;
-  margin-right: 20px;
+  margin: 1rem;
 }
 
 .albumInfo {
   display: inline-block;
   vertical-align: top;
-  max-width: 500px;
+  max-width: 50rem;
 }
 
 .albumInfo h1 {
-  font-size: 2rem;
+  font-size: 3rem;
   margin-bottom: 10px;
 }
 
 .albumInfo p {
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: #555;
 }
 
 /* Tabs Section */
 .tabs {
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
   justify-content: space-evenly;
   background-color: black;
