@@ -54,83 +54,16 @@ export default function CommentSection({ entityId, entityType }) {
   }, [entityId, entityType]);
 
   // Add a comment
-  const handleCommentSubmit = async (entityType, entityId, newComment) => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      console.error("Token is missing. Redirecting to login.");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `/api/v1/comments/${entityType}/${entityId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ comment: newComment.comment }),
-        }
+  // Handle the comment added from CommentForm
+  const handleCommentSubmit = (entityType, entityId, newComment) => {
+    if (newComment && newComment.user && newComment.user.name) {
+      setComments((prevComments) => [...prevComments, newComment]); // Add the new comment
+      setError(""); // Clear errors
+    } else {
+      console.error(
+        "Invalid comment structure or missing user data:",
+        newComment
       );
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("New Comment:", data);
-
-        if (data && data.data && data.data.comment) {
-          setComments((prevComments) => [
-            ...prevComments,
-            data.data.comment, // Add the new comment to the list
-          ]);
-        }
-      } else {
-        console.error("Failed to post comment");
-      }
-    } catch (error) {
-      console.error("Error posting comment:", error.message);
-    }
-  };
-
-  // Add a reply
-  const handleReplySubmit = async (parentId, replyText) => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      console.error("Token is missing. Redirecting to login.");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `/api/v1/comments/${entityType}/${entityId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ comment: replyText, parentComment: parentId }),
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        const newReply = data.data.comment;
-
-        setComments((prevComments) =>
-          prevComments.map((comment) =>
-            comment._id === parentId
-              ? { ...comment, replies: [...comment.replies, newReply] }
-              : comment
-          )
-        );
-      } else {
-        console.error("Failed to post reply");
-      }
-    } catch (error) {
-      console.error("Error posting reply:", error.message);
     }
   };
 
@@ -168,29 +101,9 @@ export default function CommentSection({ entityId, entityType }) {
               <div className={styles.comment}>
                 <p>{comment.comment}</p>
                 <small>By {comment.user.name}</small>
+                <br />
+                <small>{new Date(comment.createdAt).toLocaleString()}</small>
               </div>
-              <button
-                onClick={() =>
-                  handleReplySubmit(comment._id, "Your reply text")
-                }
-                className={styles.replyButton}
-              >
-                {comment.replies && comment.replies.length > 0
-                  ? `Replies ${comment.replies.length}`
-                  : "Reply"}
-              </button>
-              {comment.replies && comment.replies.length > 0 && (
-                <ul className={styles.repliesList}>
-                  {comment.replies.map((reply) => (
-                    <li key={reply._id} className={styles.replyItem}>
-                      <div className="styles.reply">
-                        <p>{reply.comment}</p>
-                        <small>By {reply.user.name}</small>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
             </li>
           ))}
         </ul>
