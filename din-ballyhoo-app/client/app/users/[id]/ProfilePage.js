@@ -1,6 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/alert/AlertDialog";
 
 export default function ProfilePage({ id }) {
   const [user, setUser] = useState(null);
@@ -12,6 +23,8 @@ export default function ProfilePage({ id }) {
   const [newPassword, setNewPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [deleteError, setDeleteError] = useState("");
+
   // Fetch user data when component mounts
   useEffect(() => {
     console.log("ProfilePage id:", id);
@@ -164,6 +177,35 @@ export default function ProfilePage({ id }) {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setDeleteError("You must be logged in.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/v1/users/deleteMe", {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Failed to delete account");
+      }
+
+      // Clear local storage
+      localStorage.removeItem("token");
+
+      // Redirect to home page or login page
+      router.push("/login");
+    } catch (error) {
+      setDeleteError(`Error deleting account: ${error.message}`);
+    }
+  };
   // Render loading or error messages while fetching data
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -193,12 +235,12 @@ export default function ProfilePage({ id }) {
                 placeholder={user.email} // Use placeholder for current email
                 onChange={(e) => setNewEmail(e.target.value)}
               />
+              <br />
+              <button type="submit">Update Profile</button>
             </div>
             <div>
               <h2>Change Password</h2>
-              {passwordError && (
-                <p className="passwordError">{passwordError}</p>
-              )}
+              {passwordError && <p className="error">{passwordError}</p>}
               <form onSubmit={handlePasswordUpdate} className="passwordForm">
                 <label className="passwordLabel">Current Password:</label>
                 <input
@@ -222,10 +264,41 @@ export default function ProfilePage({ id }) {
                   placeholder="Confirm new password"
                   onChange={(e) => setPasswordConfirm(e.target.value)}
                 />
+                <br />
                 <button type="submit">Update Password</button>
               </form>
             </div>
-            <button type="submit">Update Profile</button>
+            <div className="section">
+              <h2>Delete Profile</h2>
+              {deleteError && <p className="error">{deleteError}</p>}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <button className="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+                    Delete Account
+                  </button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your account and remove all of your data from our servers.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDeleteAccount}
+                      className="bg-red-500 hover:bg-red-600"
+                    >
+                      Delete Account
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </form>
         </div>
       ) : (
