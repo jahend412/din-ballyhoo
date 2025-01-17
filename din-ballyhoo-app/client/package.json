@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-alert-dialog": "^1.1.4",
     "axios": "^1.7.9",
     "firebase": "^11.1.0",
     "js-cookie": "^3.0.5",
