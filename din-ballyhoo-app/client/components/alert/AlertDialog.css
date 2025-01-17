@@ -1,0 +1,146 @@
+/* Base styles for the overlay */
+.alert-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Content styles */
+.alert-dialog-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 51;
+  width: 90%;
+  max-width: 500px;
+  background-color: white;
+  border-radius: 6px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Header styles */
+.alert-dialog-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 640px) {
+  .alert-dialog-header {
+    text-align: left;
+  }
+}
+
+/* Footer styles */
+.alert-dialog-footer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+@media (min-width: 640px) {
+  .alert-dialog-footer {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+/* Title styles */
+.alert-dialog-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+/* Description styles */
+.alert-dialog-description {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Button styles */
+.alert-dialog-action,
+.alert-dialog-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.alert-dialog-action {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+}
+
+.alert-dialog-action:hover {
+  background-color: #dc2626;
+}
+
+.alert-dialog-cancel {
+  background-color: transparent;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+}
+
+.alert-dialog-cancel:hover {
+  background-color: #f3f4f6;
+}
+
+/* Focus styles */
+.alert-dialog-action:focus-visible,
+.alert-dialog-cancel:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Animations */
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Disable pointer events when dialog is closed */
+[data-state="closed"] {
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .alert-dialog-cancel {
+    margin-top: 8px;
+  }
+}
