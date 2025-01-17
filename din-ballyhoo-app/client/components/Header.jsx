@@ -9,6 +9,7 @@ export default function Header() {
   const { user } = useUserContext();
   const { logoutUser } = useUserContext();
   const router = useRouter();
+  const id = user ? user._id : null;
 
   const handleLogout = async () => {
     logoutUser();
@@ -19,7 +20,7 @@ export default function Header() {
     <header className={styles.header}>
       <h1 className={styles.title}>Din Ballyhoo</h1>
       <nav className={styles.navLinks}>
-        <Link href="/profile" className={styles.navLink}>
+        <Link href={`/users/${id}`} className={styles.navLink}>
           Welcome, {user ? user.name : "Guest"}
         </Link>
         <Link href="/news" className={styles.navLink}>
