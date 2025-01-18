@@ -13,12 +13,6 @@
   padding: 16px;
 }
 
-/* Link styling within the card */
-.cardLink {
-  text-decoration: none;
-  color: #007bff;
-}
-
 /* Parent container for all cards (this holds the flexbox properties) */
 .cardContainer {
   display: flex;
@@ -26,4 +20,12 @@
   gap: 16px; /* Adds space between cards */
   justify-content: flex-start; /* Aligns cards to the left */
   padding: 1rem; /* Adds padding around the container */
+}
+
+.headLink {
+  text-decoration: none;
+  color: #ff0000;
+  font-size: 2rem;
+  margin: 2rem;
+  font-weight: bold;
 }
