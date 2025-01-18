@@ -12,6 +12,19 @@
   border: 0.3rem solid #ff0000;
   transform: translateY(-5px);
 }
+
+.card:hover .cardImage {
+  transform: scale(1.1);
+}
+
+.card:hover .cardTitle {
+  color: #ff0000;
+}
+
+.card:hover .cardSubtitle {
+  color: #ff0000;
+}
+
 /* Card image style */
 .cardImage {
   width: 100%;
@@ -36,8 +49,4 @@
   text-decoration: none;
   color: #ffffff;
   font-weight: 500;
-}
-
-.cardLink:hover {
-  color: #ff0000;
 }
