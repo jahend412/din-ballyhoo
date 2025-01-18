@@ -15,36 +15,30 @@ export default function Card({ data, config }) {
       : data[imageField];
 
   return (
-    <div className={styles.card}>
-      {/* Cover Image */}
+    <Link className={styles.cardLink} href={`${linkBase}/${data[linkField]}`}>
+      <div className={styles.card}>
+        {/* Cover Image */}
 
-      {imageField && data[imageField] && (
-        <Image
-          className={styles.cardImage}
-          src={`${backendBaseUrl}${data.coverImage}`}
-          alt={data[titleField] || "Album cover"}
-          width={300}
-          height={300}
-          unoptimized // Disable image optimization for external URLs like Firebase
-          priority
-        />
-      )}
-
-      {/* Content Section */}
-      <div className={styles.cardContent}>
-        <h2 className={styles.cardTitle}>{data[titleField]}</h2>
-        <h3 className={styles.cardSubtitle}>
-          {new Date(data[subtitleField]).toDateString("en-US")}
-        </h3>
-        {linkField && (
-          <Link
-            href={`${linkBase}/${data[linkField]}`}
-            className={styles.cardLink}
-          >
-            View Details
-          </Link>
+        {imageField && data[imageField] && (
+          <Image
+            className={styles.cardImage}
+            src={`${backendBaseUrl}${data.coverImage}`}
+            alt={data[titleField] || "Album cover"}
+            width={300}
+            height={300}
+            unoptimized // Disable image optimization for external URLs like Firebase
+            priority
+          />
         )}
+
+        {/* Content Section */}
+        <div className={styles.cardContent}>
+          <h2 className={styles.cardTitle}>{data[titleField]}</h2>
+          <h3 className={styles.cardSubtitle}>
+            {new Date(data[subtitleField]).toDateString("en-US")}
+          </h3>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
