@@ -13,6 +13,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/alert/AlertDialog";
 import "./ProfilePage.css";
+import Header from "@/components/Header";
 
 export default function ProfilePage({ id }) {
   const [user, setUser] = useState(null);
@@ -214,6 +215,7 @@ export default function ProfilePage({ id }) {
   // Once data is fetched and loaded, render the user profile
   return (
     <div>
+      <Header />
       <h1>Profile</h1>
       {user ? (
         <div>
