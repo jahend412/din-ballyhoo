@@ -8,7 +8,7 @@ import CommentSection from "@/components/commentSection/CommentSection";
 import TrackSection from "@/components/trackSection/TrackSection";
 import Header from "@/components/Header";
 import { fetchTrackUrl } from "@/app/utils/firebaseUtils";
-import styles from "./AlbumPage.module.css";
+import styles from "@/app/EntityPageCSS/EntityPage.module.css";
 
 export default function AlbumPage({ data }) {
   const { id } = useParams();
@@ -103,7 +103,7 @@ export default function AlbumPage({ data }) {
   return (
     <div>
       <Header />
-      <div className={styles.albumCover}>
+      <div className={styles.entityCover}>
         <Image
           src={`http://localhost:8080/${album.coverImage}`}
           alt={album.title}
@@ -112,7 +112,7 @@ export default function AlbumPage({ data }) {
           priority
         />
       </div>
-      <div className={styles.albumInfo}>
+      <div className={styles.entityInfo}>
         <h1>{album.title}</h1>
         <p>{album.artist}</p>
         <p>{new Date(album.releaseDate).toLocaleDateString("en-US")}</p>
@@ -155,7 +155,7 @@ export default function AlbumPage({ data }) {
         </div>
       )}
       {activeSection === "details" && (
-        <div className={styles.albumDetails}>
+        <div className={styles.entityDetails}>
           <p>{album.details}</p>
         </div>
       )}
