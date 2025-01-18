@@ -12,6 +12,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/alert/AlertDialog";
+import "./ProfilePage.css";
 
 export default function ProfilePage({ id }) {
   const [user, setUser] = useState(null);
