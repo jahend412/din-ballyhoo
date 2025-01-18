@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Card from "@/components/Card";
 import Header from "@/components/Header";
 import { showConfig } from "@/app/config/cardConfigs";
-import fetchShows from "@/app/utils/fetchEntity";
+import { fetchShows } from "@/app/utils/fetchEntity";
 import styles from "./ShowsPage.module.css";
 
 export default function ShowPage() {
@@ -12,7 +12,6 @@ export default function ShowPage() {
   const [error, setError] = useState("");
   const token = localStorage.getItem("token");
 
-  // Fetch shows
   // Fetch shows
   useEffect(() => {
     const loadShows = async () => {
