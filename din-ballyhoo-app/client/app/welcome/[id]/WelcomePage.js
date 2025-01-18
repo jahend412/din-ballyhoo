@@ -16,6 +16,7 @@ import {
   webcastConfig,
 } from "@/app/config/cardConfigs";
 import styles from "../WelcomePage.module.css";
+import Link from "next/link";
 
 export default function WelcomePage() {
   const { user, loading } = useUserContext();
@@ -107,7 +108,9 @@ export default function WelcomePage() {
     <div>
       <Header user={user} />
       <div className="section">
-        <h2>Albums</h2>
+        <Link href="/albums" className={styles.headLink}>
+          Albums
+        </Link>
         <div className={styles.cardContainer}>
           {albums.length > 0 ? (
             albums.map((album) => (
@@ -119,7 +122,9 @@ export default function WelcomePage() {
         </div>
       </div>
       <div className="section">
-        <h2>Webcasts</h2>
+        <Link href="/webcasts" className={styles.headLink}>
+          Webcasts
+        </Link>
         <div className={styles.cardContainer}>
           {webcasts.length > 0 ? (
             webcasts.map((webcast) => (
@@ -130,7 +135,9 @@ export default function WelcomePage() {
           )}
         </div>
         <div className="section">
-          <h2>Shows</h2>
+          <Link href="/shows" className={styles.headLink}>
+            Shows
+          </Link>
           <div className={styles.cardContainer}>
             {shows.length > 0 ? (
               shows.map((show) => (
