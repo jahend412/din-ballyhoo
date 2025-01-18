@@ -21,6 +21,12 @@ const webcastSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  tracks: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Track',
+    },
+  ],
   videoUrl: {
     type: String,
     required: [true, 'Video URL is required'],
