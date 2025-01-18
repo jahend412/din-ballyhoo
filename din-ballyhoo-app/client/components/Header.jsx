@@ -26,12 +26,6 @@ export default function Header() {
         <Link href="/news" className={styles.navLink}>
           News
         </Link>
-        <Link href="/shows" className={styles.navLink}>
-          Shows
-        </Link>
-        <Link href="/albums" className={styles.navLink}>
-          Albums
-        </Link>
         <Link
           href="https://www.youtube.com/@dinballyhoo6740"
           className={styles.navLink}
@@ -40,6 +34,9 @@ export default function Header() {
         </Link>
         <Link href="/about" className={styles.navLink}>
           About
+        </Link>
+        <Link href={`/welcome/${id}`} className={styles.navLink}>
+          Home
         </Link>
         <Link href="/login" onClick={handleLogout} className={styles.navLink}>
           Logout
