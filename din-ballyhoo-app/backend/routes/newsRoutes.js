@@ -2,31 +2,33 @@ const express = require('express');
 const newsController = require('../controllers/newsController');
 const authController = require('../controllers/authController');
 const checkPermissions = require('../middleware/permissionsMiddleware');
+const multer = require('multer');
+const upload = multer();
 
 const router = express.Router();
 
+router.use(authController.protect);
+
 router
-  .route('/news')
+  .route('/')
   .get(newsController.getAllNews)
   .post(
     checkPermissions('create-news'),
-    authController.protect,
     authController.restrictTo('admin'),
+    newsController.uploadNewsImage,
     newsController.createNews
   );
 
 router
-  .route('/news/:id')
+  .route('/:id')
   .get(newsController.getNews)
   .patch(
     checkPermissions('edit-news'),
-    authController.protect,
     authController.restrictTo('admin'),
     newsController.updateNews
   )
   .delete(
     checkPermissions('delete-news'),
-    authController.protect,
     authController.restrictTo('admin'),
     newsController.deleteNews
   );
