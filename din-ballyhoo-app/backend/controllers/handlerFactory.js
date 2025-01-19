@@ -20,6 +20,7 @@ exports.getAll = (Model) =>
     if (req.params.showId) filter = { show: req.params.showId };
     if (req.params.webcastId) filter = { webcast: req.params.webcastId };
     if (req.params.trackId) filter = { track: req.params.trackId };
+    if (req.params.newsId) filter = { news: req.params.newsId };
 
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
