@@ -20,14 +20,33 @@ body {
 
 /* Main container styling */
 .home-container {
-  position: relative;
-  height: 100vh; /* Full viewport height */
-  width: 100vw; /* Full viewport width */
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* Push links to the bottom */
-  align-items: center; /* Center links horizontally */
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.home-news {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: 100rem;
+  margin-bottom: 2rem;
+}
+
+.home-title {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  color: var(--hover-text);
+}
+
+.home-subtitle {
+  font-size: 2rem;
 }
 
 /* Image styling */
@@ -63,6 +82,6 @@ body {
 
 /* Hover effect for links */
 .home-link:hover {
-  background-color: var(--hover-text); /* Change background on hover */
-  color: var(--background); /* Change text color on hover */
+  /* Change background on hover */
+  color: var(--hover-text); /* Change text color on hover */
 }
