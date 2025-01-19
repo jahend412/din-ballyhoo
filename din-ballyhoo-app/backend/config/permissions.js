@@ -63,6 +63,12 @@ const permissions = {
   'reset-password': 'reset-password',
   'forgot-password': 'forgot-password',
 
+  // News Management
+  'create-news': 'create-news',
+  'edit-news': 'edit-news',
+  'delete-news': 'delete-news',
+  'view-news': 'view-news',
+
   // Profile Management
   'update-profile': 'update-profile',
 };
