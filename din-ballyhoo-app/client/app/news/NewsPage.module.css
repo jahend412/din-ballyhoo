@@ -1,0 +1,18 @@
+.newsPage {
+  padding: 20px;
+  background-color: #000000;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap; /* Ensures cards wrap to the next line if there's not enough space */
+  gap: 20px; /* Adds space between cards */
+  justify-content: center; /* Centers cards horizontally */
+  align-items: center; /* Aligns cards vertically */
+}
+
+.cardContainer > * {
+  flex: 1 1 calc(25% - 20px); /* Each card takes up 25% width minus the gap, and is flexible */
+  max-width: calc(25% - 20px); /* Limits the width to 25% minus the gap */
+  box-sizing: border-box; /* Includes padding and border in the width calculation */
+}
