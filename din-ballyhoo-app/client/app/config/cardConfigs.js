@@ -24,3 +24,12 @@ export const webcastConfig = {
   linkField: "_id",
   linkBase: "/webcasts",
 };
+
+export const newsConfig = {
+  imageField: "coverImage",
+  titleField: "title",
+  subtitleField: "datePosted",
+  detailField: ["content"],
+  linkField: "_id",
+  linkBase: "/news",
+};
