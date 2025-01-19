@@ -1,14 +1,26 @@
-export const fetchAlbums = async (token) => {
+import Cookies from "js-cookie";
+
+const BASE_URL = "http://localhost:8080";
+
+// Fetch albums
+export const fetchAlbums = async () => {
   try {
-    const response = await fetch("/api/v1/albums", {
+    const token = Cookies.get("token");
+
+    if (!token) {
+      console.log("No token found in cookies");
+      return [];
+    }
+
+    const response = await fetch(`${BASE_URL}/api/v1/albums`, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     });
     const data = await response.json();
 
     if (data.status === "success") {
-      // Ensure coverImage has a leading slash
       return data.data.map((album) => {
         if (album.coverImage && !album.coverImage.startsWith("/")) {
           album.coverImage = `/${album.coverImage}`;
@@ -25,17 +37,31 @@ export const fetchAlbums = async (token) => {
   }
 };
 
-export const fetchShows = async (token) => {
+// Fetch Shows
+export const fetchShows = async () => {
   try {
-    const response = await fetch("/api/v1/shows", {
+    const token = Cookies.get("token");
+
+    if (!token) {
+      console.log("No token found in cookies");
+      return [];
+    }
+
+    const response = await fetch(`${BASE_URL}/api/v1/shows`, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     });
     const data = await response.json();
 
     if (data.status === "success") {
-      return data.data;
+      return data.data.map((show) => {
+        if (show.coverImage && !show.coverImage.startsWith("/")) {
+          show.coverImage = `/${show.coverImage}`;
+        }
+        return show;
+      });
     } else {
       console.error("Failed to fetch shows: Unexpected data structure");
       return [];
@@ -46,23 +72,72 @@ export const fetchShows = async (token) => {
   }
 };
 
-export const fetchWebcasts = async (token) => {
+// Fetch webcasts
+// Fetch Shows
+export const fetchWebcasts = async () => {
   try {
-    const response = await fetch("/api/v1/webcasts", {
+    const token = Cookies.get("token");
+
+    if (!token) {
+      console.log("No token found in cookies");
+      return [];
+    }
+
+    const response = await fetch(`${BASE_URL}/api/v1/webcasts`, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     });
     const data = await response.json();
 
     if (data.status === "success") {
-      return data.data;
+      return data.data.map((webcast) => {
+        if (webcast.coverImage && !webcast.coverImage.startsWith("/")) {
+          webcast.coverImage = `/${webcast.coverImage}`;
+        }
+        return webcast;
+      });
     } else {
-      console.error("Failed to fetch webcasts: Unexpected data structure");
+      console.error("Failed to fetch shows: Unexpected data structure");
       return [];
     }
   } catch (error) {
-    console.error("Failed to fetch webcasts:", error);
+    console.error("Failed to fetch shows:", error);
+    return [];
+  }
+};
+
+// Fetch News
+export const fetchNews = async () => {
+  try {
+    const token = Cookies.get("token");
+
+    if (!token) {
+      console.log("No token found in cookies");
+      return [];
+    }
+
+    const response = await fetch(`${BASE_URL}/api/v1/news`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+
+    if (data.status === "success") {
+      return data.data.map((news) => {
+        if (news.coverImage && !news.coverImage.startsWith("/")) {
+          news.coverImage = `/${news.coverImage}`;
+        }
+        return news;
+      });
+    } else {
+      console.error("Failed to fetch shows: Unexpected data structure");
+      return [];
+    }
+  } catch (error) {
+    console.error("Failed to fetch shows:", error);
     return [];
   }
 };
