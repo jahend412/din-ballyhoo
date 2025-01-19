@@ -19,6 +19,7 @@ const userRoutes = require('./routes/userRoutes');
 const trackRoutes = require('./routes/trackRoutes');
 const showRoutes = require('./routes/showRoutes');
 const webcastRoutes = require('./routes/webcastRoutes');
+const newsRoutes = require('./routes/newsRoutes');
 
 const app = express();
 
@@ -87,6 +88,7 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/tracks', trackRoutes);
 app.use('/api/v1/shows', showRoutes);
 app.use('/api/v1/webcasts', webcastRoutes);
+app.use('/api/v1/news', newsRoutes);
 
 // Error handling middleware
 app.all('*', (req, res, next) => {
