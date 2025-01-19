@@ -27,7 +27,7 @@ const upload = multer({
 });
 
 // Middleware to handle image uploads for album cover
-exports.uploadNewsImage = upload.single('image');
+exports.uploadNewsImage = upload.single('coverImage');
 
 exports.createNews = async (req, res, next) => {
   try {
@@ -37,7 +37,7 @@ exports.createNews = async (req, res, next) => {
       title,
       content,
       datePosted,
-      image: req.file ? req.file.path : undefined, // Add the uploaded file path
+      coverImage: req.file ? req.file.path : undefined, // Add the uploaded file path
     });
 
     res.status(201).json({
