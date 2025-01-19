@@ -11,9 +11,14 @@ export default function Header() {
   const router = useRouter();
   const id = user ? user._id : null;
 
-  const handleLogout = async () => {
-    logoutUser();
-    router.push("/");
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      logoutUser();
+      router.push("/");
+    } catch (err) {
+      console.error("Error logging out:", err);
+    }
   };
 
   return (
