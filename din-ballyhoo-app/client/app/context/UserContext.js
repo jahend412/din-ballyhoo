@@ -59,12 +59,18 @@ const UserProvider = ({ children }) => {
   };
 
   const loginUser = (user, token) => {
-    Cookies.set("token", token);
+    Cookies.set("token", token, {
+      secure: true, // Only transmitted over HTTPS
+      sameSite: "strict", // Protects against CSRF
+      expires: 7, // cookie expires in 7 days
+    });
     console.log("Token set:", token);
+    console.log("Cookie verification:", Cookies.get("token"));
     setUser(user);
   };
 
   const logoutUser = () => {
+    console.log("Previous token:", Cookies.get("token"));
     Cookies.remove("token");
     console.log("Token removed", Cookies.get("token"));
     setUser(null);
