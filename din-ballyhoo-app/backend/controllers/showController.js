@@ -1,6 +1,4 @@
 const Shows = require('../models/showModel');
-const APIFeatures = require('../utils/apiFeatures');
-const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
 exports.getAllShows = factory.getAll(Shows);
