@@ -11,7 +11,7 @@ export default function Card({ data, config }) {
   // Ensure image path has a leading slash if it's a relative path
   const imagePath =
     data[imageField] && !data[imageField].startsWith("/")
-      ? `/uploads/${data[imageField]}`
+      ? `/${data[imageField]}`
       : data[imageField];
 
   return (
@@ -22,8 +22,8 @@ export default function Card({ data, config }) {
         {imageField && data[imageField] && (
           <Image
             className={styles.cardImage}
-            src={`${backendBaseUrl}${data.coverImage}`}
-            alt={data[titleField] || "Album cover"}
+            src={`${backendBaseUrl}${imagePath}`}
+            alt={data[titleField] || `Cover Image`}
             width={300}
             height={300}
             unoptimized // Disable image optimization for external URLs like Firebase
