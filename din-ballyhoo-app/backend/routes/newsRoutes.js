@@ -7,11 +7,14 @@ const upload = multer();
 
 const router = express.Router();
 
+router.route('/').get(newsController.getAllNews);
+
+router.route('/:id').get(newsController.getNews);
+
 router.use(authController.protect);
 
 router
   .route('/')
-  .get(newsController.getAllNews)
   .post(
     checkPermissions('create-news'),
     authController.restrictTo('admin'),
