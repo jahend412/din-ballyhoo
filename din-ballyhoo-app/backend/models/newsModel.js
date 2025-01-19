@@ -9,7 +9,7 @@ const newsSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Content is required'],
   },
-  image: {
+  coverImage: {
     type: String,
     required: false,
   },
