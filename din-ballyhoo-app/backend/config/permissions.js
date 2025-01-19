@@ -67,7 +67,6 @@ const permissions = {
   'create-news': 'create-news',
   'edit-news': 'edit-news',
   'delete-news': 'delete-news',
-  'view-news': 'view-news',
 
   // Profile Management
   'update-profile': 'update-profile',
