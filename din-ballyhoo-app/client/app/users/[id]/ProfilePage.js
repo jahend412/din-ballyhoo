@@ -102,7 +102,7 @@ export default function ProfilePage({ id }) {
     };
 
     try {
-      const response = await fetch(`/api/v1/users/${id}`, {
+      const response = await fetch(`/api/v1/users/updateMe`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -111,10 +111,10 @@ export default function ProfilePage({ id }) {
         body: JSON.stringify(updatedData),
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data.user); // Update user with the latest data
-        setError(""); // Clear error
+      const data = await response.json();
+      if (response.ok && data.status === "success" && data.data?.user) {
+        setUser(data.data.user);
+        setError("");
         setNewName("");
         setNewEmail("");
       } else {
@@ -150,7 +150,7 @@ export default function ProfilePage({ id }) {
         },
         body: JSON.stringify({
           currentPassword,
-          Password,
+          newPassword,
           passwordConfirm,
         }),
       });
@@ -176,47 +176,6 @@ export default function ProfilePage({ id }) {
       alert("Password updated successfully.");
     } catch (error) {
       setPasswordError(error.message);
-    }
-  };
-
-  // Handle profile update form submission
-  const handleProfileUpdate = async (e) => {
-    e.preventDefault();
-
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setError("You must be logged in.");
-      return;
-    }
-
-    const updatedData = {
-      name: newName || user.name,
-      email: newEmail || user.email,
-      password: newPassword,
-    };
-
-    try {
-      const response = await fetch(`/api/v1/users/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data.user); // Update user with the latest data
-        setError(""); // Clear error
-        setNewName("");
-        setNewEmail("");
-        setNewPassword("");
-      } else {
-        setError("Failed to update profile.");
-      }
-    } catch (error) {
-      setError("Error updating profile.");
     }
   };
 
@@ -259,7 +218,7 @@ export default function ProfilePage({ id }) {
       <Header />
       <h1>Profile</h1>
       {user ? (
-        <div>
+        <div className="profile">
           <h2>Profile Information</h2>
           <form onSubmit={handleUpdateUser}>
             <div>
@@ -267,7 +226,7 @@ export default function ProfilePage({ id }) {
               <input
                 type="text"
                 value={newName}
-                placeholder={user.name} // Use placeholder for current name
+                placeholder={user.name}
                 onChange={(e) => setNewName(e.target.value)}
               />
             </div>
@@ -276,74 +235,74 @@ export default function ProfilePage({ id }) {
               <input
                 type="email"
                 value={newEmail}
-                placeholder={user.email} // Use placeholder for current email
+                placeholder={user.email}
                 onChange={(e) => setNewEmail(e.target.value)}
               />
               <br />
               <button type="submit">Update Profile</button>
             </div>
-            <div>
-              <h2>Change Password</h2>
-              {passwordError && <p className="error">{passwordError}</p>}
-              <form onSubmit={handlePasswordUpdate} className="passwordForm">
-                <label className="passwordLabel">Current Password:</label>
-                <input
-                  type="password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="w-full p-2 border rounded"
-                  required
-                />
-                <label className="passwordLabel">New Password:</label>
-                <input
-                  type="password"
-                  value={newPassword}
-                  placeholder="Enter new password"
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-                <label className="passwordLabel">Confirm Password:</label>
-                <input
-                  type="password"
-                  value={passwordConfirm}
-                  placeholder="Confirm new password"
-                  onChange={(e) => setPasswordConfirm(e.target.value)}
-                />
-                <br />
-                <button type="submit">Update Password</button>
-              </form>
-            </div>
-            <div className="section">
-              <h2>Delete Profile</h2>
-              {deleteError && <p className="error">{deleteError}</p>}
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <button className="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
-                    Delete Account
-                  </button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you absolutely sure?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      your account and remove all of your data from our servers.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={handleDeleteAccount}
-                      className="bg-red-500 hover:bg-red-600"
-                    >
-                      Delete Account
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </div>
           </form>
+
+          <div>
+            <h2>Change Password</h2>
+            {passwordError && <p className="error">{passwordError}</p>}
+            <form onSubmit={handlePasswordUpdate} className="passwordForm">
+              <label className="passwordLabel">Current Password:</label>
+              <input
+                type="password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                className="w-full p-2 border rounded"
+                required
+              />
+              <label className="passwordLabel">New Password:</label>
+              <input
+                type="password"
+                value={newPassword}
+                placeholder="Enter new password"
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+              <label className="passwordLabel">Confirm Password:</label>
+              <input
+                type="password"
+                value={passwordConfirm}
+                placeholder="Confirm new password"
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+              />
+              <br />
+              <button type="submit">Update Password</button>
+            </form>
+          </div>
+
+          <div className="section">
+            <h2>Delete Profile</h2>
+            {deleteError && <p className="error">{deleteError}</p>}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <button className="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+                  Delete Account
+                </button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your account and remove all of your data from our servers.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleDeleteAccount}
+                    className="bg-red-500 hover:bg-red-600"
+                  >
+                    Delete Account
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         </div>
       ) : (
         <p>No user data available</p>
