@@ -9,6 +9,7 @@ import Header from "@/components/Header";
 import { fetchTrackUrl } from "@/app/utils/firebaseUtils";
 import styles from "@/app/EntityPageCSS/EntityPage.module.css";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 export default function WebcastPage({ data }) {
   const { id } = useParams();
@@ -20,7 +21,7 @@ export default function WebcastPage({ data }) {
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
 
     const fetchWebcastAndComments = async () => {
       try {

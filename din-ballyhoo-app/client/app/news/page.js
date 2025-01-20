@@ -6,11 +6,12 @@ import Header from "@/components/Header";
 import { fetchNews } from "@/app/utils/fetchEntity";
 import { newsConfig } from "@/app/config/cardConfigs";
 import styles from "./NewsPage.module.css";
+import Cookies from "js-cookie";
 
 export default function NewsPage() {
   const [news, setNews] = useState([]);
   const [error, setError] = useState("");
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   // Fetch news
   useEffect(() => {

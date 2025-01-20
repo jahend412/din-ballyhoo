@@ -33,7 +33,6 @@ const upload = multer({
 exports.uploadAlbumCover = upload.single('coverImage');
 
 // Create a new album with the uploaded image
-// Create a new album with the uploaded image
 exports.createAlbum = async (req, res, next) => {
   try {
     const { title, artist, releaseDate } = req.body;

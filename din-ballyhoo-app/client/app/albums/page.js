@@ -7,11 +7,12 @@ import { albumConfig } from "@/app/config/cardConfigs";
 import { useState, useEffect } from "react";
 import { fetchAlbums } from "@/app/utils/fetchEntity";
 import Header from "@/components/Header";
+import Cookies from "js-cookie";
 
 export default function AlbumsPage() {
   const [albums, setAlbums] = useState([]);
   const [error, setError] = useState("");
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   // Fetch albums
   useEffect(() => {

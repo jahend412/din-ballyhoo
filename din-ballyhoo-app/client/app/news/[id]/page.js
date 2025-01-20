@@ -6,7 +6,7 @@ import SecondaryHeader from "@/components/SecondaryHeader";
 import Image from "next/image";
 import { useParams } from "next/navigation"; // Import useRouter to extract the ID from the URL
 import styles from "./NewPage.module.css";
-import Link from "next/link";
+import Cookies from "js-cookie";
 
 export default function NewPage() {
   const { id } = useParams();
@@ -17,7 +17,7 @@ export default function NewPage() {
 
   useEffect(() => {
     // Check for the token in localStorage
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
 
     if (token) {
       setIsLogged(true); // If token is found, user is logged in

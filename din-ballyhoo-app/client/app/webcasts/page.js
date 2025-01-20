@@ -7,11 +7,12 @@ import { webcastConfig } from "@/app/config/cardConfigs";
 import { useState, useEffect } from "react";
 import { fetchWebcasts } from "@/app/utils/fetchEntity";
 import Header from "@/components/Header";
+import Cookies from "js-cookie";
 
 export default function AlbumsPage() {
   const [webcasts, setWebcasts] = useState([]);
   const [error, setError] = useState("");
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   // Fetch webcasts
   useEffect(() => {

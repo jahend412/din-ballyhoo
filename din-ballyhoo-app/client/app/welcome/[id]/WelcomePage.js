@@ -17,6 +17,7 @@ import {
 } from "@/app/config/cardConfigs";
 import styles from "../WelcomePage.module.css";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 export default function WelcomePage() {
   const { user, loading } = useUserContext();
@@ -24,7 +25,7 @@ export default function WelcomePage() {
   const [shows, setShows] = useState([]);
   const [webcasts, setWebcasts] = useState([]);
   const [error, setError] = useState("");
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   // Fetch albums
   useEffect(() => {

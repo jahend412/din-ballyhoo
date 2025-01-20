@@ -14,6 +14,7 @@ import {
 } from "@/components/alert/AlertDialog";
 import "./ProfilePage.css";
 import Header from "@/components/Header";
+import Cookies from "js-cookie";
 
 export default function ProfilePage({ id }) {
   const [user, setUser] = useState(null);
@@ -32,7 +33,7 @@ export default function ProfilePage({ id }) {
     console.log("ProfilePage id:", id);
 
     const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
+      const token = Cookies.get("token");
       if (!token) {
         setError("You must be logged in.");
         setLoading(false);

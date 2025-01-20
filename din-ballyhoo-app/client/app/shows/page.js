@@ -6,11 +6,12 @@ import Header from "@/components/Header";
 import { showConfig } from "@/app/config/cardConfigs";
 import { fetchShows } from "@/app/utils/fetchEntity";
 import styles from "./ShowsPage.module.css";
+import Cookies from "js-cookie";
 
 export default function ShowPage() {
   const [shows, setShows] = useState([]);
   const [error, setError] = useState("");
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   // Fetch shows
   useEffect(() => {

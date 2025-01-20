@@ -5,10 +5,10 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import CommentSection from "@/components/commentSection/CommentSection";
-import TrackSection from "@/components/trackSection/TrackSection";
 import Header from "@/components/Header";
 import { fetchTrackUrl } from "@/app/utils/firebaseUtils";
 import styles from "@/app/EntityPageCSS/EntityPage.module.css";
+import Cookies from "js-cookie";
 
 export default function AlbumPage({ data }) {
   const { id } = useParams();
@@ -19,19 +19,21 @@ export default function AlbumPage({ data }) {
   const [activeTrack, setActiveTrack] = useState(null);
   const [playing, setPlaying] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const BASE_URL = "http://localhost:8080";
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
 
     const fetchAlbumAndComments = async () => {
       try {
         // Fetch album data
-        const albumResponse = await fetch(`/api/v1/albums/${id}`, {
+        const albumResponse = await fetch(`${BASE_URL}/api/v1/albums/${id}`, {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
 
         const albumData = await albumResponse.json();
+        console.log("Album Data:", albumData);
         if (albumResponse.ok && albumData.status === "success") {
           const updatedTracks = await Promise.all(
             albumData.data.tracks.map(async (track) => {
@@ -45,12 +47,16 @@ export default function AlbumPage({ data }) {
         }
 
         // Fetch comments for the album
-        const commentsResponse = await fetch(`/api/v1/comments/album/${id}`, {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const commentsResponse = await fetch(
+          `${BASE_URL}/api/v1/comments/album/${id}`,
+          {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         const commentsData = await commentsResponse.json();
+        console.log("Comments Data:", commentsData);
         if (commentsResponse.ok && commentsData.status === "success") {
           setAlbum((prevAlbum) => ({
             ...prevAlbum,
