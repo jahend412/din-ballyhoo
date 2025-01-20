@@ -1,0 +1,45 @@
+/* EntityPage.module.css */
+.entityCover {
+  display: flex;
+  justify-content: center;
+  margin: 4rem auto;
+  width: 100%;
+  max-width: 40rem;
+}
+
+.entityInfo {
+  text-align: center;
+  margin: 2rem auto;
+  max-width: 40rem;
+  padding: 0 1rem;
+}
+
+.entityInfo h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.entityInfo p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.entityContent {
+  margin: 2rem auto;
+  max-width: 40rem;
+  padding: 0 1rem;
+  line-height: 1.6;
+  font-size: 1.125rem;
+}
+
+/* Add this class to your JSX div for overall page styling */
+.newsPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
