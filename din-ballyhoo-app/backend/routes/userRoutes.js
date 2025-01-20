@@ -40,7 +40,7 @@ router
   .patch(
     '/updateMe',
     authController.protect,
-    checkPermissions('update-profile'),
+    checkPermissions('update-user'),
     userController.updateMe
   )
   .delete(

@@ -85,12 +85,52 @@ export default function ProfilePage({ id }) {
     }
   }, [id]);
 
+  // Handle Update User
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    const token = Cookies.get("token");
+    if (!token) {
+      setError("You must be logged in.");
+      return;
+    }
+
+    const updatedData = {
+      name: newName || user.name,
+      email: newEmail || user.email,
+    };
+
+    try {
+      const response = await fetch(`/api/v1/users/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user); // Update user with the latest data
+        setError(""); // Clear error
+        setNewName("");
+        setNewEmail("");
+      } else {
+        setError("Failed to update profile.");
+      }
+    } catch (error) {
+      setError("Error updating profile.");
+    }
+  };
+
   // Handle Password Update
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
-    setPasswrodError("");
+    setPasswordError("");
 
-    if (newPassword !== newPasswordConfirm) {
+    if (newPassword !== passwordConfirm) {
       setPasswordError("Passwords do not match.");
       return;
     }
@@ -221,7 +261,7 @@ export default function ProfilePage({ id }) {
       {user ? (
         <div>
           <h2>Profile Information</h2>
-          <form onSubmit={handleProfileUpdate}>
+          <form onSubmit={handleUpdateUser}>
             <div>
               <label>Name:</label>
               <input

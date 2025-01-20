@@ -16,6 +16,7 @@ const roles = {
     permissions['update-password'],
     permissions['view-user'],
     permissions['view-comments'],
+    permissions['update-user'],
   ],
   bandMember: [
     permissions['create-comment'],
@@ -41,6 +42,7 @@ const roles = {
     permissions['edit-merch'],
     permissions['view-dashboard'],
     permissions['view-user'],
+    permissions['update-user'],
     permissions['view-comments'],
   ],
   admin: [
@@ -85,6 +87,7 @@ const roles = {
     permissions['edit-news'],
     permissions['delete-news'],
     permissions['view-comments'],
+    permissions['update-user'],
   ],
 };
 
