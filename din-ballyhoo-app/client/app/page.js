@@ -4,6 +4,7 @@ import Link from "next/link";
 import Card from "@/components/Card";
 import { newsConfig } from "@/app/config/cardConfigs";
 import { useState, useEffect } from "react";
+import SecondaryHeader from "@/components/SecondaryHeader";
 
 export default function Home() {
   const [news, setNews] = useState([]);
@@ -35,29 +36,23 @@ export default function Home() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <main className="home-container">
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      <h1 className="home-title">Din Ballyhoo</h1>
-      <h2 className="home-subtitle"> News </h2>
-      <div className="home-news">
-        {news.data && news.data.length > 0 ? (
-          news.data.map((newsItem) => (
-            <Card key={newsItem._id} data={newsItem} config={newsConfig} />
-          ))
-        ) : (
-          <p>No news found</p>
-        )}
-      </div>
-      <h2 className="home-subtitle"> Log in to check out our Music </h2>
-      <div className="home-links">
-        <Link href="/login" className="home-link">
-          Log In
-        </Link>
-        <Link href="/signup" className="home-link">
-          Sign Up
-        </Link>
-      </div>
-    </main>
+    <>
+      <SecondaryHeader />
+      <main className="home-container">
+        {loading && <p>Loading...</p>}
+        {error && <p>Error: {error}</p>}
+
+        <h2 className="home-subtitle"> News </h2>
+        <div className="home-news">
+          {news.data && news.data.length > 0 ? (
+            news.data.map((newsItem) => (
+              <Card key={newsItem._id} data={newsItem} config={newsConfig} />
+            ))
+          ) : (
+            <p>No news found</p>
+          )}
+        </div>
+      </main>
+    </>
   );
 }
