@@ -1,0 +1,40 @@
+.header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #000000;
+  color: white;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ff0000;
+  text-decoration: underline;
+}
+
+.subtitle {
+  font-size: 2rem;
+  color: #ff0000;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center; /* Centers nav links horizontally */
+  align-items: center; /* Ensures vertical alignment */
+  margin-top: 1rem; /* Adds spacing below subtitle */
+}
+
+.navLink {
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.navLink:hover {
+  color: #ff0000;
+}
