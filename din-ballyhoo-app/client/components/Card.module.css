@@ -1,5 +1,6 @@
 /* Style for each card */
 .card {
+  position: relative;
   border: 0.3rem solid #ddd;
   border-radius: 8px;
   margin: 16px;
@@ -50,4 +51,14 @@
   text-decoration: none;
   color: #ffffff;
   font-weight: 500;
+}
+
+.heartIcon {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.heartIcon:hover {
+  transform: scale(1.1);
 }
