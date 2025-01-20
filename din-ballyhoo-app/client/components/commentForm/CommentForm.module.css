@@ -26,3 +26,8 @@
 .submitBtn:hover {
   background: darkred; /* Changes the background color on hover */
 }
+
+.submitBtn:active {
+  background: #cc0000; /* Changes the background color on click */
+  transform: scaleY(0.95); /* Scales the button down slightly */
+}

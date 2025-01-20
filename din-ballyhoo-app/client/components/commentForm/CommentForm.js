@@ -1,8 +1,9 @@
 import { useState } from "react";
 import styles from "./CommentForm.module.css";
+import Cookies from "js-cookie";
 
 export default function CommentForm({ entityType, entityId, onCommentAdded }) {
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
   const [comment, setComment] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

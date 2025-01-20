@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CommentForm from "@/components/commentForm/CommentForm";
 import styles from "./CommentSection.module.css";
+import Cookies from "js-cookie";
 
 export default function CommentSection({ entityId, entityType }) {
   const [comments, setComments] = useState([]);
@@ -11,7 +12,7 @@ export default function CommentSection({ entityId, entityType }) {
   // Fetch comments for the given entity
   useEffect(() => {
     const fetchComments = async () => {
-      const token = localStorage.getItem("token");
+      const token = Cookies.get("token");
 
       if (!token) {
         console.error("Token is missing. Redirecting to login.");
