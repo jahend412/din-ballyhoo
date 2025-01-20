@@ -5,7 +5,8 @@ import Header from "@/components/Header";
 import SecondaryHeader from "@/components/SecondaryHeader";
 import Image from "next/image";
 import { useParams } from "next/navigation"; // Import useRouter to extract the ID from the URL
-import styles from "@/app/EntityPageCSS/EntityPage.module.css";
+import styles from "./NewPage.module.css";
+import Link from "next/link";
 
 export default function NewPage() {
   const { id } = useParams();
@@ -62,28 +63,29 @@ export default function NewPage() {
   if (!news || error) return <p>{error || "News not found"}</p>;
 
   return (
-    <div>
+    <>
       {/* Render header conditionally based on the login status */}
       {isLogged ? <Header /> : <SecondaryHeader />}
-
-      <div className={styles.entityCover}>
-        {news.coverImage && (
-          <Image
-            src={`http://localhost:8080/${news.coverImage}`}
-            alt={news.title || "cover image"}
-            width={300}
-            height={300}
-            priority
-          />
-        )}
+      <div className="newsPage">
+        <div className={styles.entityCover}>
+          {news.coverImage && (
+            <Image
+              src={`http://localhost:8080/${news.coverImage}`}
+              alt={news.title || "cover image"}
+              width={300}
+              height={300}
+              priority
+            />
+          )}
+        </div>
+        <div className={styles.entityInfo}>
+          <h1>{news.title}</h1>
+          <p>{new Date(news.datePosted).toLocaleDateString("en-us")}</p>
+        </div>
+        <div className={styles.entityContent}>
+          <p>{news.content}</p>
+        </div>
       </div>
-      <div className={styles.entityInfo}>
-        <h1>{news.title}</h1>
-        <p>{new Date(news.datePosted).toLocaleDateString("en-us")}</p>
-      </div>
-      <div className={styles.entityContent}>
-        <p>{news.content}</p>
-      </div>
-    </div>
+    </>
   );
 }
