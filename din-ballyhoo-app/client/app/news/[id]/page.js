@@ -16,7 +16,7 @@ export default function NewPage() {
   const [loading, setLoading] = useState(true); // Initially, we're loading
 
   useEffect(() => {
-    // Check for the token in localStorage
+    // Check for the token in Cookies
     const token = Cookies.get("token");
 
     if (token) {

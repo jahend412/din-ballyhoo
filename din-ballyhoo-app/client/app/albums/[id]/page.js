@@ -75,7 +75,7 @@ export default function AlbumPage({ data }) {
 
   useEffect(() => {
     if (album) {
-      const token = localStorage.getItem("token");
+      const token = Cookies.get("token");
       console.log("Token:", token);
       setAlbumToken(token);
     }
