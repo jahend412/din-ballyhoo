@@ -1,4 +1,5 @@
 .entityCover {
+  justify-content: center;
   display: inline-block;
   margin: 1rem;
 }
@@ -128,4 +129,14 @@
   width: 100%;
   height: 50px;
   background-color: #333;
+}
+
+.newsPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
