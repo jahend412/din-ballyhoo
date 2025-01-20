@@ -36,7 +36,14 @@ export default function ShowPage() {
         <div className={styles.cardContainer}>
           {shows.length > 0 ? (
             shows.map((show) => (
-              <Card key={show._id} data={show} config={showConfig} />
+              <Card
+                key={show._id}
+                data={show}
+                config={showConfig}
+                entityType="album"
+                entityId={album.id}
+                isFavInit={album.isFavorite}
+              />
             ))
           ) : (
             <p>No shows found</p>

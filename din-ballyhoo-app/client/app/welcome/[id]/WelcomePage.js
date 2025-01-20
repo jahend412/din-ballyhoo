@@ -115,7 +115,15 @@ export default function WelcomePage() {
         <div className={styles.cardContainer}>
           {albums.length > 0 ? (
             albums.map((album) => (
-              <Card key={album._id} data={album} config={albumConfig} />
+              <Card
+                key={album._id}
+                data={album}
+                config={albumConfig}
+                entityType="album"
+                entityId={album.id}
+                isFavInit={album.isFavorite}
+                showFavIcon={true}
+              />
             ))
           ) : (
             <p>No albums found</p>
@@ -129,7 +137,15 @@ export default function WelcomePage() {
         <div className={styles.cardContainer}>
           {webcasts.length > 0 ? (
             webcasts.map((webcast) => (
-              <Card key={webcast._id} data={webcast} config={webcastConfig} />
+              <Card
+                key={webcast._id}
+                data={webcast}
+                config={webcastConfig}
+                entityType="webcast"
+                entityId={webcast.id}
+                isFavInit={webcast.isFavorite}
+                showFavIcon={true}
+              />
             ))
           ) : (
             <p>Stay Tuned for the first webcast</p>
@@ -142,7 +158,15 @@ export default function WelcomePage() {
           <div className={styles.cardContainer}>
             {shows.length > 0 ? (
               shows.map((show) => (
-                <Card key={show._id} data={show} config={showConfig} />
+                <Card
+                  key={show._id}
+                  data={show}
+                  config={showConfig}
+                  entityType="show"
+                  entityId={show.id}
+                  isFavInit={show.isFavorite}
+                  showFavIcon={true}
+                />
               ))
             ) : (
               <p>Stay Tuned for the first show</p>

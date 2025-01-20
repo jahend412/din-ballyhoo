@@ -47,7 +47,14 @@ export default function AlbumsPage() {
         <div className={styles.cardContainer}>
           {webcasts.length > 0 ? (
             webcasts.map((webcast) => (
-              <Card key={webcast._id} data={webcast} config={webcastConfig} />
+              <Card
+                key={webcast._id}
+                data={webcast}
+                config={webcastConfig}
+                entityType="album"
+                entityId={album.id}
+                isFavInit={album.isFavorite}
+              />
             ))
           ) : (
             <p>No webcasts found</p>

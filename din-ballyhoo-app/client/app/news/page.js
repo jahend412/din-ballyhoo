@@ -45,7 +45,15 @@ export default function NewsPage() {
         <div className={styles.cardContainer}>
           {news.length > 0 ? (
             news.map((news) => (
-              <Card key={news._id} data={news} config={newsConfig} />
+              <Card
+                key={news._id}
+                data={news}
+                config={newsConfig}
+                entityType="news"
+                entityId={news.id}
+                isFavInit={false}
+                showFavoriteIcon={false}
+              />
             ))
           ) : (
             <p>No news found</p>

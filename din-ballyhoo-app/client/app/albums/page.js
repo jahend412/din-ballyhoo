@@ -46,7 +46,15 @@ export default function AlbumsPage() {
         <div className={styles.cardContainer}>
           {albums.length > 0 ? (
             albums.map((album) => (
-              <Card key={album._id} data={album} config={albumConfig} />
+              <Card
+                key={album._id}
+                data={album}
+                config={albumConfig}
+                entityType="album"
+                entityId={album.id}
+                isFavInit={album.isFavorite}
+                showFavIcon={true}
+              />
             ))
           ) : (
             <p>No albums found</p>

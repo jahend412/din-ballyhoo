@@ -46,7 +46,15 @@ export default function Home() {
         <div className="home-news">
           {news.data && news.data.length > 0 ? (
             news.data.map((newsItem) => (
-              <Card key={newsItem._id} data={newsItem} config={newsConfig} />
+              <Card
+                key={newsItem._id}
+                data={newsItem}
+                config={newsConfig}
+                entityType="news"
+                entityId={news.id}
+                isFavInit={false}
+                showFavoriteIcon={false}
+              />
             ))
           ) : (
             <p>No news found</p>
