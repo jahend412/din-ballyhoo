@@ -90,6 +90,27 @@ export default function AlbumPage({ data }) {
     setPlaying(true);
   };
 
+  const handlePlay = async () => {
+    if (activeTrack && albumToken) {
+      try {
+        await fetch(
+          `${BASE_URL}/api/v1/tracks/${activeTrack._id}/increment-playcount`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+          }
+        );
+
+        console.log(`Play count incremented for track: ${activeTrack.title}`);
+      } catch (error) {
+        console.error("Error updating play count:", error);
+      }
+    }
+  };
+
   // Function to update the comments when a new comment is added
   const updateComments = (newComment) => {
     setAlbum((prevAlbum) => ({
@@ -180,6 +201,7 @@ export default function AlbumPage({ data }) {
             playing={playing}
             width="100%"
             height="50px"
+            onStart={handlePlay}
           />
         )}
       </div>
