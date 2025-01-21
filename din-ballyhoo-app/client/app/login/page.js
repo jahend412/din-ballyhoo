@@ -100,7 +100,7 @@ export default function LoginPage() {
               <label htmlFor="rememberMe">Remember me</label>
             </div>
             <div className={styles.forgotPassword}>
-              <Link href="/forgot-password">Forgot password?</Link>
+              <Link href="/forgotPassword">Forgot password?</Link>
             </div>
           </div>
           <button
