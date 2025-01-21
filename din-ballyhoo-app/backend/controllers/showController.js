@@ -1,5 +1,9 @@
 const Shows = require('../models/showModel');
 const factory = require('./handlerFactory');
+const { uploadImage } = require('../utils/uploadImage');
+
+// Middleware to handle show cover image upload
+exports.uploadShowCover = uploadImage('coverImage');
 
 exports.getAllShows = factory.getAll(Shows);
 exports.getShow = factory.getOne(Shows, [

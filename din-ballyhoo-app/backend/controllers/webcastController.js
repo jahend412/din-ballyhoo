@@ -2,6 +2,10 @@ const Webcast = require('../models/webcastModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
+const { uploadImage } = require('../utils/uploadImage');
+
+// Middleware to handle webcast cover image upload
+exports.uploadWebcastCover = uploadImage('coverImage');
 
 exports.getAllWebcasts = factory.getAll(Webcast);
 exports.getWebcast = factory.getOne(Webcast, [

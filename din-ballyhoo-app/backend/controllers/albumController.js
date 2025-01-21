@@ -2,35 +2,10 @@ const Album = require('../models/albumModel');
 const Track = require('../models/trackModel');
 const factory = require('./handlerFactory');
 const multer = require('multer');
+const { uploadImage } = require('../utils/uploadImage');
 
-// Multer configuration
-// Configure Multer storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Save files to the 'uploads' directory
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}_${file.originalname}`); // Generate a unique filename
-  },
-});
-
-// File filter to ensure only image files are uploaded
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image')) {
-    cb(null, true); // Accept the file
-  } else {
-    cb(new Error('Not an image! Please upload only images.'), false); // Reject the file
-  }
-};
-
-// Multer middleware
-const upload = multer({
-  storage,
-  fileFilter,
-});
-
-// Middleware to handle image uploads for album cover
-exports.uploadAlbumCover = upload.single('coverImage');
+// Middleware to handle album cover image upload
+exports.uploadAlbumCover = uploadImage('coverImage');
 
 // Create a new album with the uploaded image
 exports.createAlbum = async (req, res, next) => {
