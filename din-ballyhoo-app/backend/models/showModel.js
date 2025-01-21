@@ -21,11 +21,10 @@ const showSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Setlist is required'],
   },
-  audioTracks: [
+  tracks: [
     {
-      trackTitle: { type: String, required: true },
-      duration: { type: Number }, // in seconds or minutes
-      trackUrl: { type: String, required: true },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Track',
     },
   ],
   imageUrl: {
