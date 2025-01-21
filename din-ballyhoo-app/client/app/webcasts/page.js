@@ -54,6 +54,7 @@ export default function AlbumsPage() {
                 entityType="album"
                 entityId={album.id}
                 isFavInit={album.isFavorite}
+                showFavIcon={true}
               />
             ))
           ) : (

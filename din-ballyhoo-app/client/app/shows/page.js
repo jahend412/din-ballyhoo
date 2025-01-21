@@ -43,6 +43,7 @@ export default function ShowPage() {
                 entityType="album"
                 entityId={album.id}
                 isFavInit={album.isFavorite}
+                showFavIcon={true}
               />
             ))
           ) : (
