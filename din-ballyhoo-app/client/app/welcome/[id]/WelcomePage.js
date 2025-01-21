@@ -18,6 +18,7 @@ import {
 import styles from "../WelcomePage.module.css";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import PopularTracks from "@/components/PopularTracks/PopularTracks";
 
 export default function WelcomePage() {
   const { user, loading } = useUserContext();
@@ -108,6 +109,7 @@ export default function WelcomePage() {
   return (
     <div>
       <Header user={user} />
+
       <div className="section">
         <Link href="/albums" className={styles.headLink}>
           Albums
@@ -172,6 +174,9 @@ export default function WelcomePage() {
               <p>Stay Tuned for the first show</p>
             )}
           </div>
+        </div>
+        <div className="section">
+          <PopularTracks tracks={PopularTracks} />
         </div>
       </div>
     </div>
