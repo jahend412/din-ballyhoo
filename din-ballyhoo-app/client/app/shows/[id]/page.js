@@ -78,6 +78,27 @@ export default function ShowPage({ data }) {
     setPlaying(true);
   };
 
+  const handlePlay = async () => {
+    if (activeTrack && albumToken) {
+      try {
+        await fetch(
+          `${BASE_URL}/api/v1/tracks/${activeTrack._id}/increment-playcount`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+          }
+        );
+
+        console.log(`Play count incremented for track: ${activeTrack.title}`);
+      } catch (error) {
+        console.error("Error updating play count:", error);
+      }
+    }
+  };
+
   const updateComments = (newComment) => {
     setShow((prevShow) => ({
       ...prevShow,
@@ -172,6 +193,7 @@ export default function ShowPage({ data }) {
             playing={playing}
             width="100%"
             height="50px"
+            onStart={handlePlay}
           />
         )}
       </div>
