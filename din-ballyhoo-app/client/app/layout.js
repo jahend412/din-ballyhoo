@@ -1,5 +1,6 @@
 import "./globals.css";
 import { UserProvider } from "@/app/context/UserContext";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Din Ballyhoo",
@@ -11,6 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <UserProvider>{children}</UserProvider>
+        <Footer />
       </body>
     </html>
   );
