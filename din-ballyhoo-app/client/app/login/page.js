@@ -95,10 +95,6 @@ export default function LoginPage() {
             />
           </div>
           <div className={styles.optionContainer}>
-            <div className={styles.rememberMeContainer}>
-              <input type="checkbox" id="rememberMe" />
-              <label htmlFor="rememberMe">Remember me</label>
-            </div>
             <div className={styles.forgotPassword}>
               <Link href="/forgotPassword">Forgot password?</Link>
             </div>
