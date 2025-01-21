@@ -1,15 +1,27 @@
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+/* Ensure the page takes at least the full viewport height */
+
+.page-container {
+  margin-top: 2rem !important;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the full height of the page */
+}
+
+/* Main content will take available space pushing footer down */
+.content {
+  flex: 1;
+}
+
+.footer {
+  width: 100%;
   background-color: #000000;
   color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
   flex-wrap: wrap;
-  padding-bottom: 1rem;
 }
 
 .logo {
@@ -21,6 +33,7 @@
 .navLinks {
   display: flex;
   gap: 1.5rem;
+  justify-content: center;
 }
 
 .navLink {
@@ -35,8 +48,11 @@
 }
 
 .copy {
-  font-size: 0.875rem; /* Smaller font for copyright */
+  font-size: 0.875rem;
   text-align: left;
   margin-top: 1rem;
-  flex: 1 0 100%; /* Push copyright text below on small screens */
+  flex: 1 0 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
