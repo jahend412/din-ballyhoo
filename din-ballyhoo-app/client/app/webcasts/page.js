@@ -51,9 +51,9 @@ export default function AlbumsPage() {
                 key={webcast._id}
                 data={webcast}
                 config={webcastConfig}
-                entityType="album"
-                entityId={album.id}
-                isFavInit={album.isFavorite}
+                entityType="webcast"
+                entityId={webcast.id}
+                isFavInit={webcast.isFavorite}
                 showFavIcon={true}
               />
             ))
