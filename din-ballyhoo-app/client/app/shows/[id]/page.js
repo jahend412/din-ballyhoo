@@ -11,10 +11,10 @@ import styles from "@/app/EntityPageCSS/EntityPage.module.css";
 import Link from "next/link";
 import Cookies from "js-cookie";
 
-export default function WebcastPage({ data }) {
+export default function ShowPage({ data }) {
   const { id } = useParams();
-  const [webcast, setWebcast] = useState(null);
-  const [webcastToken, setWebcastToken] = useState(null);
+  const [show, setShow] = useState(null);
+  const [showToken, setShowToken] = useState(null);
   const [error, setError] = useState("");
   const [activeSection, setActiveSection] = useState("tracks");
   const [activeTrack, setActiveTrack] = useState(null);
@@ -23,31 +23,31 @@ export default function WebcastPage({ data }) {
   useEffect(() => {
     const token = Cookies.get("token");
 
-    const fetchWebcastAndComments = async () => {
+    const fetchShowAndComments = async () => {
       try {
         // Fetch webcast data
-        const webcastResponse = await fetch(`/api/v1/webcasts/${id}`, {
+        const showResponse = await fetch(`/api/v1/shows/${id}`, {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const webcastData = await webcastResponse.json();
-        console.log("Webcast Data: ", webcastData);
+        const showData = await showResponse.json();
+        console.log("show Data: ", showData);
 
-        if (webcastResponse.ok && webcastData.status === "success") {
+        if (showResponse.ok && showData.status === "success") {
           const updatedTracks = await Promise.all(
-            webcastData.data.tracks.map(async (track) => {
+            showData.data.tracks.map(async (track) => {
               const url = await fetchTrackUrl(track.url);
               return { ...track, url };
             })
           );
-          setWebcast({ ...webcastData.data, tracks: updatedTracks });
+          setShow({ ...showData.data, tracks: updatedTracks });
         } else {
-          setError("Failed to fetch webcast");
+          setError("Failed to fetch show");
         }
 
         // Fetch comments for the webcast
-        const commentsResponse = await fetch(`/api/v1/comments/webcast/${id}`, {
+        const commentsResponse = await fetch(`/api/v1/comments/show/${id}`, {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -62,11 +62,11 @@ export default function WebcastPage({ data }) {
           setError("Failed to fetch comments");
         }
       } catch (err) {
-        console.error("Error fetching webcast:", err);
-        setError("Error fetching webcast");
+        console.error("Error fetching show:", err);
+        setError("Error fetching show");
       }
     };
-    fetchWebcastAndComments();
+    fetchShowAndComments();
   }, [id]);
 
   const handleSectionChange = (section) => {
@@ -79,9 +79,9 @@ export default function WebcastPage({ data }) {
   };
 
   const updateComments = (newComment) => {
-    setWebcast((prevWebcast) => ({
-      ...prevWebcast,
-      comments: [...prevWebcast.comments, newComment],
+    setShow((prevShow) => ({
+      ...prevShow,
+      comments: [...prevShow.comments, newComment],
     }));
   };
 
@@ -98,18 +98,18 @@ export default function WebcastPage({ data }) {
       <Header />
       <div className={styles.entityCover}>
         <Image
-          src={`http://localhost:8080/${webcast.coverImage}`}
-          alt={webcast.title}
+          src={`http://localhost:8080/${show.coverImage}`}
+          alt={show.title}
           width={800}
           height={800}
           priority
         />
       </div>
       <div className={styles.entityInfo}>
-        <h1>{webcast.title}</h1>
-        <p>{webcast.description}</p>
-        <p>{new Date(webcast.date).toLocaleDateString("en-us")}</p>
-        <Link className={styles.videoLink} href={webcast.videoUrl}>
+        <h1>{show.title}</h1>
+        <p>{show.description}</p>
+        <p>{new Date(show.date).toLocaleDateString("en-us")}</p>
+        <Link className={styles.videoLink} href={show.videoUrl}>
           Watch Here
         </Link>
       </div>
@@ -135,7 +135,7 @@ export default function WebcastPage({ data }) {
       </div>
       {activeSection === "tracks" && (
         <div className={styles.trackList}>
-          {webcast.tracks.map((track, index) => (
+          {show.tracks.map((track, index) => (
             <div
               key={track._id}
               className={`${styles.trackItem} ${
@@ -152,14 +152,14 @@ export default function WebcastPage({ data }) {
       )}
       {activeSection === "details" && (
         <div className={styles.entityDetails}>
-          <p>{webcast.details}</p>
+          <p>{show.details}</p>
           <h3>Setlist</h3>
-          <p>{webcast.setlist}</p>
+          <p>{show.setlist}</p>
         </div>
       )}
       {activeSection === "comments" && (
         <CommentSection
-          entityType="webcast"
+          entityType="show"
           entityId={id}
           updateComments={updateComments}
         />
