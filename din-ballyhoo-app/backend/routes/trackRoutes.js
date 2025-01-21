@@ -21,6 +21,8 @@ router
   .get(checkPermissions('view-track'), trackController.getAllTracks)
   .post(checkPermissions('create-track'), trackController.createTrack);
 
+router.get('/popular', trackController.getPopularTracks);
+
 router
   .route('/:id')
   .get(checkPermissions('view-track'), trackController.getTrack)
@@ -28,8 +30,6 @@ router
   .delete(checkPermissions('delete-track'), trackController.deleteTrack);
 
 router.route('/:id/stream', trackController.streamTrackById);
-
-router.get('/popular', trackController.getPopularTracks);
 
 router.patch('/:id/increment-playcount', trackController.incrementPlayCount);
 
