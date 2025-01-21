@@ -1,0 +1,19 @@
+.popular-tracks {
+  margin-top: 2rem;
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #ff0000;
+  }
+
+  ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+
+    li {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+  }
+}
