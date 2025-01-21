@@ -9,9 +9,13 @@ const showSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Venue is required'],
   },
-  date: {
+  releaseDate: {
     type: Date,
-    required: [true, 'Date is required'],
+    required: false,
+  },
+  coverImage: {
+    type: String,
+    required: false,
   },
   location: {
     type: String,

@@ -5,11 +5,15 @@ const webcastSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Title is required'],
   },
+  artist: {
+    type: String,
+    required: [true, 'Artist is required'],
+  },
   description: {
     type: String,
     required: false,
   },
-  date: {
+  releaseDate: {
     type: Date,
     required: [true, 'Date is required'],
   },
