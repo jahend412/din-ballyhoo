@@ -29,6 +29,10 @@ router
 
 router.route('/:id/stream', trackController.streamTrackById);
 
+router.get('/popular', trackController.getPopularTracks);
+
+router.patch('/:id/increment-playcount', trackController.incrementPlayCount);
+
 router.post('/upload', checkPermissions('upload-track'), (req, res) => {
   // Log incoming request details
   console.log('Upload Request Received:', {
