@@ -19,16 +19,8 @@ router
   );
 
 router
-  .post(
-    '/forgotPassword',
-    checkPermissions('forgot-password'),
-    authController.forgotPassword
-  )
-  .post(
-    '/resetPassword/:token',
-    checkPermissions('reset-password'),
-    authController.resetPassword
-  );
+  .post('/forgotPassword', authController.forgotPassword)
+  .post('/resetPassword/:token', authController.resetPassword);
 
 router
   .patch(
