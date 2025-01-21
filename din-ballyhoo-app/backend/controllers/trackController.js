@@ -85,3 +85,45 @@ exports.streamTrackById = catchAsync(async (req, res, next) => {
     });
   });
 });
+
+// Get Track play count
+exports.incrementPlayCount = catchAsync(async (req, res, next) => {
+  const updatedTrack = await Track.findByIdAndUpdate(
+    req.params.id,
+    { $inc: { playCount: 1 } },
+    { new: true, runValidators: true }
+  );
+
+  if (!updatedTrack) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Track not found',
+    });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      track: updatedTrack,
+    },
+  });
+});
+
+// Get Popular Tracks
+exports.getPopularTracks = catchAsync(async (req, res, next) => {
+  // Get the top 10 tracks by play count
+  const page = req.query.page * 1 || 1;
+  const limit = req.query.limit * 1 || 10;
+  const skip = (page - 1) * limit;
+
+  const tracks = await Track.find()
+    .sort({ playCount: -1 })
+    .skip(skip)
+    .limit(limit);
+
+  res.status(200).json({
+    status: 'success',
+    results: tracks.length,
+    data: { tracks },
+  });
+});
