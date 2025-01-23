@@ -12,7 +12,7 @@ export default function Footer() {
           <Link href="/privacy" className={styles.navLink}>
             Privacy Policy
           </Link>
-          <Link href="/customer-service" className={styles.navLink}>
+          <Link href="/customer" className={styles.navLink}>
             Customer Service
           </Link>
         </nav>
