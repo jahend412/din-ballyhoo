@@ -13,18 +13,27 @@ export async function fetchEntityData(entityType, id, setEntity, setError) {
     const data = await response.json();
 
     if (response.ok && data.status === "success") {
+      // Fetch the track details using track IDs
       const updatedTracks = await Promise.all(
-        data.data.tracks.map(async (track) => {
-          const url = await fetchTrackUrl(track.url);
-          return { ...track, url };
+        data.data.tracks.map(async (trackId) => {
+          const trackResponse = await fetch(`/api/v1/tracks/${trackId}`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          const trackData = await trackResponse.json();
+          const trackUrl = await fetchTrackUrl(trackData.data.url);
+
+          return { ...trackData.data, url: trackUrl };
         })
       );
+
       setEntity({ ...data.data, tracks: updatedTracks });
     } else {
       setError(`Failed to fetch ${entityType}`);
     }
-  } catch (err) {
-    console.error(`Error fetching ${entityType}:`, err);
+  } catch (error) {
+    console.error(`Error fetching ${entityType}:`, error);
     setError(`Error fetching ${entityType}`);
   }
 }
