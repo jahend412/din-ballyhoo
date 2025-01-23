@@ -10,7 +10,7 @@ export const albumConfig = {
 export const showConfig = {
   imageField: "coverImage",
   titleField: "title",
-  subtitleField: "venue",
+  subtitleField: "releaseDate",
   detailField: ["data", "location"],
   linkField: "_id",
   linkBase: "/shows",
@@ -19,7 +19,7 @@ export const showConfig = {
 export const webcastConfig = {
   imageField: "coverImage",
   titleField: "title",
-  subtitleField: "date",
+  subtitleField: "releaseDate",
   detailField: ["location"],
   linkField: "_id",
   linkBase: "/webcasts",
