@@ -56,7 +56,7 @@ export default function EntityPage({
         <div className={styles.trackList}>
           {entity.tracks.map((track, index) => (
             <div
-              key={track._id}
+              key={track.id || index}
               className={`${styles.trackItem} ${
                 activeTrack?.url === track.url ? styles.active : ""
               }`}
