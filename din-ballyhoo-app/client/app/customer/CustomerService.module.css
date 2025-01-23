@@ -1,0 +1,33 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-direction: column;
+}
+
+.h2 {
+  font-size: 2rem;
+  margin-top: 30px;
+  color: #555;
+  text-align: center;
+}
+
+.contactInfo {
+  color: #dbdbdb;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  text-align: center;
+}
