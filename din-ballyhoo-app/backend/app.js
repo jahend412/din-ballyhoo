@@ -82,6 +82,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// Body parser, reading data from body into req.body
+app.use(express.urlencoded({ extended: true }));
+
 // Routes
 
 app.use('/api/v1/albums', albumRoutes);
