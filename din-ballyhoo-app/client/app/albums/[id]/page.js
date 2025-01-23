@@ -15,7 +15,23 @@ export default function AlbumPage() {
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    fetchEntityData("album", id, setAlbum, setError);
+    console.log("Fetching album data for ID:", id);
+    fetchEntityData(
+      "album",
+      id,
+      (data) => {
+        console.log("Fetched album data:", data);
+        if (data) {
+          setAlbum(data);
+        } else {
+          console.error("No data received for album ID:", id);
+        }
+      },
+      (error) => {
+        console.error("Error fetching album data:", error);
+        setError(error);
+      }
+    );
   }, [id]);
 
   const handleTrackClick = (track) => {
