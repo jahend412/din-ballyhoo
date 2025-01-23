@@ -131,9 +131,5 @@ exports.getAlbum = factory.getOne(Album, [
     path: 'favorites', // Virtual field for favorites
     select: 'fan createdAt', // Only include these fields in the populated favorites
   },
-  {
-    path: 'tracks', // Add this to populate the tracks
-    select: 'title artist url', // Specify the fields you want to include for tracks
-  },
 ]);
 exports.deleteAlbum = factory.deleteOne(Album);
