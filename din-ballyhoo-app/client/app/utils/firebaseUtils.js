@@ -1,14 +1,21 @@
 import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from "@/firebaseConfig";
 
-// Function to convert gs:// URL to https:// URL
+// Function to fetch the track URL from Firebase Storage
 export const fetchTrackUrl = async (path) => {
   try {
-    const storageRef = ref(storage, path); // Use the initialized storage reference
-    const url = await getDownloadURL(storageRef); // Get the URL of the file
+    // Remove "gs://din-ballyhoo.firebasestorage.app/" prefix if present
+    const storagePath = path.startsWith("gs://")
+      ? path.replace("gs://din-ballyhoo.firebasestorage.app/", "")
+      : path;
+
+    // Create a reference to the file in Firebase Storage
+    const storageRef = ref(storage, storagePath);
+    const url = await getDownloadURL(storageRef);
+
     return url;
   } catch (error) {
     console.error("Error fetching track URL:", error);
-    throw error; // Rethrow the error for the caller to handle
+    throw error;
   }
 };
