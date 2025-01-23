@@ -18,8 +18,9 @@ router
   .post(
     protect,
     checkPermissions('create-webcast'),
+    webcastController.uploadWebcastCover,
     webcastController.createWebcast
-  ); // Same here
+  );
 
 // GET, PATCH, DELETE a specific webcast by ID
 router

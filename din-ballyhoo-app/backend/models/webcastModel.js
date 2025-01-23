@@ -9,7 +9,7 @@ const webcastSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Artist is required'],
   },
-  description: {
+  details: {
     type: String,
     required: false,
   },
@@ -19,7 +19,7 @@ const webcastSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    required: [true, 'Location is required'],
+    required: false,
   },
   coverImage: {
     type: String,
@@ -33,7 +33,7 @@ const webcastSchema = new mongoose.Schema({
   ],
   videoUrl: {
     type: String,
-    required: [true, 'Video URL is required'],
+    required: false,
   },
   setlist: {
     type: String,
