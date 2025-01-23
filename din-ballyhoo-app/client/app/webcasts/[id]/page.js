@@ -15,7 +15,23 @@ export default function WebcastPage() {
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    fetchEntityData("webcast", id, setWebcast, setError);
+    console.log("Fetching webcast data for ID:", id);
+    fetchEntityData(
+      "webcast",
+      id,
+      (data) => {
+        console.log("Fetched webcast data:", data);
+        if (data) {
+          setWebcast(data);
+        } else {
+          console.error("No data received for webcast ID:", id);
+        }
+      },
+      (error) => {
+        console.error("Error fetching webcast data:", error);
+        setError(error);
+      }
+    );
   }, [id]);
 
   const handleTrackClick = (track) => {
