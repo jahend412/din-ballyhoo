@@ -39,10 +39,10 @@ export default function AboutPage() {
           <h3 className="member-name">Ben Storey</h3>
           <p className="member-bio">
             Ben Storey is the bassist for Din Ballyhoo. He has been playing bass
-            for 10 years and has been in several bands before Din Ballyhoo. He
-            is married to Monica Storey, the guitarist and vocalist for Din
-            Ballyhoo. Ben is a software engineer by day and a musician by night.
-            He enjoys playing video games, reading, and watching movies.
+            for the past 10 years and has played in Din Ballyhoo since he
+            started. He is married to Monica Storey, the guitarist and vocalist
+            for Din Ballyhoo. He enjoys playing video games, hanging out with
+            his family, and watching movies.
           </p>
         </div>
 
@@ -52,8 +52,9 @@ export default function AboutPage() {
             Monica Storey is the guitarist and vocalist for Din Ballyhoo. She
             has been playing guitar for 15 years and has been singing for 20
             years. She is married to Ben Storey, the bassist for Din Ballyhoo.
-            Monica is a graphic designer by day and a musician by night. She
-            enjoys painting, drawing, and playing video games.
+            Monica is a teacher and photographer by day and a musician by night.
+            She enjoys painting, drawing, activities with her family, and
+            working with her students.
           </p>
         </div>
 
@@ -61,10 +62,12 @@ export default function AboutPage() {
           <h3 className="member-name">Josh Endemann</h3>
           <p className="member-bio">
             Josh Endemann is the guitarist and vocalist for Din Ballyhoo. He has
-            been playing guitar for 10 years and has been singing for 5 years.
+            been playing guitar for 20 years and has been singing for 15 years.
             He is cousins with Monica Storey, the guitarist and vocalist for Din
-            Ballyhoo. Josh is a student by day and a musician by night. He
-            enjoys playing video games, reading, and watching movies.
+            Ballyhoo. Josh works in construction by day and is working towards
+            becoming a web developer. He enjoys coding, hanging out with his
+            family, and playing music. He is also the web developer for Din
+            Ballyhoo.
           </p>
         </div>
 
@@ -74,8 +77,9 @@ export default function AboutPage() {
             Gary Swallow is the drummer and vocalist for Din Ballyhoo. He has
             been playing drums for 10 years and has been singing for 5 years. He
             is friends with Ben and Monica Storey, and Josh Endemann. Gary is a
-            student by day and a musician by night. He enjoys playing video
-            games, reading, and watching movies.
+            construction worker by day and a musician by night. He enjoys
+            playing video games, reading, and watching movies, and visiting with
+            his friends.
           </p>
         </div>
       </div>
