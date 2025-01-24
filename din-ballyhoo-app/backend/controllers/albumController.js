@@ -10,7 +10,7 @@ exports.uploadAlbumCover = uploadImage('coverImage');
 // Create a new album with the uploaded image
 exports.createAlbum = async (req, res, next) => {
   try {
-    const { title, artist, releaseDate } = req.body;
+    const { title, artist, releaseDate, details } = req.body;
     let tracks = req.body.tracks;
 
     // Parse tracks if it's a string
