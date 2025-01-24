@@ -37,8 +37,6 @@ export default function AlbumsPage() {
     return <p>No Webcasts Found</p>;
   }
 
-  console.log(webcasts);
-
   return (
     <div>
       <Header />

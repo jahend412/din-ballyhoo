@@ -15,12 +15,10 @@ export default function AlbumPage() {
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    console.log("Fetching album data for ID:", id);
     fetchEntityData(
       "album",
       id,
       (data) => {
-        console.log("Fetched album data:", data);
         if (data) {
           setAlbum(data);
         } else {

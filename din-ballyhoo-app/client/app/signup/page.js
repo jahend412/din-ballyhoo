@@ -35,7 +35,6 @@ export default function SignupPage() {
       });
 
       setSuccess("Signup successful!");
-      console.log(response.data);
       router.push("/login"); // Redirect to login page
     } catch (error) {
       setError(error.response?.data?.message || "Signup failed");

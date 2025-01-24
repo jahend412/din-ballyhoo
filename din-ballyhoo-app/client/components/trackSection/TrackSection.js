@@ -42,13 +42,10 @@ export default function TrackSection({ id, dataType }) {
 
         // Parse the response
         const data = await response.json();
-        console.log("API Response:", data);
 
         // Check if the request was successful
         if (data.status === "success") {
           const item = data.data;
-          console.log("data: ", data.data);
-
           // Check if the item has tracks
           if (item && item.tracks && item.tracks.length > 0) {
             setTracks(item.tracks); // Set the tracks for the selected item (album, show, or webcast)

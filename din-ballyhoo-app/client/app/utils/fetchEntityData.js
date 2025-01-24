@@ -14,7 +14,6 @@ export async function fetchEntityData(entityType, id, setEntity, setError) {
 
     if (response.ok && data.status === "success") {
       // Log tracks to see what they look like
-      console.log("Tracks:", data.data.tracks);
 
       // Filter out null track IDs before proceeding
       const validTracks = data.data.tracks.filter((trackId) => trackId != null);
@@ -28,22 +27,17 @@ export async function fetchEntityData(entityType, id, setEntity, setError) {
       const updatedTracks = await Promise.all(
         validTracks.map(async (trackId) => {
           try {
-            console.log("Fetching track:", trackId); // Log the track ID
-
             const trackResponse = await fetch(`/api/v1/tracks/${trackId}`, {
               method: "GET",
               headers: { Authorization: `Bearer ${token}` },
             });
 
             const trackData = await trackResponse.json();
-            console.log("Fetching track with ID:", trackId);
 
             // Handle error if track fetch failed
             if (trackData.status !== "success") {
               throw new Error(`Failed to fetch track ${trackId}`);
             }
-
-            console.log("Fetched track data:", trackData);
 
             const trackUrl = trackData.data.url
               ? await fetchTrackUrl(trackData.data.url)

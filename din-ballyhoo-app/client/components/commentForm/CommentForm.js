@@ -45,8 +45,6 @@ export default function CommentForm({ entityType, entityId, onCommentAdded }) {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("API Response:", data); // Log the response to check structure
-
         if (data && data.data && data.data.comment) {
           onCommentAdded(entityType, entityId, data.data.comment); // Pass the single comment
           setComment(""); // Clear the input after submission

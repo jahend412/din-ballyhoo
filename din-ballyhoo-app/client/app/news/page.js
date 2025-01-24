@@ -36,7 +36,6 @@ export default function NewsPage() {
     return <p>Loading...</p>;
   }
 
-  console.log(news);
   return (
     <div>
       <Header />

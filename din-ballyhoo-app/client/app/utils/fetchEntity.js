@@ -8,7 +8,6 @@ export const fetchAlbums = async () => {
     const token = Cookies.get("token");
 
     if (!token) {
-      console.log("No token found in cookies");
       return [];
     }
 
@@ -43,7 +42,6 @@ export const fetchShows = async () => {
     const token = Cookies.get("token");
 
     if (!token) {
-      console.log("No token found in cookies");
       return [];
     }
 
@@ -79,7 +77,6 @@ export const fetchWebcasts = async () => {
     const token = Cookies.get("token");
 
     if (!token) {
-      console.log("No token found in cookies");
       return [];
     }
 
@@ -114,7 +111,6 @@ export const fetchNews = async () => {
     const token = Cookies.get("token");
 
     if (!token) {
-      console.log("No token found in cookies");
       return [];
     }
 

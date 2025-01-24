@@ -30,8 +30,6 @@ export default function ProfilePage({ id }) {
 
   // Fetch user data when component mounts
   useEffect(() => {
-    console.log("ProfilePage id:", id);
-
     const fetchUserData = async () => {
       const token = Cookies.get("token");
       if (!token) {
@@ -57,10 +55,6 @@ export default function ProfilePage({ id }) {
         }
 
         const responseData = await response.json();
-        console.log(
-          "Raw response data:",
-          JSON.stringify(responseData, null, 2)
-        );
 
         // Check for the correct nested structure
         if (responseData.status === "success" && responseData.data?.user) {

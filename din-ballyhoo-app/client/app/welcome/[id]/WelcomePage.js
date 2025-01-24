@@ -82,13 +82,6 @@ export default function WelcomePage() {
         setError("User is null or not logged in");
         return;
       }
-
-      try {
-        console.log("User fetched successfully", user);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        setError("Error fetching user");
-      }
     };
 
     fetchUser();

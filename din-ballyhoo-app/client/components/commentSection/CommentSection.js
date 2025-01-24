@@ -33,8 +33,6 @@ export default function CommentSection({ entityId, entityType }) {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Comment Response:", data);
-
           if (data && data.data && Array.isArray(data.data.comments)) {
             setComments(data.data.comments); // Set the array of comments
           } else {
