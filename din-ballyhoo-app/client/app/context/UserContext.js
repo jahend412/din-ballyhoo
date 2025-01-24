@@ -7,16 +7,21 @@ import axios from "axios";
 const UserContext = createContext();
 
 const parseJwt = (token) => {
-  const base64Url = token.split(".")[1];
-  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-  const jsonPayload = decodeURIComponent(
-    atob(base64)
-      .split("")
-      .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-      .join("")
-  );
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
 
-  return JSON.parse(jsonPayload);
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    console.error("Error parsing JWT:", error);
+    return null;
+  }
 };
 
 const UserProvider = ({ children }) => {
@@ -24,35 +29,39 @@ const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const loadUserFromToken = async () => {
+    if (typeof window === "undefined") return; // Ensure function runs only on client side
+
     const token = Cookies.get("token");
-    console.log("Token:", token);
 
-    if (token) {
-      try {
-        const decoded = parseJwt(token);
-        const currentTime = Date.now() / 1000;
+    if (!token) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
 
-        if (decoded.exp < currentTime) {
-          console.warn("Token has expired");
-          Cookies.remove("token");
-          setUser(null);
-          setLoading(false);
-          return;
-        }
+    try {
+      const decoded = parseJwt(token);
+      if (!decoded) throw new Error("Invalid token");
 
-        const userId = decoded.id;
-        const response = await axios.get(`/api/v1/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log("API response:", response.data);
-        setUser(response.data.data.user);
-      } catch (error) {
-        console.error("Error fetching user or decoding token:", error);
+      const currentTime = Math.floor(Date.now() / 1000);
+      if (decoded.exp < currentTime) {
+        console.warn("Token has expired");
+        Cookies.remove("token");
         setUser(null);
+        setLoading(false);
+        return;
       }
-    } else {
+
+      const userId = decoded.id;
+      const response = await axios.get(`/api/v1/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUser(response.data.data.user);
+    } catch (error) {
+      console.error("Error fetching user or decoding token:", error);
       setUser(null);
     }
     setLoading(false);
@@ -60,19 +69,16 @@ const UserProvider = ({ children }) => {
 
   const loginUser = (user, token) => {
     Cookies.set("token", token, {
-      secure: true, // Only transmitted over HTTPS
-      sameSite: "strict", // Protects against CSRF
-      expires: 7, // cookie expires in 7 days
+      secure: true,
+      sameSite: "strict",
+      expires: 7,
     });
-    console.log("Token set:", token);
-    console.log("Cookie verification:", Cookies.get("token"));
+
     setUser(user);
   };
 
   const logoutUser = () => {
-    console.log("Previous token:", Cookies.get("token"));
     Cookies.remove("token");
-    console.log("Token removed", Cookies.get("token"));
     setUser(null);
   };
 
@@ -82,7 +88,7 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider value={{ user, loading, logoutUser, loginUser }}>
-      {children}
+      {!loading && children}
     </UserContext.Provider>
   );
 };
@@ -92,5 +98,4 @@ const useUserContext = () => {
   return useContext(UserContext);
 };
 
-// Export the provider and the custom hook
 export { UserProvider, useUserContext };
