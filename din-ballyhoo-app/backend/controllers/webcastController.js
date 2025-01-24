@@ -9,7 +9,6 @@ exports.uploadWebcastCover = uploadImage('coverImage');
 // Create a new webcast with the uploaded image and tracks
 exports.createWebcast = async (req, res, next) => {
   try {
-    console.log('Received request body:', req.body); // Check the full body
     const { title, artist, releaseDate, details } = req.body;
     let tracks = req.body.tracks;
 

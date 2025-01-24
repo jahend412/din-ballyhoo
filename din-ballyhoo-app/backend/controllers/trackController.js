@@ -128,7 +128,6 @@ exports.getPopularTracks = catchAsync(async (req, res, next) => {
       data: { tracks },
     });
   } catch (err) {
-    console.log(err);
     next(err);
   }
 });

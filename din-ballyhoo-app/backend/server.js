@@ -30,27 +30,19 @@ mongoose
     useUnifiedTopology: true,
   })
   .then((conn) => {
-    console.log('MongoDB Connected');
-
     // Start the app
     const port = process.env.PORT || 8080;
-    const server = app.listen(port, () => {
-      console.log(`App running on port ${port}...`);
-    });
+    const server = app.listen(port, () => {});
 
     return conn;
   });
 
 // Middleware
 process.on('uncaughtException', (err) => {
-  console.log(err.name, err.message);
-  console.log('UNCAUGHT EXCEPTION! Shutting down...');
   process.exit(1);
 });
 
 process.on('unhandledRejection', (err) => {
-  console.log(err.name, err.message);
-  console.log('UNHANDLED REJECTION! Shutting down...');
   server.close(() => {
     // Always close the server like this!!!
     process.exit(1);

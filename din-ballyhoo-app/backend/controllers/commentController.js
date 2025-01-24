@@ -89,8 +89,6 @@ exports.getCommentsForEntity = async (req, res, next) => {
   if (entityType === 'webcast') filter.webcast = entityId;
   if (entityType === 'merch') filter.merch = entityId; // Explicit filter for 'merch'
 
-  console.log('Filter:', filter); // Debugging the filter
-
   try {
     // Fetch top-level comments (comments with no parentComment) and populate user & replies
     const comments = await Comment.find({ ...filter, parentComment: null })

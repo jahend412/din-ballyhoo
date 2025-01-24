@@ -40,10 +40,8 @@ const importData = async () => {
     await Track.create(tracks);
     await Album.create(albums);
 
-    console.log('Data successfully loaded!');
     process.exit();
   } catch (err) {
-    console.error('Error loading data:', err);
     process.exit(1);
   }
 };
@@ -58,7 +56,6 @@ const deleteData = async () => {
     await Track.deleteMany();
     await Album.deleteMany();
 
-    console.log('Data successfully deleted!');
     process.exit();
   } catch (err) {
     console.error('Error deleting data:', err);

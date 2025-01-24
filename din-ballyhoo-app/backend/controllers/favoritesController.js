@@ -10,8 +10,6 @@ const Webcast = require('../models/webcastModel');
 exports.addToFavorites = catchAsync(async (req, res, next) => {
   const { type, itemId } = req.params; // Get type and itemId from URL params
 
-  console.log('Type:', type); // Debugging
-
   // Ensure that the type is valid
   if (!['track', 'album', 'show', 'webcast'].includes(type)) {
     return next(new AppError('Invalid type', 400));

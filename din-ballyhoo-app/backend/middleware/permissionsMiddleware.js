@@ -8,10 +8,6 @@ exports.checkPermission = (requiredPermission) => {
       return next(new AppError('Invalid token. Please log in again.', 401));
     }
 
-    // Log for debugging
-    console.log('Required Permission:', requiredPermission);
-    console.log('User Permissions:', req.user.permissions);
-
     // Check if the required permission is in the user's permissions array
     if (
       !req.user.permissions ||

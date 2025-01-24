@@ -34,13 +34,6 @@ router.route('/:id/stream', trackController.streamTrackById);
 router.patch('/:id/increment-playcount', trackController.incrementPlayCount);
 
 router.post('/upload', checkPermissions('upload-track'), (req, res) => {
-  // Log incoming request details
-  console.log('Upload Request Received:', {
-    body: req.body,
-    files: req.files,
-    headers: req.headers,
-  });
-
   const upload = setupGridFsStorage();
 
   // Use a Promise-based approach for better error handling
@@ -74,9 +67,6 @@ router.post('/upload', checkPermissions('upload-track'), (req, res) => {
         title: req.body.title || 'Unknown Title',
         artist: req.body.artist || 'Unknown Artist',
       };
-
-      // Log the uploaded file details
-      console.log('Uploaded track:', track);
 
       // Respond with success
       res.status(201).json({
