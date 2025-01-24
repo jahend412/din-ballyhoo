@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const cors = require('cors');
 const express = require('express');
-const setupGridFsStorage = require('./utils/multer');
+
 // Load environment variables FIRST
 const result = dotenv.config({
   path: path.resolve(__dirname, './config.env'),

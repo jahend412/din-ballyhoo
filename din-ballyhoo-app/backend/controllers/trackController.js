@@ -20,9 +20,6 @@ exports.createTrack = factory.createOne(Track);
 exports.updateTrack = factory.updateOne(Track);
 exports.deleteTrack = factory.deleteOne(Track);
 
-// Multer configuration
-const upload = multer({ storage }); // Initialize Multer with the GridFS storage engine
-
 // Upload Track
 exports.uploadTrack = catchAsync(async (req, res, next) => {
   // Check if it is an MP3 file
@@ -63,12 +60,6 @@ exports.streamTrackById = catchAsync(async (req, res, next) => {
       message: 'No track found with that ID',
     });
   }
-
-  // Stream the MP3 file from GridFS
-  const readStream = gfs.createReadStream({
-    _id: track.fileId, // Fetch the track's file ID
-    root: 'tracks', // Ensure this matches the GridFS bucket name
-  });
 
   // Set response headers to stream the MP3 file
   res.set('Content-Type', 'audio/mpeg');
