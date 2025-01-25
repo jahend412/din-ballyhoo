@@ -37,7 +37,6 @@ export default function AlbumsPage() {
     return <p>Loading...</p>;
   }
 
-  console.log(albums);
   return (
     <div>
       <Header />
