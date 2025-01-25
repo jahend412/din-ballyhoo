@@ -67,7 +67,8 @@ export default function AboutPage() {
             Ballyhoo. Josh works in construction by day and is working towards
             becoming a web developer. He enjoys coding, hanging out with his
             family, and playing music. He is also the web developer for Din
-            Ballyhoo.
+            Ballyhoo. He also plays with another group up in madison that is
+            being called Mad Sun for now, no puns intended.
           </p>
         </div>
 
