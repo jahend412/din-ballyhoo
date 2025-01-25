@@ -43,7 +43,7 @@ export default function Header() {
         <Link href={`/welcome/${id}`} className={styles.navLink}>
           Home
         </Link>
-        <Link href="/login" onClick={handleLogout} className={styles.navLink}>
+        <Link href="/" onClick={handleLogout} className={styles.navLink}>
           Logout
         </Link>
       </nav>
