@@ -9,7 +9,7 @@ import { fetchWebcasts } from "@/app/utils/fetchEntity";
 import Header from "@/components/Header";
 import Cookies from "js-cookie";
 
-export default function AlbumsPage() {
+export default function WebcastPage() {
   const [webcasts, setWebcasts] = useState([]);
   const [error, setError] = useState("");
   const token = Cookies.get("token");

@@ -6,6 +6,7 @@ import styles from "./Card.module.css";
 import { use, useState } from "react";
 import Cookies from "js-cookie";
 import { FaHeart } from "react-icons/fa";
+API_URL = process.env.BACKEND_URL;
 
 export default function Card({
   data,
@@ -15,7 +16,6 @@ export default function Card({
   isFavInit,
   showFavIcon,
 }) {
-  const backendBaseUrl = "http://localhost:8080";
   const [isFavorite, setIsFavorite] = useState(isFavInit);
   const [error, setError] = useState("");
 
@@ -37,7 +37,7 @@ export default function Card({
     }
 
     const method = isFavorite ? "DELETE" : "POST";
-    const url = `http://localhost:8080/api/v1/favorites/${entityType}/${entityId}`;
+    const url = `${API_URL}/api/v1/favorites/${entityType}/${entityId}`;
 
     try {
       const response = await fetch(url, {

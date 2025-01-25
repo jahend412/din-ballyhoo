@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+API_URL = process.env.BACKEND_URL;
 
 export default function ResetPassword() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function ResetPassword() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/users/resetPassword/${token}`,
+        `${API_URL}/api/v1/users/resetPassword/${token}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

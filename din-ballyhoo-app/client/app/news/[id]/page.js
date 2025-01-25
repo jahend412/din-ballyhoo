@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation"; // Import useRouter to extract the ID from the URL
 import styles from "./NewPage.module.css";
 import Cookies from "js-cookie";
+API_URL = process.env.BACKEND_URL;
 
 export default function NewPage() {
   const { id } = useParams();
@@ -34,12 +35,9 @@ export default function NewPage() {
 
     const fetchNewsById = async () => {
       try {
-        const newsResponse = await fetch(
-          `http://localhost:8080/api/v1/news/${id}`,
-          {
-            method: "GET",
-          }
-        );
+        const newsResponse = await fetch(`${API_URL}/api/v1/news/${id}`, {
+          method: "GET",
+        });
 
         if (!newsResponse.ok) {
           throw new Error("Failed to fetch news");
@@ -70,7 +68,7 @@ export default function NewPage() {
         <div className={styles.entityCover}>
           {news.coverImage && (
             <Image
-              src={`http://localhost:8080/${news.coverImage}`}
+              src={`${API_URL}/${news.coverImage}`}
               alt={news.title || "cover image"}
               width={300}
               height={300}

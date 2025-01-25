@@ -6,13 +6,13 @@ const PopularTracks = () => {
   const [tracks, setTracks] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const BASE_URL = "http://localhost:8080";
+  API_URL = process.env.BACKEND_URL;
   const token = Cookies.get("token");
 
   useEffect(() => {
     const fetchPopularTracks = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/api/v1/tracks/popular`, {
+        const response = await fetch(`${API_URL}/api/v1/tracks/popular`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

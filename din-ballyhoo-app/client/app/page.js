@@ -5,6 +5,7 @@ import Card from "@/components/Card";
 import { newsConfig } from "@/app/config/cardConfigs";
 import { useState, useEffect } from "react";
 import SecondaryHeader from "@/components/SecondaryHeader";
+API_URL = process.env.BACKEND_URL;
 
 export default function Home() {
   const [news, setNews] = useState([]);
@@ -14,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     const fetchNewsData = async () => {
       try {
-        const res = await fetch("http://localhost:8080/api/v1/news");
+        const res = await fetch(`${API_URL}/api/v1/news`);
         const data = await res.json();
 
         if (data.status === "success") {

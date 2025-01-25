@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-const BASE_URL = "http://localhost:8080";
+API_URL = process.env.BACKEND_URL;
 
 // Fetch albums
 export const fetchAlbums = async () => {
@@ -11,7 +11,7 @@ export const fetchAlbums = async () => {
       return [];
     }
 
-    const response = await fetch(`${BASE_URL}/api/v1/albums`, {
+    const response = await fetch(`${API_URL}/api/v1/albums`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export const fetchShows = async () => {
       return [];
     }
 
-    const response = await fetch(`${BASE_URL}/api/v1/shows`, {
+    const response = await fetch(`${API_URL}/api/v1/shows`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export const fetchWebcasts = async () => {
       return [];
     }
 
-    const response = await fetch(`${BASE_URL}/api/v1/webcasts`, {
+    const response = await fetch(`${API_URL}/api/v1/webcasts`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -114,7 +114,7 @@ export const fetchNews = async () => {
       return [];
     }
 
-    const response = await fetch(`${BASE_URL}/api/v1/news`, {
+    const response = await fetch(`${API_URL}/api/v1/news`, {
       headers: {
         "Content-Type": "application/json",
       },

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./CommentForm.module.css";
 import Cookies from "js-cookie";
+API_URL = process.env.BACKEND_URL;
 
 export default function CommentForm({ entityType, entityId, onCommentAdded }) {
   const token = Cookies.get("token");
@@ -32,7 +33,7 @@ export default function CommentForm({ entityType, entityId, onCommentAdded }) {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:8080/api/v1/comments/${entityType}/${entityId}`,
+        `${API_URL}/api/v1/comments/${entityType}/${entityId}`,
         {
           method: "POST",
           headers: {
