@@ -14,6 +14,7 @@ export default function ShowPage() {
   const [activeSection, setActiveSection] = useState("tracks");
   const [activeTrack, setActiveTrack] = useState(null);
   const [playing, setPlaying] = useState(false);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     fetchEntityData("show", id, setShow, setError);
@@ -43,6 +44,33 @@ export default function ShowPage() {
     }
   };
 
+  // Fetch comments when the component mounts or when album ID changes
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/v1/comments/shows/${id}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          const filteredComments = data.data.comments.filter(
+            (comment) => comment.show === id
+          );
+          setComments(filteredComments || []);
+        } else {
+          console.error("Failed to fetch comments");
+        }
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    fetchComments();
+  }, [id]);
+
   if (error) return <div>{error}</div>;
   if (!show) return <div>Loading...</div>;
 
@@ -56,11 +84,9 @@ export default function ShowPage() {
       activeTrack={activeTrack}
       playing={playing}
       handlePlay={handlePlay}
+      comments={comments}
       updateComments={(newComment) =>
-        setShow((prevShow) => ({
-          ...prevShow,
-          comments: [...prevShow.comments, newComment],
-        }))
+        setComments((prevComments) => [...prevComments, newComment])
       }
     />
   );

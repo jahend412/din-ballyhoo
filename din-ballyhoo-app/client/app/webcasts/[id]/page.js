@@ -14,6 +14,7 @@ export default function WebcastPage() {
   const [activeSection, setActiveSection] = useState("tracks");
   const [activeTrack, setActiveTrack] = useState(null);
   const [playing, setPlaying] = useState(false);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     fetchEntityData(
@@ -57,6 +58,36 @@ export default function WebcastPage() {
     }
   };
 
+  // Fetch comments when the component mounts or when webcast ID changes
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(
+          `${API_URL}/api/v1/comments/webcast/${id}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          const filteredComments = data.data.comments.filter(
+            (comment) => comment.webcast === id
+          );
+          setComments(filteredComments || []);
+        } else {
+          console.error("Failed to fetch comments");
+        }
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    fetchComments();
+  }, [id]);
+
   if (error) return <div>{error}</div>;
   if (!webcast) return <div>Loading...</div>;
 
@@ -70,11 +101,9 @@ export default function WebcastPage() {
       activeTrack={activeTrack}
       playing={playing}
       handlePlay={handlePlay}
+      comments={comments}
       updateComments={(newComment) =>
-        setWebcast((prevWebcast) => ({
-          ...prevWebcast,
-          comments: [...prevWebcast.comments, newComment],
-        }))
+        setComments((prevComments) => [...prevComments, newComment])
       }
     />
   );
