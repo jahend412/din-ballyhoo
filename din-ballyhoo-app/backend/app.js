@@ -27,12 +27,7 @@ app.use(
   cors({
     origin: 'http://localhost:3000', // Your frontend origin
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    allowedHeaders: [
-      'Content-Type',
-      'Authorization',
-      'Access-Control-Allow-Origin',
-      'Cache-Control',
-    ],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control'],
     credentials: true, // Allow cookies and headers
   })
 );
