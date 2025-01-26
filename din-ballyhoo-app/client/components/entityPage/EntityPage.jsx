@@ -3,7 +3,9 @@ import Image from "next/image";
 import CommentSection from "@/components/commentSection/CommentSection";
 import Header from "@/components/Header";
 import styles from "@/app/EntityPageCSS/EntityPage.module.css";
-API_URL = process.env.BACKEND_URL;
+
+const API_URL = process.env.BACKEND_URL;
+console.log(API_URL);
 
 export default function EntityPage({
   entity,
@@ -17,7 +19,7 @@ export default function EntityPage({
   updateComments,
 }) {
   return (
-    <div>
+    <div className={styles.pageWrapper}>
       <Header />
       <div className={styles.entityCover}>
         <Image
