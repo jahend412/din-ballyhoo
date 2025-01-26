@@ -4,6 +4,18 @@
   --hover-text: #ff0000;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 @import "@/app/welcome/WelcomePage.module.css";
 
 @media (prefers-color-scheme: dark) {
