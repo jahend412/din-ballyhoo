@@ -1,6 +1,15 @@
 import Cookies from "js-cookie";
 
-const API_URL = process.env.BACKEND_URL;
+const handleFetchResponse = async (response) => {
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  try {
+    return await response.json();
+  } catch (error) {
+    throw new Error("Failed to parse JSON response");
+  }
+};
 
 // Fetch albums
 export const fetchAlbums = async () => {
@@ -11,13 +20,14 @@ export const fetchAlbums = async () => {
       return [];
     }
 
-    const response = await fetch(`${API_URL}/api/v1/albums`, {
+    const response = await fetch(`/api/v1/albums`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
-    const data = await response.json();
+
+    const data = await handleFetchResponse(response);
 
     if (data.status === "success") {
       return data.data.map((album) => {
@@ -45,13 +55,14 @@ export const fetchShows = async () => {
       return [];
     }
 
-    const response = await fetch(`${API_URL}/api/v1/shows`, {
+    const response = await fetch(`/api/v1/shows`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
-    const data = await response.json();
+
+    const data = await handleFetchResponse(response);
 
     if (data.status === "success") {
       return data.data.map((show) => {
@@ -71,7 +82,6 @@ export const fetchShows = async () => {
 };
 
 // Fetch webcasts
-// Fetch Shows
 export const fetchWebcasts = async () => {
   try {
     const token = Cookies.get("token");
@@ -80,13 +90,14 @@ export const fetchWebcasts = async () => {
       return [];
     }
 
-    const response = await fetch(`${API_URL}/api/v1/webcasts`, {
+    const response = await fetch(`/api/v1/webcasts`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
-    const data = await response.json();
+
+    const data = await handleFetchResponse(response);
 
     if (data.status === "success") {
       return data.data.map((webcast) => {
@@ -96,16 +107,15 @@ export const fetchWebcasts = async () => {
         return webcast;
       });
     } else {
-      console.error("Failed to fetch shows: Unexpected data structure");
+      console.error("Failed to fetch webcasts: Unexpected data structure");
       return [];
     }
   } catch (error) {
-    console.error("Failed to fetch shows:", error);
+    console.error("Failed to fetch webcasts:", error);
     return [];
   }
 };
 
-// Fetch News
 export const fetchNews = async () => {
   try {
     const token = Cookies.get("token");
@@ -114,12 +124,14 @@ export const fetchNews = async () => {
       return [];
     }
 
-    const response = await fetch(`${API_URL}/api/v1/news`, {
+    const response = await fetch(`/api/v1/news`, {
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
-    const data = await response.json();
+
+    const data = await handleFetchResponse(response);
 
     if (data.status === "success") {
       return data.data.map((news) => {
@@ -129,11 +141,11 @@ export const fetchNews = async () => {
         return news;
       });
     } else {
-      console.error("Failed to fetch shows: Unexpected data structure");
+      console.error("Failed to fetch news: Unexpected data structure");
       return [];
     }
   } catch (error) {
-    console.error("Failed to fetch shows:", error);
+    console.error("Failed to fetch news:", error);
     return [];
   }
 };
