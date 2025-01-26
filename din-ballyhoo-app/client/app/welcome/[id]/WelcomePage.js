@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { useUserContext } from "@/app/context/UserContext";
 import {
   fetchAlbums,
@@ -20,7 +19,7 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import PopularTracks from "@/components/PopularTracks/PopularTracks";
 
-export default function WelcomePage() {
+export default function WelcomePage({ id }) {
   const { user, loading } = useUserContext();
   const [albums, setAlbums] = useState([]);
   const [shows, setShows] = useState([]);
@@ -72,9 +71,6 @@ export default function WelcomePage() {
 
     loadWebcasts();
   }, [token]);
-
-  const params = useParams();
-  const id = params?.id;
 
   useEffect(() => {
     const fetchUser = async () => {
