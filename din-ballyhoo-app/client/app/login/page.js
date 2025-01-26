@@ -31,10 +31,13 @@ export default function LoginPage() {
     }
 
     try {
+      console.log("Sending login request...");
       const response = await axios.post(`${API_URL}/api/v1/users/login`, {
         email,
         password,
       });
+      console.log("Login response:", response); // Ensure you see this
+
       const user = response.data.data?.user;
       const token = response.data.token;
 
@@ -46,10 +49,13 @@ export default function LoginPage() {
 
       loginUser(user, token);
       setSuccess("Login successful!");
-      router.push(`${API_URL}/welcome/${user._id}`);
+      const frontendUrl =
+        process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000"; // Default to localhost for dev
+      router.push(`${frontendUrl}/welcome/${user._id}`);
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || error.message || "Login failed";
+      console.error("Login error:", errorMessage); // Log the error message
       setError(errorMessage);
     } finally {
       setLoading(false); // End loading state
