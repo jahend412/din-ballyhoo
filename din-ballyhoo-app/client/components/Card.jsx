@@ -66,7 +66,7 @@ export default function Card({
         {imageField && data[imageField] && (
           <Image
             className={styles.cardImage}
-            src={`${backendBaseUrl}${imagePath}`}
+            src={`${API_URL}${imagePath}`}
             alt={data[titleField] || `Cover Image`}
             width={300}
             height={300}
