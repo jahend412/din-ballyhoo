@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function ResetPassword() {
