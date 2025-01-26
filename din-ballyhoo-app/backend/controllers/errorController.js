@@ -42,23 +42,28 @@ const sendErrorDev = (err, res) => {
 
 // Error handling for production
 const sendErrorProd = (err, res) => {
-  // Operational, trust error: send message to client
+  // Check if headers have already been sent to avoid multiple responses
+  if (res.headersSent) {
+    console.error('Response already sent, skipping error response.');
+    return;
+  }
+
+  const statusCode = err.statusCode || 500;
+  const status = err.status || 'error';
+
   if (err.isOperational) {
-    res.status(err.statusCode).json({
-      status: err.status,
-      message: err.message,
+    res.status(statusCode).json({
+      status,
+      message: err.message || 'Something went wrong!',
     });
-    // Programming or other unknown error: don't leak error details
   } else {
-    // 1) Log error
-    console.error('ERROR', err);
+    // 1) Log the unexpected error
+    console.error('ERROR:', err);
 
-    // 2) Send generic message
-    const message = 'Something went very wrong!';
-
+    // 2) Send a generic message to avoid leaking details
     res.status(500).json({
       status: 'error',
-      message,
+      message: 'Something went very wrong!',
     });
   }
 };
