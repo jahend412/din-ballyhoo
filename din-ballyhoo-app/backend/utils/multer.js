@@ -4,15 +4,16 @@ const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const dotenv = require('dotenv');
 
-// Explicitly specify the path to the .env file
-const result = dotenv.config({
-  path: path.resolve(__dirname, '../config.env'),
-});
+// Only load .env file in local development environment
+if (process.env.NODE_ENV !== 'production') {
+  const result = dotenv.config({
+    path: path.resolve(__dirname, '../.env'),
+  });
 
-// Check if .env file was loaded successfully
-if (result.error) {
-  console.error('Error loading .env file:', result.error);
-  throw new Error('Unable to load environment variables');
+  if (result.error) {
+    console.error('Error loading .env file:', result.error);
+    throw new Error('Unable to load environment variables');
+  }
 }
 
 // Validate required environment variables
