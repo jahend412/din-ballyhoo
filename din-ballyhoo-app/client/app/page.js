@@ -5,7 +5,7 @@ import Card from "@/components/Card";
 import { newsConfig } from "@/app/config/cardConfigs";
 import { useState, useEffect } from "react";
 import SecondaryHeader from "@/components/SecondaryHeader";
-API_URL = process.env.BACKEND_URL;
+const API_URL = process.env.BACKEND_URL;
 
 export default function Home() {
   const [news, setNews] = useState([]);

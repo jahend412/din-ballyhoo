@@ -16,6 +16,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false); // For loading state
   const router = useRouter();
   const { loginUser } = useUserContext(); // Destructure loginUser from context
+  const API_URL = process.env.BACKEND_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +31,7 @@ export default function LoginPage() {
     }
 
     try {
-      const response = await axios.post("/api/v1/users/login", {
+      const response = await axios.post(`${API_URL}/api/v1/users/login`, {
         email,
         password,
       });

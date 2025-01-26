@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-API_URL = process.env.BACKEND_URL;
+const API_URL = process.env.BACKEND_URL;
 
 // Fetch albums
 export const fetchAlbums = async () => {

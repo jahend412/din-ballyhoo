@@ -6,7 +6,7 @@ const PopularTracks = () => {
   const [tracks, setTracks] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  API_URL = process.env.BACKEND_URL;
+  const API_URL = process.env.BACKEND_URL;
   const token = Cookies.get("token");
 
   useEffect(() => {
