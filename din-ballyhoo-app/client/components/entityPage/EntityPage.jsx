@@ -3,9 +3,7 @@ import Image from "next/image";
 import CommentSection from "@/components/commentSection/CommentSection";
 import Header from "@/components/Header";
 import styles from "@/app/EntityPageCSS/EntityPage.module.css";
-
-const API_URL = process.env.BACKEND_URL;
-console.log(API_URL);
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function EntityPage({
   entity,
@@ -17,13 +15,20 @@ export default function EntityPage({
   playing,
   handlePlay,
   updateComments,
+  comments,
 }) {
+  // Ensure image path has a leading slash if it's a relative path
+  const imagePath =
+    entity.coverImage && !entity.coverImage.startsWith("/")
+      ? `/${entity.coverImage}`
+      : entity.coverImage;
+  console.log("Entity comments:", entity.comments);
   return (
     <div className={styles.pageWrapper}>
       <Header />
       <div className={styles.entityCover}>
         <Image
-          src={`${API_URL}/${entity.coverImage}`}
+          src={`${API_URL}${imagePath}`}
           alt={entity.title}
           width={600}
           height={600}
@@ -52,7 +57,7 @@ export default function EntityPage({
           className={activeSection === "comments" ? styles.active : ""}
           onClick={() => setActiveSection("comments")}
         >
-          Reviews {entity.comments ? entity.comments.length : 0}
+          Reviews {comments?.length || 0} {/* Display the number of comments */}
         </button>
       </div>
       {activeSection === "tracks" && (
