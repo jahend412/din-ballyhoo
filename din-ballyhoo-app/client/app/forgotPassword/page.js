@@ -6,7 +6,7 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  API_URL = process.env.BACKEND_URL;
+  const API_URL = process.env.BACKEND_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
