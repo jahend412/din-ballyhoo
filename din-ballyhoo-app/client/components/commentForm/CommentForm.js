@@ -1,13 +1,13 @@
 import { useState } from "react";
 import styles from "./CommentForm.module.css";
 import Cookies from "js-cookie";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function CommentForm({ entityType, entityId, onCommentAdded }) {
   const token = Cookies.get("token");
   const [comment, setComment] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const API_URL = process.env.BACKEND_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

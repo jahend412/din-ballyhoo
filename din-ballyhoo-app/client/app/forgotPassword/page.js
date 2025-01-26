@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const API_URL = process.env.BACKEND_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

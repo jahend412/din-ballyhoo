@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation"; // Import useRouter to extract the ID from the URL
 import styles from "./NewPage.module.css";
 import Cookies from "js-cookie";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function NewPage() {
   const { id } = useParams();
@@ -14,7 +15,6 @@ export default function NewPage() {
   const [error, setError] = useState("");
   const [isLogged, setIsLogged] = useState(null); // Null means we haven't checked yet
   const [loading, setLoading] = useState(true); // Initially, we're loading
-  const API_URL = process.env.BACKEND_URL;
 
   useEffect(() => {
     // Check for the token in Cookies

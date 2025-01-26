@@ -6,6 +6,7 @@ import styles from "./Card.module.css";
 import { use, useState } from "react";
 import Cookies from "js-cookie";
 import { FaHeart } from "react-icons/fa";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function Card({
   data,
@@ -19,7 +20,6 @@ export default function Card({
   const [error, setError] = useState("");
 
   const { imageField, titleField, subtitleField, linkField, linkBase } = config;
-  const API_URL = process.env.BACKEND_URL;
 
   // Ensure image path has a leading slash if it's a relative path
   const imagePath =

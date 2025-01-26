@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import "./PopularTracks.css";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const PopularTracks = () => {
   const [tracks, setTracks] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const API_URL = process.env.BACKEND_URL;
   const token = Cookies.get("token");
 
   useEffect(() => {

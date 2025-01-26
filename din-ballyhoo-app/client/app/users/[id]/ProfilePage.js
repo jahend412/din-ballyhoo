@@ -15,6 +15,7 @@ import {
 import "./ProfilePage.css";
 import Header from "@/components/Header";
 import Cookies from "js-cookie";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function ProfilePage({ id }) {
   const [user, setUser] = useState(null);
@@ -41,7 +42,7 @@ export default function ProfilePage({ id }) {
       try {
         setLoading(true);
 
-        const response = await fetch(`/api/v1/users/${id}`, {
+        const response = await fetch(`${API_URL}/api/v1/users/${id}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -96,7 +97,7 @@ export default function ProfilePage({ id }) {
     };
 
     try {
-      const response = await fetch(`/api/v1/users/updateMe`, {
+      const response = await fetch(`${API_URL}/api/v1/users/updateMe`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -136,7 +137,7 @@ export default function ProfilePage({ id }) {
     }
 
     try {
-      const response = await fetch(`/api/v1/users/updatePassword`, {
+      const response = await fetch(`${API_URL}/api/v1/users/updatePassword`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CommentForm from "@/components/commentForm/CommentForm";
 import styles from "./CommentSection.module.css";
 import Cookies from "js-cookie";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function CommentSection({ entityId, entityType }) {
   const [comments, setComments] = useState([]);
@@ -22,7 +23,7 @@ export default function CommentSection({ entityId, entityType }) {
       try {
         setLoading(true);
         const response = await fetch(
-          `/api/v1/comments/${entityType}/${entityId}`,
+          `${API_URL}/api/v1/comments/${entityType}/${entityId}`,
           {
             method: "GET",
             headers: {

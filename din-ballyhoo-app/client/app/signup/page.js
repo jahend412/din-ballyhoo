@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function SignupPage() {
   const [name, setName] = useState("");
@@ -27,7 +28,7 @@ export default function SignupPage() {
     }
 
     try {
-      const response = await axios.post("/api/v1/users/signup", {
+      const response = await axios.post(`${API_URL}/api/v1/users/signup`, {
         name,
         email,
         password,

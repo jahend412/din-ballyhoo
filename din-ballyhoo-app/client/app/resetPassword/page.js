@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function ResetPassword() {
   const router = useRouter();
@@ -9,7 +10,6 @@ export default function ResetPassword() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const API_URL = process.env.BACKEND_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

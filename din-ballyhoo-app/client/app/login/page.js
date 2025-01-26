@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 import { useUserContext } from "@/app/context/UserContext"; // Import useUserContext
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -16,7 +17,6 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false); // For loading state
   const router = useRouter();
   const { loginUser } = useUserContext(); // Destructure loginUser from context
-  const API_URL = process.env.BACKEND_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,7 +46,7 @@ export default function LoginPage() {
 
       loginUser(user, token);
       setSuccess("Login successful!");
-      router.push(`/welcome/${user._id}`);
+      router.push(`${API_URL}/welcome/${user._id}`);
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || error.message || "Login failed";

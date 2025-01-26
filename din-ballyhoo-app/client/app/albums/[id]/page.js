@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import EntityPage from "@/components/entityPage/EntityPage";
 import { fetchEntityData } from "@/app/utils/fetchEntityData";
 import Cookies from "js-cookie";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function AlbumPage() {
   const { id } = useParams();
@@ -40,13 +41,16 @@ export default function AlbumPage() {
   const handlePlay = async () => {
     if (activeTrack) {
       try {
-        await fetch(`/api/v1/tracks/${activeTrack._id}/increment-playcount`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${Cookies.get("token")}`,
-          },
-        });
+        await fetch(
+          `${API_URL}/api/v1/tracks/${activeTrack._id}/increment-playcount`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+          }
+        );
       } catch (error) {
         console.error("Error updating play count:", error);
       }
