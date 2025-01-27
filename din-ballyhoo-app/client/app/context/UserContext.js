@@ -53,11 +53,14 @@ const UserProvider = ({ children }) => {
       }
 
       const userId = decoded.id;
-      const response = await axios.get(`/api/v1/users/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setUser(response.data.data.user);
     } catch (error) {
