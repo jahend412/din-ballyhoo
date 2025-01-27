@@ -20,12 +20,15 @@ export const fetchAlbums = async () => {
       return [];
     }
 
-    const response = await fetch(`/api/v1/albums`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/albums`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await handleFetchResponse(response);
 
@@ -55,12 +58,15 @@ export const fetchShows = async () => {
       return [];
     }
 
-    const response = await fetch(`/api/v1/shows`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/shows`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await handleFetchResponse(response);
 
@@ -90,12 +96,15 @@ export const fetchWebcasts = async () => {
       return [];
     }
 
-    const response = await fetch(`/api/v1/webcasts`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/webcasts`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await handleFetchResponse(response);
 
