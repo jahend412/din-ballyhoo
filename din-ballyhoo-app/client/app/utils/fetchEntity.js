@@ -133,12 +133,15 @@ export const fetchNews = async () => {
       return [];
     }
 
-    const response = await fetch(`/api/v1/news`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/news`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await handleFetchResponse(response);
 
