@@ -5,10 +5,13 @@ export async function fetchEntityData(entityType, id, setEntity, setError) {
   const token = Cookies.get("token");
 
   try {
-    const response = await fetch(`/api/v1/${entityType}s/${id}`, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/${entityType}s/${id}`,
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
     const data = await response.json();
 
@@ -27,10 +30,13 @@ export async function fetchEntityData(entityType, id, setEntity, setError) {
       const updatedTracks = await Promise.all(
         validTracks.map(async (trackId) => {
           try {
-            const trackResponse = await fetch(`/api/v1/tracks/${trackId}`, {
-              method: "GET",
-              headers: { Authorization: `Bearer ${token}` },
-            });
+            const trackResponse = await fetch(
+              `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/${trackId}`,
+              {
+                method: "GET",
+                headers: { Authorization: `Bearer ${token}` },
+              }
+            );
 
             const trackData = await trackResponse.json();
 
