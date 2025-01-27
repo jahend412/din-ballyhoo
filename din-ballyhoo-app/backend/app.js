@@ -26,9 +26,11 @@ const app = express();
 app.use(
   cors({
     origin: [
-      'http://localhost:3000',
-      'https://din-ballyhoo-lwpof5qxn-josh-endemanns-projects.vercel.app/',
-    ], // Your frontend origin
+      'http://localhost:3000', // For local development
+      'https://din-ballyhoo.vercel.app', // Your deployed frontend domain
+      'https://din-ballyhoo-ghfh3s60s-josh-endemanns-projects.vercel.app',
+      'https://din-ballyhoo-ghfh3s60s-josh-endemanns-projects.vercel.app',
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control'],
     credentials: true, // Allow cookies and headers
