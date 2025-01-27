@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 import { useUserContext } from "@/app/context/UserContext"; // Import useUserContext
-const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -32,10 +31,13 @@ export default function LoginPage() {
 
     try {
       console.log("Sending login request...");
-      const response = await axios.post(`${API_URL}/api/v1/users/login`, {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/login`,
+        {
+          email,
+          password,
+        }
+      );
       console.log("Login response:", response); // Ensure you see this
 
       const user = response.data.data?.user;
