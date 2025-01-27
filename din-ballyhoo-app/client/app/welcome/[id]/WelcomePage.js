@@ -19,7 +19,7 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import PopularTracks from "@/components/PopularTracks/PopularTracks";
 
-export default function WelcomePage({ id }) {
+export default function WelcomePage() {
   const { user, loading } = useUserContext();
   const [albums, setAlbums] = useState([]);
   const [shows, setShows] = useState([]);
