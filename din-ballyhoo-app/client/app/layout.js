@@ -11,8 +11,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <UserProvider>{children}</UserProvider>
-        <Footer />
+        <UserProvider>
+          <div className="pageWrapper">
+            {children}
+            <Footer />
+          </div>
+        </UserProvider>
       </body>
     </html>
   );
