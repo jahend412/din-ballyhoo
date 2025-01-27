@@ -5,7 +5,7 @@ import Card from "@/components/Card";
 import Header from "@/components/Header";
 import { showConfig } from "@/app/config/cardConfigs";
 import { fetchShows } from "@/app/utils/fetchEntity";
-import styles from "./ShowsPage.module.css";
+import styles from "@/app/albums/AlbumsPage.module.css";
 import Cookies from "js-cookie";
 
 export default function ShowPage() {
@@ -31,7 +31,7 @@ export default function ShowPage() {
   return (
     <div>
       <Header />
-      <div className={styles.showsPage}>
+      <div className={styles.albumsPage}>
         <h2>Shows</h2>
         <div className={styles.cardContainer}>
           {shows.length > 0 ? (
@@ -41,8 +41,8 @@ export default function ShowPage() {
                 data={show}
                 config={showConfig}
                 entityType="album"
-                entityId={album.id}
-                isFavInit={album.isFavorite}
+                entityId={show.id}
+                isFavInit={show.isFavorite}
                 showFavIcon={true}
               />
             ))
