@@ -116,17 +116,133 @@
   background-color: #840000; /* Darker blue on hover */
 }
 
-/* Responsive design for smaller screens */
-@media (max-width: 600px) {
+/* Enhanced Responsive Design */
+@media (max-width: 768px) {
+  .loginContainer {
+    padding: 1rem;
+    height: auto;
+    min-height: 100vh;
+  }
+
   .loginForm {
+    width: 100%;
+    max-width: 100%;
     padding: 1.5rem;
+    margin: 1rem;
+    box-shadow: none;
+  }
+
+  .logoContainer {
+    margin-top: 2rem;
+  }
+
+  .loginForm h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .inputGroup {
+    margin-bottom: 1.25rem;
+  }
+
+  .inputGroup label {
+    font-size: 0.875rem;
+  }
+
+  .inputGroup input {
+    padding: 0.7rem;
+    font-size: 1rem;
+  }
+
+  .optionContainer {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+    margin: 1rem 0;
+  }
+
+  .rememberMeContainer {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .forgotPassword {
+    width: 100%;
+    text-align: left;
+  }
+
+  .submitButton {
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+  .loginContainer {
+    padding: 0.5rem;
+  }
+
+  .loginForm {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+
+  .logoContainer {
+    margin-top: 1rem;
   }
 
   .loginForm h2 {
     font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .inputGroup {
+    margin-bottom: 1rem;
+  }
+
+  .inputGroup input {
+    padding: 0.6rem;
+    font-size: 0.95rem;
   }
 
   .submitButton {
-    font-size: 0.9rem;
+    padding: 0.7rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* Height-based media query for very short screens */
+@media (max-height: 600px) {
+  .pageContainer {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .logoContainer {
+    margin-top: 1rem;
+  }
+
+  .loginContainer {
+    height: auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+/* Ensure the form is usable when keyboard is active on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .pageContainer {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .loginContainer {
+    height: auto;
+    padding: 1rem;
+  }
+
+  .logoContainer {
+    margin-top: 0.5rem;
   }
 }

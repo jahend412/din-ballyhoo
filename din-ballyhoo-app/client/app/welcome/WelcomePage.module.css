@@ -21,3 +21,136 @@
   margin: 2rem;
   font-weight: bold;
 }
+
+/* Card content style */
+.cardContent {
+  padding: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Parent container for all cards */
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
+  padding: 1rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.headLink {
+  text-decoration: none;
+  color: #ff0000;
+  font-size: 2rem;
+  margin: 2rem;
+  font-weight: bold;
+  display: block;
+}
+
+/* Desktop Layout */
+@media screen and (min-width: 1201px) {
+  .cardContainer {
+    gap: 24px;
+    padding: 2rem;
+  }
+
+  .cardContent {
+    padding: 20px;
+  }
+}
+
+/* Large Tablet/Small Desktop */
+@media screen and (max-width: 1200px) {
+  .cardContainer {
+    gap: 20px;
+    padding: 1.5rem;
+  }
+
+  .headLink {
+    font-size: 1.75rem;
+    margin: 1.75rem;
+  }
+}
+
+/* Tablet */
+@media screen and (max-width: 900px) {
+  .cardContainer {
+    gap: 16px;
+    padding: 1.25rem;
+    justify-content: center;
+  }
+
+  .headLink {
+    font-size: 1.5rem;
+    margin: 1.5rem;
+  }
+}
+
+/* Large Mobile */
+@media screen and (max-width: 600px) {
+  .cardContainer {
+    gap: 12px;
+    padding: 1rem;
+  }
+
+  .cardContent {
+    padding: 14px;
+  }
+
+  .headLink {
+    font-size: 1.25rem;
+    margin: 1.25rem;
+  }
+}
+
+/* Small Mobile */
+@media screen and (max-width: 400px) {
+  .cardContainer {
+    gap: 10px;
+    padding: 0.75rem;
+  }
+
+  .cardContent {
+    padding: 12px;
+  }
+
+  .headLink {
+    font-size: 1.125rem;
+    margin: 1rem;
+  }
+}
+
+/* Handle larger screens */
+@media screen and (min-width: 1600px) {
+  .cardContainer {
+    gap: 32px;
+    padding: 2.5rem;
+    max-width: 1800px;
+  }
+
+  .cardContent {
+    padding: 24px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .cardContainer {
+    display: block;
+  }
+
+  .cardContent {
+    page-break-inside: avoid;
+    border: 1px solid #ddd;
+    margin-bottom: 1rem;
+  }
+
+  .headLink {
+    color: #000;
+    margin: 1rem 0;
+  }
+}

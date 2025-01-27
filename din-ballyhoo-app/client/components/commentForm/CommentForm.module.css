@@ -31,3 +31,104 @@
   background: #cc0000; /* Changes the background color on click */
   transform: scaleY(0.95); /* Scales the button down slightly */
 }
+
+/* Large Desktop */
+@media (min-width: 1440px) {
+  .largeInput {
+    height: 6rem;
+    padding: 16px 20px;
+    font-size: 1.3rem;
+  }
+
+  .submitBtn {
+    padding: 14px 20px;
+    font-size: 1.3rem;
+    min-width: 140px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .largeInput {
+    height: 4.5rem;
+    padding: 10px 14px;
+    font-size: 1.1rem;
+  }
+
+  .submitBtn {
+    padding: 10px 14px;
+    font-size: 1.1rem;
+    min-width: 110px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .largeInput {
+    height: 4rem;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+  }
+
+  .submitBtn {
+    padding: 10px 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+    width: 100%; /* Full width on mobile */
+    min-width: unset;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .largeInput {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .submitBtn {
+    padding: 12px 16px; /* Larger touch target */
+    touch-action: manipulation;
+  }
+
+  .submitBtn:hover {
+    background: #ff0000; /* Disable hover state on touch devices */
+  }
+}
+
+/* High DPI Screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .largeInput {
+    border-width: 0.5px; /* Sharper borders on retina displays */
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .largeInput {
+    background-color: #333;
+    color: #fff;
+    border-color: #555;
+  }
+
+  .largeInput::placeholder {
+    color: #888;
+  }
+
+  .largeInput:focus {
+    border-color: #ff3333;
+    box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.1);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .largeInput,
+  .submitBtn {
+    transition: none;
+  }
+
+  .submitBtn:active {
+    transform: none;
+  }
+}

@@ -145,3 +145,110 @@
   padding: 20px;
   box-sizing: border-box;
 }
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  .entityCover {
+    display: block;
+    margin: 0.5rem auto;
+    text-align: center;
+  }
+
+  .entityInfo {
+    display: block;
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+
+  .entityInfo h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .entityInfo p {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  /* Tabs Section */
+  .tabs {
+    flex-direction: column;
+    padding: 5px;
+  }
+
+  .tabs button {
+    margin: 3px 0;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+
+  /* Track List Section */
+  .trackList {
+    margin-top: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  .trackItem {
+    padding: 15px 10px;
+    font-size: 0.9rem;
+  }
+
+  /* Album Details Section */
+  .albumDetails {
+    font-size: 1.5em;
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+
+  /* Comment Section */
+  .commentSection {
+    margin-top: 15px;
+    padding: 15px;
+  }
+
+  .commentSection .commentBox {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .commentSection button {
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px 15px;
+  }
+
+  /* Track Player Section */
+  .trackPlayer {
+    padding: 5px;
+  }
+
+  .trackPlayer .reactPlayer {
+    height: 40px;
+  }
+}
+
+/* Small Mobile Devices */
+@media screen and (max-width: 480px) {
+  .entityInfo h1 {
+    font-size: 1.75rem;
+  }
+
+  .entityInfo p {
+    font-size: 1rem;
+  }
+
+  .albumDetails {
+    font-size: 1.25em;
+    padding: 0.75rem;
+  }
+
+  .tabs button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  .trackItem {
+    padding: 12px 8px;
+    font-size: 0.85rem;
+  }
+}

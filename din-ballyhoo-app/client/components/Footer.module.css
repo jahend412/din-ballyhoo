@@ -56,3 +56,132 @@
   justify-content: center;
   align-items: center;
 }
+
+/* Large Screens */
+@media (min-width: 1440px) {
+  .footer {
+    padding: 2.5rem 3rem;
+    gap: 3rem;
+  }
+
+  .logo {
+    font-size: 1.75rem;
+  }
+
+  .navLink {
+    font-size: 1.125rem;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .footer {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .logo {
+    flex: 1 0 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .navLinks {
+    gap: 1.25rem;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .footer {
+    padding: 1.25rem 1rem;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .navLinks {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .navLink {
+    font-size: 0.9375rem;
+    padding: 0.5rem 0;
+  }
+
+  .copy {
+    font-size: 0.8125rem;
+    margin-top: 0.75rem;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 320px) {
+  .footer {
+    padding: 1rem 0.75rem;
+  }
+
+  .logo {
+    font-size: 1.125rem;
+  }
+
+  .navLink {
+    font-size: 0.875rem;
+  }
+
+  .copy {
+    font-size: 0.75rem;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .navLink {
+    padding: 0.75rem;
+  }
+
+  .navLink:hover {
+    color: white;
+  }
+
+  .navLink:active {
+    color: #ff0000;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .footer {
+    border-top: 1px solid #333;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .navLink {
+    transition: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .footer {
+    background-color: white;
+    color: black;
+    border-top: 1px solid #ddd;
+  }
+
+  .navLink {
+    color: black;
+  }
+
+  .logo {
+    color: black;
+  }
+}

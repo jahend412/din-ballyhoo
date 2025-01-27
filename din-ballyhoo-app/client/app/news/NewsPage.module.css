@@ -16,3 +16,42 @@
   max-width: calc(25% - 20px); /* Limits the width to 25% minus the gap */
   box-sizing: border-box; /* Includes padding and border in the width calculation */
 }
+
+/* Small Tablet Devices */
+@media screen and (max-width: 768px) {
+  .newsPage {
+    padding: 1rem;
+  }
+
+  .cardContainer {
+    gap: 15px;
+  }
+
+  .cardContainer > * {
+    flex: 1 1 calc(50% - 15px);
+    max-width: calc(50% - 15px);
+  }
+}
+
+/* Mobile Devices */
+@media screen and (max-width: 480px) {
+  .newsPage {
+    padding: 1rem 0.5rem;
+  }
+
+  .cardContainer {
+    gap: 10px;
+  }
+
+  .cardContainer > * {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+
+/* Ensure proper spacing when very few cards are present */
+@media screen and (min-width: 1025px) {
+  .cardContainer:only-child {
+    justify-content: flex-start;
+  }
+}
