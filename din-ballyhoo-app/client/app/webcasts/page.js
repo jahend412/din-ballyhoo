@@ -6,7 +6,7 @@ import Card from "../../components/Card";
 import { webcastConfig } from "@/app/config/cardConfigs";
 import { useState, useEffect } from "react";
 import { fetchWebcasts } from "@/app/utils/fetchEntity";
-import Header from "@/components/Header";
+import AuthenticatedLayout from "@/components/AuthenticatedLayout";
 import Cookies from "js-cookie";
 
 export default function WebcastPage() {
@@ -38,28 +38,29 @@ export default function WebcastPage() {
   }
 
   return (
-    <div>
-      <Header />
-      <div className={styles.albumsPage}>
-        <h2>Webcasts</h2>
-        <div className={styles.cardContainer}>
-          {webcasts.length > 0 ? (
-            webcasts.map((webcast) => (
-              <Card
-                key={webcast._id}
-                data={webcast}
-                config={webcastConfig}
-                entityType="webcast"
-                entityId={webcast.id}
-                isFavInit={webcast.isFavorite}
-                showFavIcon={true}
-              />
-            ))
-          ) : (
-            <p>No webcasts found</p>
-          )}
+    <AuthenticatedLayout>
+      <div>
+        <div className={styles.albumsPage}>
+          <h2>Webcasts</h2>
+          <div className={styles.cardContainer}>
+            {webcasts.length > 0 ? (
+              webcasts.map((webcast) => (
+                <Card
+                  key={webcast._id}
+                  data={webcast}
+                  config={webcastConfig}
+                  entityType="webcast"
+                  entityId={webcast.id}
+                  isFavInit={webcast.isFavorite}
+                  showFavIcon={true}
+                />
+              ))
+            ) : (
+              <p>No webcasts found</p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </AuthenticatedLayout>
   );
 }

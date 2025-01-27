@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Card from "@/components/Card";
-import Header from "@/components/Header";
+import AuthenticatedLayout from "@/components/AuthenticatedLayout";
 import { showConfig } from "@/app/config/cardConfigs";
 import { fetchShows } from "@/app/utils/fetchEntity";
 import styles from "@/app/albums/AlbumsPage.module.css";
@@ -29,28 +29,29 @@ export default function ShowPage() {
   }, [token]);
 
   return (
-    <div>
-      <Header />
-      <div className={styles.albumsPage}>
-        <h2>Shows</h2>
-        <div className={styles.cardContainer}>
-          {shows.length > 0 ? (
-            shows.map((show) => (
-              <Card
-                key={show._id}
-                data={show}
-                config={showConfig}
-                entityType="album"
-                entityId={show.id}
-                isFavInit={show.isFavorite}
-                showFavIcon={true}
-              />
-            ))
-          ) : (
-            <p>No shows found</p>
-          )}
+    <AuthenticatedLayout>
+      <div>
+        <div className={styles.albumsPage}>
+          <h2>Shows</h2>
+          <div className={styles.cardContainer}>
+            {shows.length > 0 ? (
+              shows.map((show) => (
+                <Card
+                  key={show._id}
+                  data={show}
+                  config={showConfig}
+                  entityType="album"
+                  entityId={show.id}
+                  isFavInit={show.isFavorite}
+                  showFavIcon={true}
+                />
+              ))
+            ) : (
+              <p>No shows found</p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </AuthenticatedLayout>
   );
 }

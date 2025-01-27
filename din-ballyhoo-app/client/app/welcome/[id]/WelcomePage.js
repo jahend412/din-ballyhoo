@@ -18,6 +18,7 @@ import styles from "../WelcomePage.module.css";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import PopularTracks from "@/components/PopularTracks/PopularTracks";
+import AuthenticatedLayout from "@/components/AuthenticatedLayout";
 
 export default function WelcomePage() {
   const { user, loading } = useUserContext();
@@ -96,78 +97,78 @@ export default function WelcomePage() {
   }
 
   return (
-    <div>
-      <Header user={user} />
-
-      <div className="section">
-        <Link href="/albums" className={styles.headLink}>
-          Albums
-        </Link>
-        <div className={styles.cardContainer}>
-          {albums.length > 0 ? (
-            albums.map((album) => (
-              <Card
-                key={album._id}
-                data={album}
-                config={albumConfig}
-                entityType="album"
-                entityId={album.id}
-                isFavInit={album.isFavorite}
-                showFavIcon={true}
-              />
-            ))
-          ) : (
-            <p>No albums found</p>
-          )}
-        </div>
-      </div>
-      <div className="section">
-        <Link href="/webcasts" className={styles.headLink}>
-          Webcasts
-        </Link>
-        <div className={styles.cardContainer}>
-          {webcasts.length > 0 ? (
-            webcasts.map((webcast) => (
-              <Card
-                key={webcast._id}
-                data={webcast}
-                config={webcastConfig}
-                entityType="webcast"
-                entityId={webcast.id}
-                isFavInit={webcast.isFavorite}
-                showFavIcon={true}
-              />
-            ))
-          ) : (
-            <p>Stay Tuned for the first webcast</p>
-          )}
-        </div>
+    <AuthenticatedLayout>
+      <div>
         <div className="section">
-          <Link href="/shows" className={styles.headLink}>
-            Shows
+          <Link href="/albums" className={styles.headLink}>
+            Albums
           </Link>
           <div className={styles.cardContainer}>
-            {shows.length > 0 ? (
-              shows.map((show) => (
+            {albums.length > 0 ? (
+              albums.map((album) => (
                 <Card
-                  key={show._id}
-                  data={show}
-                  config={showConfig}
-                  entityType="show"
-                  entityId={show.id}
-                  isFavInit={show.isFavorite}
+                  key={album._id}
+                  data={album}
+                  config={albumConfig}
+                  entityType="album"
+                  entityId={album.id}
+                  isFavInit={album.isFavorite}
                   showFavIcon={true}
                 />
               ))
             ) : (
-              <p>Stay Tuned for the first show</p>
+              <p>No albums found</p>
             )}
           </div>
         </div>
         <div className="section">
-          <PopularTracks tracks={PopularTracks} />
+          <Link href="/webcasts" className={styles.headLink}>
+            Webcasts
+          </Link>
+          <div className={styles.cardContainer}>
+            {webcasts.length > 0 ? (
+              webcasts.map((webcast) => (
+                <Card
+                  key={webcast._id}
+                  data={webcast}
+                  config={webcastConfig}
+                  entityType="webcast"
+                  entityId={webcast.id}
+                  isFavInit={webcast.isFavorite}
+                  showFavIcon={true}
+                />
+              ))
+            ) : (
+              <p>Stay Tuned for the first webcast</p>
+            )}
+          </div>
+          <div className="section">
+            <Link href="/shows" className={styles.headLink}>
+              Shows
+            </Link>
+            <div className={styles.cardContainer}>
+              {shows.length > 0 ? (
+                shows.map((show) => (
+                  <Card
+                    key={show._id}
+                    data={show}
+                    config={showConfig}
+                    entityType="show"
+                    entityId={show.id}
+                    isFavInit={show.isFavorite}
+                    showFavIcon={true}
+                  />
+                ))
+              ) : (
+                <p>Stay Tuned for the first show</p>
+              )}
+            </div>
+          </div>
+          <div className="section">
+            <PopularTracks tracks={PopularTracks} />
+          </div>
         </div>
       </div>
-    </div>
+    </AuthenticatedLayout>
   );
 }

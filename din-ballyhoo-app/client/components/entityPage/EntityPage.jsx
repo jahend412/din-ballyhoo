@@ -25,7 +25,6 @@ export default function EntityPage({
   console.log("Entity comments:", entity.comments);
   return (
     <div className={styles.pageWrapper}>
-      <Header />
       <div className={styles.entityCover}>
         <Image
           src={`${API_URL}${imagePath}`}

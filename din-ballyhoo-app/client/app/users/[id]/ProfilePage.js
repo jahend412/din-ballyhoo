@@ -15,6 +15,7 @@ import {
 import "./ProfilePage.css";
 import Header from "@/components/Header";
 import Cookies from "js-cookie";
+import AuthenticatedLayout from "@/components/AuthenticatedLayout";
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function ProfilePage({ id }) {
@@ -209,99 +210,102 @@ export default function ProfilePage({ id }) {
 
   // Once data is fetched and loaded, render the user profile
   return (
-    <div>
-      <Header />
-      <h1>Profile</h1>
-      {user ? (
-        <div className="profile">
-          <h2>Profile Information</h2>
-          <form onSubmit={handleUpdateUser}>
-            <div>
-              <label>Name:</label>
-              <input
-                type="text"
-                value={newName}
-                placeholder={user.name}
-                onChange={(e) => setNewName(e.target.value)}
-              />
-            </div>
-            <div>
-              <label>Email:</label>
-              <input
-                type="email"
-                value={newEmail}
-                placeholder={user.email}
-                onChange={(e) => setNewEmail(e.target.value)}
-              />
-              <br />
-              <button type="submit">Update Profile</button>
-            </div>
-          </form>
-
-          <div>
-            <h2>Change Password</h2>
-            {passwordError && <p className="error">{passwordError}</p>}
-            <form onSubmit={handlePasswordUpdate} className="passwordForm">
-              <label className="passwordLabel">Current Password:</label>
-              <input
-                type="password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full p-2 border rounded"
-                required
-              />
-              <label className="passwordLabel">New Password:</label>
-              <input
-                type="password"
-                value={newPassword}
-                placeholder="Enter new password"
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-              <label className="passwordLabel">Confirm Password:</label>
-              <input
-                type="password"
-                value={passwordConfirm}
-                placeholder="Confirm new password"
-                onChange={(e) => setPasswordConfirm(e.target.value)}
-              />
-              <br />
-              <button type="submit">Update Password</button>
+    <AuthenticatedLayout>
+      <div>
+        <h1>Profile</h1>
+        {user ? (
+          <div className="profile">
+            <h2>Profile Information</h2>
+            <form onSubmit={handleUpdateUser}>
+              <div>
+                <label>Name:</label>
+                <input
+                  type="text"
+                  value={newName}
+                  placeholder={user.name}
+                  onChange={(e) => setNewName(e.target.value)}
+                />
+              </div>
+              <div>
+                <label>Email:</label>
+                <input
+                  type="email"
+                  value={newEmail}
+                  placeholder={user.email}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                />
+                <br />
+                <button type="submit">Update Profile</button>
+              </div>
             </form>
-          </div>
 
-          <div className="section">
-            <h2>Delete Profile</h2>
-            {deleteError && <p className="error">{deleteError}</p>}
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <button className="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
-                  Delete Account
-                </button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    your account and remove all of your data from our servers.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={handleDeleteAccount}
-                    className="bg-red-500 hover:bg-red-600"
-                  >
+            <div>
+              <h2>Change Password</h2>
+              {passwordError && <p className="error">{passwordError}</p>}
+              <form onSubmit={handlePasswordUpdate} className="passwordForm">
+                <label className="passwordLabel">Current Password:</label>
+                <input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+                <label className="passwordLabel">New Password:</label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  placeholder="Enter new password"
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+                <label className="passwordLabel">Confirm Password:</label>
+                <input
+                  type="password"
+                  value={passwordConfirm}
+                  placeholder="Confirm new password"
+                  onChange={(e) => setPasswordConfirm(e.target.value)}
+                />
+                <br />
+                <button type="submit">Update Password</button>
+              </form>
+            </div>
+
+            <div className="section">
+              <h2>Delete Profile</h2>
+              {deleteError && <p className="error">{deleteError}</p>}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <button className="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
                     Delete Account
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+                  </button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your account and remove all of your data from our servers.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDeleteAccount}
+                      className="bg-red-500 hover:bg-red-600"
+                    >
+                      Delete Account
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </div>
-        </div>
-      ) : (
-        <p>No user data available</p>
-      )}
-    </div>
+        ) : (
+          <p>No user data available</p>
+        )}
+      </div>
+    </AuthenticatedLayout>
   );
 }

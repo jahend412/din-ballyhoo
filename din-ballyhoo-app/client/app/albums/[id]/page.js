@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import EntityPage from "@/components/entityPage/EntityPage";
 import { fetchEntityData } from "@/app/utils/fetchEntityData";
 import Cookies from "js-cookie";
+import AuthenticatedLayout from "@/components/AuthenticatedLayout";
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function AlbumPage() {
@@ -92,19 +93,21 @@ export default function AlbumPage() {
   if (!album) return <div>Loading...</div>;
 
   return (
-    <EntityPage
-      entity={album}
-      entityType="album"
-      activeSection={activeSection}
-      setActiveSection={setActiveSection}
-      handleTrackClick={handleTrackClick}
-      activeTrack={activeTrack}
-      playing={playing}
-      handlePlay={handlePlay}
-      comments={comments}
-      updateComments={(newComment) =>
-        setComments((prevComments) => [...prevComments, newComment])
-      }
-    />
+    <AuthenticatedLayout>
+      <EntityPage
+        entity={album}
+        entityType="album"
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+        handleTrackClick={handleTrackClick}
+        activeTrack={activeTrack}
+        playing={playing}
+        handlePlay={handlePlay}
+        comments={comments}
+        updateComments={(newComment) =>
+          setComments((prevComments) => [...prevComments, newComment])
+        }
+      />
+    </AuthenticatedLayout>
   );
 }

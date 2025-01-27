@@ -6,7 +6,7 @@ import Card from "../../components/Card";
 import { albumConfig } from "@/app/config/cardConfigs";
 import { useState, useEffect } from "react";
 import { fetchAlbums } from "@/app/utils/fetchEntity";
-import Header from "@/components/Header";
+import AuthenticatedLayout from "@/components/AuthenticatedLayout";
 import Cookies from "js-cookie";
 
 export default function AlbumsPage() {
@@ -38,28 +38,29 @@ export default function AlbumsPage() {
   }
 
   return (
-    <div>
-      <Header />
-      <div className={styles.albumsPage}>
-        <h2>Albums</h2>
-        <div className={styles.cardContainer}>
-          {albums.length > 0 ? (
-            albums.map((album) => (
-              <Card
-                key={album._id}
-                data={album}
-                config={albumConfig}
-                entityType="album"
-                entityId={album.id}
-                isFavInit={album.isFavorite}
-                showFavIcon={true}
-              />
-            ))
-          ) : (
-            <p>No albums found</p>
-          )}
+    <AuthenticatedLayout>
+      <div>
+        <div className={styles.albumsPage}>
+          <h2>Albums</h2>
+          <div className={styles.cardContainer}>
+            {albums.length > 0 ? (
+              albums.map((album) => (
+                <Card
+                  key={album._id}
+                  data={album}
+                  config={albumConfig}
+                  entityType="album"
+                  entityId={album.id}
+                  isFavInit={album.isFavorite}
+                  showFavIcon={true}
+                />
+              ))
+            ) : (
+              <p>No albums found</p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </AuthenticatedLayout>
   );
 }
