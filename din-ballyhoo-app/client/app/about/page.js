@@ -8,8 +8,6 @@ export default function AboutPage() {
   return (
     <AuthenticatedLayout>
       <div className="about-container">
-        <Header />
-
         <div className="content">
           <h1 className="title">Biography</h1>
           <p className="text">
