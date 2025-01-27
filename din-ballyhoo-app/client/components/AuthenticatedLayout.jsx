@@ -1,13 +1,14 @@
 "use client";
 
-import { useUser } from "@/app/context/UserContext";
+import { useUserContext } from "@/app/context/UserContext";
 import Header from "./Header";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function AuthenticatedLayout({ children }) {
-  const { user } = useUser();
+  const { user } = useUserContext();
   const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -21,7 +22,7 @@ export default function AuthenticatedLayout({ children }) {
 
   return (
     <>
-      <Header />
+      <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       <main className="mainContent">{children}</main>
     </>
   );
