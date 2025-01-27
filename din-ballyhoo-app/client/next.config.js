@@ -2,10 +2,14 @@ module.exports = {
   images: {
     remotePatterns: [
       {
-        hostname: process.env.NEXT_PUBLIC_BACKEND_URL || "localhost",
+        protocol: "https",
+        hostname: "din-ballyhoo1-c04a1c0b364a.herokuapp.com",
+        pathname: "/uploads/**",
       },
+      // Keep your localhost pattern if needed for development
       {
-        hostname: process.env.NEXT_PUBLIC_IMAGE_HOST || "localhost",
+        protocol: "http",
+        hostname: "localhost",
       },
     ],
   },
