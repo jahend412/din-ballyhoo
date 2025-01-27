@@ -1,39 +1,31 @@
+/* Header.module.css */
 .header {
   display: flex;
-  justify-content: space-between; /* Space between logo and links */
+  justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
   background-color: #000000;
   color: white;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+  position: relative;
 }
 
 .title {
   font-size: 3rem;
-  font-weight: bold;
-  align-items: center;
   color: #ff0000;
-  text-decoration: underline;
-}
-
-.subtitle {
-  font-size: 1.5rem;
-  color: #ff0000;
+  margin: 0;
+  z-index: 2;
 }
 
 .navLinks {
   display: flex;
   gap: 1.5rem;
+  align-items: center;
 }
 
 .navLink {
   text-decoration: none;
   color: white;
-  font-size: 1rem;
+  font-size: 1.2rem;
   transition: color 0.3s;
 }
 
@@ -41,45 +33,79 @@
   color: #ff0000;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between; /* Space between logo and links */
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #000000;
-  color: white;
+/* Hamburger Menu Button */
+.menuToggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+.menuToggle span {
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  transition: all 0.3s ease-in-out;
 }
 
-.title {
-  font-size: 3rem;
-  font-weight: bold;
-  align-items: center;
-  color: #ff0000;
-  text-decoration: underline;
-}
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+  }
 
-.subtitle {
-  font-size: 1.5rem;
-  color: #ff0000;
-}
+  .menuToggle {
+    display: flex;
+  }
 
-.navLinks {
-  display: flex;
-  gap: 1.5rem;
-}
+  .navLinks {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background-color: #000000;
+    /* Changed from max-height to display none by default */
+    display: none;
+    width: 100%;
+    z-index: 1;
+  }
 
-.navLink {
-  text-decoration: none;
-  color: white;
-  font-size: 1rem;
-  transition: color 0.3s;
-}
+  /* Show the nav when active */
+  .navLinks.active {
+    display: flex;
+    padding: 1rem;
+    border-top: 1px solid #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-.navLink:hover {
-  color: #ff0000;
+  .navLink {
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #333;
+  }
+
+  .navLink:last-child {
+    border-bottom: none;
+  }
+
+  /* Hamburger to X animation */
+  .menuToggle.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .menuToggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menuToggle.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
 }

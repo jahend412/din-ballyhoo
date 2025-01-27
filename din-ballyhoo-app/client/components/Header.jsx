@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useUserContext } from "@/app/context/UserContext";
 import { useRouter } from "next/navigation";
 import styles from "./Header.module.css";
@@ -10,6 +11,7 @@ export default function Header() {
   const { logoutUser } = useUserContext();
   const router = useRouter();
   const id = user ? user._id : null;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -21,10 +23,25 @@ export default function Header() {
     }
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>Din Ballyhoo</h1>
-      <nav className={styles.navLinks}>
+
+      <button
+        className={`${styles.menuToggle} ${isMenuOpen ? styles.active : ""}`}
+        onClick={toggleMenu}
+        aria-label="Toggle menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav className={`${styles.navLinks} ${isMenuOpen ? styles.active : ""}`}>
         <Link href={`/users/${id}`} className={styles.navLink}>
           Welcome, {user ? user.name : "Guest"}
         </Link>
