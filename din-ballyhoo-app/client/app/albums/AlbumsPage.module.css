@@ -42,7 +42,7 @@
   scroll-snap-align: start;
 }
 
-/* Add responsive breakpoints */
+/* Tablet and Mobile Breakpoint */
 @media screen and (max-width: 768px) {
   .albumsPage {
     padding: 1rem;
@@ -51,6 +51,26 @@
   .albumsPage h2 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
+  }
+
+  .cardContainer {
+    flex-direction: column; /* Stack cards vertically */
+    overflow-x: visible; /* Remove horizontal scroll */
+    overflow-y: auto; /* Allow vertical scroll if needed */
+    gap: 1.5rem;
+    padding: 0.5rem;
+  }
+
+  .cardContainer > * {
+    width: 100%; /* Make cards full width */
+    margin-right: 0;
+  }
+}
+
+/* Small Mobile Adjustments */
+@media screen and (max-width: 480px) {
+  .albumsPage {
+    padding: 0.75rem;
   }
 
   .cardContainer {
