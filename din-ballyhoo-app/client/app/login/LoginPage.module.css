@@ -19,6 +19,7 @@
   height: 100vh;
   background-color: #000000; /* Light background */
   font-family: Arial, sans-serif;
+  margin-bottom: 2rem;
 }
 
 /* Login form styling */
