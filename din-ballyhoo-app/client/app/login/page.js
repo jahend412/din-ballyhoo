@@ -115,10 +115,18 @@ export default function LoginPage() {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
-          <Link href="/terms">Terms & Conditions</Link> <br />
-          <Link href="/privacy">Privacy Policy</Link>
+          <Link className={styles.links} href="/terms">
+            Terms & Conditions
+          </Link>{" "}
+          <br />
+          <Link className={styles.links} href="/privacy">
+            Privacy Policy
+          </Link>
           <p className={styles.signupLink}>
-            Don’t have an account? <Link href="/signup">Sign up</Link>
+            Don’t have an account?{" "}
+            <Link className={styles.links} href="/signup">
+              Sign up
+            </Link>
           </p>
         </form>
       </div>

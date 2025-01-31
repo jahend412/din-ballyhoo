@@ -178,6 +178,10 @@
   }
 }
 
+.links {
+  color: #ffffff;
+}
+
 /* Small Mobile Devices */
 @media (max-width: 480px) {
   .loginContainer {
