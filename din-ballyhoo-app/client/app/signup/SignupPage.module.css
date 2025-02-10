@@ -235,7 +235,7 @@
 /* Small Mobile Devices */
 @media (max-width: 320px) {
   .pageContainer {
-    padding: 0.25rem;
+    padding: 0.1rem;
   }
 
   .logoContainer {

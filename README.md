@@ -51,7 +51,7 @@ Din Ballyhoo is a web application built for fans to engage with band content. Us
 ## Getting Started
 
 ### Installation
-
+ 
 1. Clone the repository:
    ```bash
    git clone https://github.com/jahend412/din-ballyhoo.git
